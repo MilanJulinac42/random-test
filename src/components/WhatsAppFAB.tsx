@@ -16,42 +16,42 @@ export function WhatsAppFAB() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      className="fixed flex items-center justify-center transition-all"
+      className="liquid-glass fixed flex items-center gap-2 text-foreground transition-all hover:bg-white/10"
       style={{
         bottom: 28,
         right: 28,
         zIndex: 999,
-        width: 60,
-        height: 60,
-        background: "#25D366",
-        borderRadius: "50%",
+        height: 52,
+        padding: "0 20px",
+        borderRadius: 9999,
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? "auto" : "none",
-        transition: "opacity 0.4s, transform 0.2s, box-shadow 0.2s",
+        transition: "opacity 0.4s, transform 0.2s, box-shadow 0.3s",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLAnchorElement;
-        el.style.transform = "scale(1.08)";
-        el.style.boxShadow = "0 8px 24px rgba(37,211,102,0.35)";
+        el.style.transform = "translateY(-2px)";
+        el.style.boxShadow = "0 0 28px hsl(var(--primary) / 0.45)";
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLAnchorElement;
-        el.style.transform = "scale(1)";
+        el.style.transform = "translateY(0)";
         el.style.boxShadow = "none";
       }}
     >
-      <svg width="28" height="28" viewBox="0 0 32 32" fill="white" aria-hidden>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor" aria-hidden>
         <path d="M16 .4C7.4.4.5 7.3.5 15.9c0 2.8.7 5.5 2.1 7.9L.4 31.6l8-2.1c2.3 1.3 4.9 1.9 7.6 1.9 8.6 0 15.5-7 15.5-15.5C31.5 7.3 24.6.4 16 .4zm0 28.3c-2.4 0-4.7-.6-6.7-1.9l-.5-.3-4.7 1.2 1.3-4.6-.3-.5c-1.4-2.1-2.1-4.6-2.1-7.1 0-7.1 5.8-12.9 12.9-12.9 7.1 0 12.9 5.8 12.9 12.9.1 7-5.7 12.9-12.8 12.9zm7-9.7c-.4-.2-2.3-1.1-2.6-1.2-.3-.1-.6-.2-.9.2-.3.4-1 1.2-1.2 1.5-.2.3-.5.3-.9.1-.4-.2-1.6-.6-3-1.9-1.1-1-1.9-2.2-2.1-2.6-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.7.1-.3 0-.5 0-.7-.1-.2-.9-2.2-1.2-3-.3-.8-.7-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4 0 2 1.5 4 1.7 4.2.2.3 2.9 4.5 7.1 6.3 1 .4 1.8.7 2.4.9 1 .3 1.9.3 2.6.2.8-.1 2.3-.9 2.6-1.8.3-.9.3-1.7.2-1.8 0-.2-.3-.3-.7-.5z" />
       </svg>
+      <span className="hidden md:inline text-sm font-medium">Chat with us</span>
       <span
         className="absolute reno-pulse"
         style={{
-          top: -4,
-          right: -4,
+          top: -3,
+          right: -3,
           width: 10,
           height: 10,
           borderRadius: "50%",
-          background: "#25D366",
+          background: "hsl(var(--primary))",
         }}
       />
     </a>
