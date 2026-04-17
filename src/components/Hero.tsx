@@ -1,7 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { AnimatedHeading } from "@/components/AnimatedHeading";
 import { FadeIn } from "@/components/FadeIn";
-import { WHATSAPP_GENERAL } from "@/lib/constants";
 
 export function Hero() {
   return (
