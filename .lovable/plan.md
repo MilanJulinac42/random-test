@@ -1,38 +1,42 @@
 
 
-## Plan — Hero refinements + darker background
+## Plan — Logo, socials, hero copy, backgrounds, footer, FAB
 
-### 1. Background color (`src/styles.css`)
-Current dark bg is `240 9% 12%` ≈ **#1C1C21** (Obsidian from RENO spec).
-Switch `.dark --background` to `#1A1A1A` → HSL `0 0% 10%`. Also nudge `--card` to `0 0% 13%` and `--secondary`/`--muted` to `0 0% 15%` to keep the elevation hierarchy readable against the new base. Border stays neutral (`0 0% 20%`).
+### 1. Logo swap (`Navbar.tsx` + `Footer.tsx`)
+- Copy `user-uploads://Logo-06.png` → `src/assets/logo.png`.
+- Replace the "Reno" text + "Dubai" pill in Navbar with `<img src={logo} alt="Reno" className="h-7 md:h-8 w-auto" />`.
+- Same swap in Footer (slightly larger, `h-9`).
 
-### 2. Heading in 2 lines (`src/components/Hero.tsx`)
-Change `AnimatedHeading` text from:
-```
-"Transform Your Home.\nNo Stress. No Surprises."
-```
-to the same string (already 2 lines via `\n`). The wrapping to 4 lines is caused by the responsive font size + container width. Fix by:
-- Adding `whitespace-nowrap` to each line span inside `AnimatedHeading` (each `<span className="block">` gets `whitespace-nowrap`), OR simpler: add `whitespace-nowrap` via a new optional `lineClassName` prop and pass it from Hero.
-- Reduce heading max size slightly on `xl` (`xl:text-6xl` instead of `xl:text-7xl`) so "No Stress. No Surprises." fits on one line at 1064px viewport without overflow.
-- Allow horizontal room: change left column from `max-w-2xl` to `max-w-3xl lg:max-w-none` and let the 2-col grid breathe.
+### 2. Filled social icons (`Navbar.tsx` + `Footer.tsx`)
+Lucide's `Linkedin`/`Instagram` are stroke-only. Replace with inline SVG brand glyphs filled white (`fill="currentColor"`, `text-white`), hover `text-primary`. Single small `SocialIcons.tsx` helper with `<LinkedInIcon />` and `<InstagramIcon />` exports to reuse in Navbar + Footer.
 
-### 3. Hero body copy in 2 lines (`src/components/Hero.tsx`)
-Current subhead is one long paragraph that wraps to 3–4 lines. Rewrite to a tight 2-line version, then force exactly 2 lines using `line-clamp-2` + `max-w-none` removed so it spans naturally:
-- New copy (shorter): *"End-to-end renovation by expert designers and vetted contractors — milestone-based payments, fully managed. Projects from AED 275k to 920k."*
-- Apply `line-clamp-2` so any width still renders 2 lines max.
-- Remove `max-w-xl` constraint.
+### 3. Hero body — no truncation (`Hero.tsx`)
+Remove `line-clamp-2` from the subhead `<p>`. Let it wrap naturally. Keep `max-w-2xl` so it doesn't span the full width awkwardly on `lg+`.
 
-### 4. CTA cleanup (`src/components/Hero.tsx` + `src/components/Navbar.tsx`)
-- **Hero**: remove the second "WhatsApp Us ↗" button. Only "Check Project Availability →" remains (primary indigo CTA).
-- **Navbar**: restyle "Contact Us" to match the removed Hero WhatsApp button — `liquid-glass` background, `border-white/15`, white text, hover `bg-white/10`. Same height/padding feel as nav (h-9, px-4, text-[13px]). Mobile icon button gets the same glass treatment.
+### 4. Unified `#1A1A1A` background
+Audit every section (`Stats`, `Gallery`, `Quiz`, `WhyReno`, `Process`, `Reviews`, `TrustBar`, `FinalCTA`, `Footer`) and remove any `bg-card`, `bg-secondary`, `bg-muted`, gradient overlays, or off-black backgrounds at the section level. All sections inherit `bg-background` (`#1A1A1A`). Cards within sections keep their `bg-card` for elevation contrast — only the section backdrops are unified.
+
+### 5. Minimal footer (`Footer.tsx`)
+Rewrite to a single clean layout:
+- Left: logo image + 1-line tagline ("Dubai's Home Renovation Platform").
+- Middle: short About paragraph (2 lines max).
+- Right: address block — `101, EIB Building, Dubai Media City, Dubai, UAE` + social icons (LinkedIn, Instagram) below.
+- Bottom row: copyright + Privacy/Terms.
+- Remove the 4-column Company / Homeowners / Contact link grid entirely.
+
+### 6. Restyled WhatsApp FAB (`WhatsAppFAB.tsx`)
+Replace bright green circle with a refined pill:
+- Glass surface (`liquid-glass`), rounded-full, `px-5 py-3`.
+- WhatsApp glyph (white) + "Chat with us" label (hidden on mobile, visible `md+`).
+- Subtle indigo glow on hover (`box-shadow: 0 0 24px hsl(var(--primary)/0.4)`).
+- Keep pulse dot but recolor to `hsl(var(--primary))`.
+- Mobile: icon-only circular glass button (56px).
 
 ### Files touched
-- `src/styles.css` — dark token values
-- `src/components/Hero.tsx` — heading sizing/wrap, subhead copy + clamp, remove WhatsApp button
-- `src/components/AnimatedHeading.tsx` — add optional `lineClassName` prop for `whitespace-nowrap`
-- `src/components/Navbar.tsx` — Contact Us → liquid-glass style (desktop + mobile)
+- New: `src/assets/logo.png`, `src/components/SocialIcons.tsx`
+- Modified: `src/components/Navbar.tsx`, `src/components/Hero.tsx`, `src/components/WhatsAppFAB.tsx`, `src/components/sections/Footer.tsx`, `src/components/sections/{Stats,Gallery,Quiz,WhyReno,Process,Reviews,TrustBar,FinalCTA}.tsx` (background audit only).
 
 ### Out of scope
-- No layout changes to Stats, Reviews, or other sections.
+- No real social URLs (still placeholders).
 - No light-mode adjustments.
 
