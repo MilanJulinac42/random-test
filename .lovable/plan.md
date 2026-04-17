@@ -1,56 +1,64 @@
 
 
-## Plan — Subtle radial gradients across sections (Xtract-inspired)
+## Plan — Carousel testimonials (Emily Hayes style)
 
-### Pattern observed on Xtract
-Pure black canvas with **soft, low-opacity radial "auras"** — large blurred blobs of brand purple positioned behind hero copy, behind feature cards, and at section transitions. They never compete with content; they sit at ~10–20% opacity, heavily blurred (200–400px), and fade to transparent. Section seams blend because each section is the same black with one subtle glow placed strategically.
+### New layout per slide
+A 3-column horizontal layout matching the reference image:
+- **Left (col 1)**: Light card with big stat number (e.g. "98%", "4.9★", "200+") + small label underneath ("Projects delivered on time", etc.).
+- **Middle (col 2)**: Square portrait photo of the homeowner.
+- **Right (col 3)**: Large quote in serif-feeling weight, followed by name + location below.
 
-We'll replicate this using **CSS radial-gradient overlays** + a few reusable utility classes — no images, no JS, no perf cost.
+On mobile: stack vertically (stat → photo → quote).
 
-### Gradient utilities to add (`src/styles.css`)
-Three reusable absolutely-positioned glow utilities (placed in a relative section wrapper, `pointer-events-none`, `z-0`, content sits on `z-10`):
+### Carousel mechanics
+- Use existing `src/components/ui/carousel.tsx` (Embla, already installed).
+- One testimonial per slide, full width.
+- Left/right arrow buttons positioned bottom-right of section (clean, minimal, like the reference).
+- Dot indicators centered below.
+- Optional: keyboard arrow support (built into Embla wrapper already).
 
-```css
-.glow-aura-center  /* large center radial, 900px, primary @ 14% → transparent 60% */
-.glow-aura-top     /* top-center elliptical, 1200×600, primary @ 10% */
-.glow-aura-corner  /* bottom-right offset radial, 700px, primary @ 12% */
-.grain-overlay     /* optional faint noise layer for texture */
+### Content (3 testimonials, reuse existing quotes)
+| Stat | Label | Name | Location | Photo |
+|---|---|---|---|---|
+| 98% | On-time delivery | Fatima A. | Arabian Ranches | Unsplash portrait 1 |
+| 4.9★ | Average homeowner rating | Khalid & Sara M. | Downtown Dubai | Unsplash portrait 2 |
+| 200+ | Homes renovated | James R. | JVC | Unsplash portrait 3 |
+
+Photos: Unsplash hotlinks (`?w=800&h=800&fit=crop`) — same approach as Gallery section.
+
+### Section structure (`Reviews.tsx` rewrite)
+```
+<section> (keep glow-aura-top, section-fade-bottom, bg-background)
+  <eyebrow>Homeowner Stories</eyebrow>
+  <h2>Trusted Across Dubai</h2>            ← centered, max-w-2xl
+  
+  <Carousel>
+    <CarouselContent>
+      <CarouselItem>            ← per testimonial
+        <grid 3-col>
+          <StatCard />          ← bg-card, rounded-sh-lg, p-10, large number
+          <PortraitCard />      ← aspect-square, rounded-sh-lg, object-cover
+          <QuoteBlock />        ← text-3xl/4xl quote + name/location
+        </grid>
+      </CarouselItem>
+    </CarouselContent>
+    <controls bottom-right>
+      <CarouselPrevious /> <CarouselNext />
+    </controls>
+  </Carousel>
+</section>
 ```
 
-Plus a section-seam helper:
-```css
-.section-fade-top    /* linear-gradient bg → transparent at top edge, 120px */
-.section-fade-bottom /* mirror at bottom — softens hard section borders */
-```
-
-### Where each gradient goes
-
-| Section | Gradient | Purpose |
-|---|---|---|
-| **Hero** (already has video) | `glow-aura-bottom` (indigo, behind CTA area) | Pulls eye to the CTA — replaces current `--gradient-hero` linear |
-| **Stats** | `glow-aura-center` low-opacity | Halo behind the "200+" counter |
-| **Gallery** | `glow-aura-corner` top-left | Soft warmth so the section isn't a flat black slab |
-| **WhyReno** (feature cards) | `glow-aura-top` | Indigo wash behind the eyebrow + heading; cards float on top |
-| **Process** | `glow-aura-center` very faint | Centers attention on the 3-step row |
-| **Quiz** | `glow-aura-corner` bottom-right | Adds depth to the form panel |
-| **Reviews** | `glow-aura-top` left-aligned | Sits behind the sticky heading column |
-| **FinalCTA** | Keep solid primary bg, add `grain-overlay` only | Already vibrant, just add texture |
-| **Footer** | `section-fade-top` | Softens the seam coming out of FinalCTA |
-| **Section seams** (between every section) | `section-fade-bottom` on the preceding section | Eliminates hard edges everywhere — the Xtract "one continuous canvas" feel |
-
-### Color & opacity rules (the "subtle" part)
-- All glows use `hsl(var(--primary) / 0.08–0.16)` — never higher.
-- Radial size: 60–80% of section width, `filter: blur(80px)` for extra softness.
-- Always `pointer-events-none` and behind content (`z-0` vs content `z-10 relative`).
-- On mobile, scale glows down 40% (`@media (max-width: 768px)`) to avoid washing out small viewports.
+### Removed
+- Google rating block (★★★★★ · 4.9 · 140+ reviews) and `GoogleIcon` SVG.
+- Sticky left-column heading layout.
+- Old vertical 3-card stack.
 
 ### Files touched
-- `src/styles.css` — add the 4 glow utilities + 2 fade helpers (~40 lines).
-- `src/components/Hero.tsx` — wrap with `relative`, add bottom aura div.
-- `src/components/sections/{Stats,Gallery,WhyReno,Process,Quiz,Reviews,FinalCTA,Footer}.tsx` — each gets a `relative overflow-hidden` wrapper + one `<div className="glow-aura-*" aria-hidden />` and content moved to `relative z-10`.
+- `src/components/sections/Reviews.tsx` — full rewrite.
 
 ### Out of scope
-- No starfield/particle background (Xtract has one — too noisy for a renovation brand).
-- No gradient borders on cards (kept clean).
-- No animated/moving gradients.
+- No autoplay (user controls pacing).
+- No new testimonial data fields beyond stat/photo/quote/name/location.
+- No changes to other sections.
 
