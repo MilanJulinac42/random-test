@@ -89,7 +89,7 @@ export function Reviews() {
                 <CarouselItem key={t.name}>
                   <div className="grid md:grid-cols-12 gap-5 md:gap-6 items-stretch">
                     {/* Stat card */}
-                    <div className="md:col-span-3 bg-card border border-border rounded-sh-lg p-8 md:p-10 flex flex-col justify-between min-h-[260px] md:min-h-0">
+                    <div className="md:col-span-3 bg-card border border-border rounded-sh-lg p-8 md:p-10 flex flex-col justify-between min-h-[260px] md:h-full">
                       <div
                         className="text-foreground"
                         style={{
@@ -107,8 +107,8 @@ export function Reviews() {
                     </div>
 
                     {/* Portrait */}
-                    <div className="md:col-span-4">
-                      <div className="relative w-full aspect-square overflow-hidden rounded-sh-lg border border-border">
+                    <div className="md:col-span-4 md:h-full">
+                      <div className="relative w-full aspect-square md:aspect-auto md:h-full overflow-hidden rounded-sh-lg border border-border">
                         <img
                           src={t.photo}
                           alt={t.name}
