@@ -60,13 +60,8 @@ function BeforeAfterCard({ item }: { item: Item }) {
     <div className="shrink-0 w-[85%] sm:w-auto" style={{ scrollSnapAlign: "start" }}>
       <div
         ref={containerRef}
-        className="relative overflow-hidden select-none"
-        style={{
-          aspectRatio: "16 / 9",
-          borderRadius: 16,
-          background: "#141414",
-          touchAction: "none",
-        }}
+        className="relative overflow-hidden select-none bg-card rounded-sh-lg"
+        style={{ aspectRatio: "16 / 9", touchAction: "none" }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -86,35 +81,27 @@ function BeforeAfterCard({ item }: { item: Item }) {
           style={{ clipPath: `inset(0 0 0 ${pos}%)` }}
         />
 
-        {/* Labels */}
         <span
-          className="absolute top-3 left-3 px-2 py-1 text-[11px] font-medium tracking-wide"
-          style={{ background: "rgba(10,10,10,0.7)", color: "#F5F0EB", borderRadius: 6 }}
+          className="absolute top-3 left-3 px-2 py-1 text-[11px] font-medium tracking-wide rounded-sm text-foreground"
+          style={{ background: "hsla(240, 9%, 8%, 0.75)" }}
         >
           BEFORE
         </span>
-        <span
-          className="absolute top-3 right-3 px-2 py-1 text-[11px] font-medium tracking-wide"
-          style={{ background: "rgba(201,169,110,0.9)", color: "#0A0A0A", borderRadius: 6 }}
-        >
+        <span className="absolute top-3 right-3 px-2 py-1 text-[11px] font-semibold tracking-wide rounded-sm bg-primary text-primary-foreground">
           AFTER
         </span>
 
-        {/* Drag handle */}
         <div
           className="absolute top-0 bottom-0 pointer-events-none"
           style={{ left: `${pos}%`, transform: "translateX(-50%)" }}
         >
-          <div style={{ width: 3, background: "#C9A96E", height: "100%" }} />
+          <div className="bg-primary h-full" style={{ width: 3 }} />
           <div
-            className="absolute top-1/2 left-1/2 flex items-center justify-center"
+            className="absolute top-1/2 left-1/2 flex items-center justify-center rounded-full bg-primary text-primary-foreground"
             style={{
               transform: "translate(-50%, -50%)",
               width: 32,
               height: 32,
-              borderRadius: "50%",
-              background: "#C9A96E",
-              color: "#0A0A0A",
               cursor: "grab",
               fontSize: 14,
               fontWeight: 700,
@@ -125,8 +112,8 @@ function BeforeAfterCard({ item }: { item: Item }) {
         </div>
       </div>
       <div className="mt-3">
-        <p style={{ fontWeight: 600, fontSize: 15, color: "#F5F0EB" }}>{item.label}</p>
-        <p style={{ fontWeight: 400, fontSize: 13, color: "#8C8C82" }}>{item.location}</p>
+        <p className="text-foreground text-base font-semibold">{item.label}</p>
+        <p className="text-muted-foreground text-sm">{item.location}</p>
       </div>
     </div>
   );
@@ -134,25 +121,19 @@ function BeforeAfterCard({ item }: { item: Item }) {
 
 export function Gallery() {
   return (
-    <section id="gallery" className="px-6 md:px-12 lg:px-16" style={{ background: "#0A0A0A", padding: "64px 24px" }}>
-      <div className="mx-auto max-w-7xl" style={{ paddingTop: 32, paddingBottom: 32 }}>
+    <section id="gallery" className="bg-background px-6 md:px-12 lg:px-16 py-16 md:py-24">
+      <div className="mx-auto max-w-7xl">
         <Reveal>
           <p
-            className="text-center"
-            style={{ fontWeight: 500, fontSize: 12, color: "#C9A96E", letterSpacing: "3px", textTransform: "uppercase" }}
+            className="text-center text-primary text-xs font-medium uppercase"
+            style={{ letterSpacing: "0.25em" }}
           >
             THE WORK
           </p>
-          <h2
-            className="text-center text-[28px] md:text-[42px]"
-            style={{ fontWeight: 700, color: "#F5F0EB", marginTop: 12 }}
-          >
+          <h2 className="text-center text-3xl md:text-5xl text-foreground mt-3" style={{ fontWeight: 700 }}>
             Results That Speak for Themselves
           </h2>
-          <p
-            className="text-center mx-auto"
-            style={{ fontWeight: 400, fontSize: 16, color: "#8C8C82", maxWidth: 480, margin: "12px auto 48px" }}
-          >
+          <p className="text-center text-muted-foreground text-base mx-auto mt-3 mb-12" style={{ maxWidth: 480 }}>
             Every project managed end-to-end — design, build, and handover.
           </p>
         </Reveal>
@@ -175,11 +156,7 @@ export function Gallery() {
         </div>
 
         <div className="text-center mt-10">
-          <a
-            href="#"
-            className="hover:underline"
-            style={{ fontWeight: 400, fontSize: 14, color: "#8C8C82" }}
-          >
+          <a href="#" className="text-muted-foreground text-sm hover:text-foreground hover:underline transition-colors">
             View More Projects →
           </a>
         </div>

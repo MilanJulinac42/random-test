@@ -30,86 +30,50 @@ const steps = [
 
 export function Process() {
   return (
-    <section id="how-it-works" style={{ background: "#141414" }} className="px-6 md:px-12 lg:px-16 py-16 md:py-24">
+    <section id="how-it-works" className="bg-card px-6 md:px-12 lg:px-16 py-16 md:py-24">
       <div className="mx-auto max-w-7xl">
         <Reveal>
-          <p
-            className="text-center"
-            style={{ fontWeight: 500, fontSize: 12, color: "#C9A96E", letterSpacing: "3px", textTransform: "uppercase" }}
-          >
+          <p className="text-center text-primary text-xs font-medium uppercase" style={{ letterSpacing: "0.25em" }}>
             HOW IT WORKS
           </p>
-          <h2
-            className="text-center text-[28px] md:text-[42px]"
-            style={{ fontWeight: 700, color: "#F5F0EB", marginTop: 12 }}
-          >
+          <h2 className="text-center text-3xl md:text-5xl text-foreground mt-3" style={{ fontWeight: 700 }}>
             From First Call to Final Handover
           </h2>
-          <p
-            className="text-center mx-auto"
-            style={{ fontWeight: 400, fontSize: 16, color: "#8C8C82", maxWidth: 480, margin: "12px auto 64px" }}
-          >
+          <p className="text-center text-muted-foreground text-base mx-auto mt-3 mb-16" style={{ maxWidth: 480 }}>
             A structured process that removes every guessing game.
           </p>
         </Reveal>
 
         <div className="relative">
-          {/* Dashed connector (desktop only) */}
           <div
-            className="hidden lg:block absolute left-0 right-0"
-            style={{
-              top: 90,
-              borderTop: "1px dashed #1F1F1F",
-              marginLeft: "16%",
-              marginRight: "16%",
-            }}
+            className="hidden lg:block absolute left-0 right-0 border-t border-dashed border-border"
+            style={{ top: 90, marginLeft: "16%", marginRight: "16%" }}
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-0 relative">
             {steps.map((s, i) => (
               <Reveal key={s.title} delay={i * 100}>
                 <div className="relative text-center px-6 lg:px-10">
-                  <span
-                    style={{
-                      background: "#1F1F1F",
-                      color: "#C9A96E",
-                      fontWeight: 500,
-                      fontSize: 12,
-                      padding: "4px 12px",
-                      borderRadius: 100,
-                      display: "inline-block",
-                      position: "relative",
-                      zIndex: 2,
-                    }}
-                  >
+                  <span className="bg-secondary text-primary rounded-full inline-block relative z-10 px-3 py-1 text-xs font-medium">
                     {s.badge}
                   </span>
-                  <div className="relative" style={{ marginTop: 16 }}>
+                  <div className="relative mt-4">
                     <span
                       aria-hidden
-                      className="absolute left-1/2 -translate-x-1/2 pointer-events-none select-none"
+                      className="absolute left-1/2 -translate-x-1/2 pointer-events-none select-none text-primary"
                       style={{
                         top: -30,
                         fontWeight: 800,
                         fontSize: 96,
-                        color: "#C9A96E",
-                        opacity: 0.06,
+                        opacity: 0.08,
                         lineHeight: 1,
                       }}
                     >
                       {s.num}
                     </span>
-                    <s.Icon
-                      size={32}
-                      color="#C9A96E"
-                      style={{ margin: "16px auto", display: "block", position: "relative", zIndex: 1 }}
-                    />
-                    <h3 style={{ fontWeight: 600, fontSize: 20, color: "#F5F0EB", marginBottom: 12 }}>
-                      {s.title}
-                    </h3>
-                    <p style={{ fontWeight: 400, fontSize: 15, color: "#8C8C82", lineHeight: 1.65 }}>
-                      {s.body}
-                    </p>
+                    <s.Icon size={32} className="text-primary mx-auto block relative z-10 my-4" />
+                    <h3 className="text-foreground text-xl font-semibold mb-3">{s.title}</h3>
+                    <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{s.body}</p>
                   </div>
                 </div>
               </Reveal>
@@ -117,19 +81,11 @@ export function Process() {
           </div>
         </div>
 
-        <div className="text-center" style={{ marginTop: 56 }}>
+        <div className="text-center mt-14">
           <a
             href="#quiz"
-            className="inline-flex items-center justify-center reno-cta-gold"
-            style={{
-              background: "#C9A96E",
-              color: "#0A0A0A",
-              fontWeight: 600,
-              fontSize: 15,
-              height: 52,
-              padding: "0 28px",
-              borderRadius: 10,
-            }}
+            className="reno-cta inline-flex items-center justify-center bg-primary text-primary-foreground rounded-sh px-7 font-semibold text-sm"
+            style={{ height: 52 }}
           >
             Book Your 15-Minute Assessment →
           </a>

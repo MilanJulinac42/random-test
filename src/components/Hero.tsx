@@ -1,12 +1,13 @@
 import { ChevronDown } from "lucide-react";
+import { AnimatedHeading } from "@/components/AnimatedHeading";
+import { FadeIn } from "@/components/FadeIn";
 import { WHATSAPP_GENERAL } from "@/lib/constants";
 
 export function Hero() {
   return (
     <section
       id="top"
-      className="relative min-h-screen w-full overflow-hidden"
-      style={{ background: "#0A0A0A", color: "#F5F0EB" }}
+      className="relative min-h-screen w-full overflow-hidden flex flex-col bg-background text-foreground"
     >
       <video
         className="absolute inset-0 h-full w-full object-cover"
@@ -17,145 +18,104 @@ export function Hero() {
         playsInline
       />
 
-      {/* Overlay: desktop gradient, mobile flat */}
       <div
-        className="absolute inset-0 hidden md:block"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(10,10,10,0.90) 45%, rgba(10,10,10,0.25) 100%)",
-        }}
-      />
-      <div
-        className="absolute inset-0 md:hidden"
-        style={{ background: "rgba(10,10,10,0.78)" }}
-      />
-
-      <div className="relative z-10 flex min-h-screen items-center">
-        <div
-          className="w-full"
-          style={{ paddingLeft: "6%", paddingRight: "6%" }}
-        >
-          <div style={{ maxWidth: 560 }} className="px-0 md:pl-0">
-            <p
-              style={{
-                fontWeight: 500,
-                fontSize: 13,
-                color: "#C9A96E",
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-              }}
-            >
-              Dubai's Home Renovation Platform
-            </p>
-
-            <h1
-              className="text-[38px] md:text-[58px]"
-              style={{
-                fontWeight: 800,
-                color: "#F5F0EB",
-                lineHeight: 1.1,
-                marginTop: 16,
-              }}
-            >
-              Transform Your Home.
-              <br />
-              No Stress. No Surprises.
-            </h1>
-
-            <p
-              style={{
-                fontWeight: 400,
-                fontSize: 17,
-                color: "#8C8C82",
-                maxWidth: 460,
-                lineHeight: 1.65,
-                marginTop: 20,
-              }}
-            >
-              Reno manages your full renovation end-to-end — expert designers,
-              vetted contractors, and milestone-based payments. Specialising in
-              projects from AED 275,000 to AED 920,000.
-            </p>
-
-            <div
-              className="flex flex-col sm:flex-row"
-              style={{ marginTop: 36, gap: 12 }}
-            >
-              <a
-                href="#quiz"
-                className="reno-cta-gold inline-flex items-center justify-center"
-                style={{
-                  background: "#C9A96E",
-                  color: "#0A0A0A",
-                  fontWeight: 600,
-                  fontSize: 15,
-                  height: 52,
-                  padding: "0 28px",
-                  borderRadius: 10,
-                }}
+        className="relative z-10 flex-1 flex flex-col justify-end pb-12 lg:pb-16 px-6 md:px-12 lg:px-16"
+      >
+        <div className="grid lg:grid-cols-2 gap-8 items-end">
+          {/* Left column */}
+          <div className="max-w-2xl">
+            <FadeIn delay={200}>
+              <p
+                className="text-primary uppercase text-xs md:text-sm font-medium"
+                style={{ letterSpacing: "0.2em" }}
               >
-                Check Project Availability →
-              </a>
-              <a
-                href={WHATSAPP_GENERAL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center transition-colors hover:bg-[#C9A96E] hover:text-[#0A0A0A]"
-                style={{
-                  background: "transparent",
-                  border: "1px solid #C9A96E",
-                  color: "#C9A96E",
-                  fontWeight: 500,
-                  fontSize: 15,
-                  height: 52,
-                  padding: "0 28px",
-                  borderRadius: 10,
-                }}
-              >
-                WhatsApp Us ↗
-              </a>
-            </div>
+                Dubai's Home Renovation Platform
+              </p>
+            </FadeIn>
 
-            <div
-              className="flex flex-wrap items-center"
-              style={{ marginTop: 40, gap: 16 }}
-            >
-              {[
-                "200+ Projects Delivered",
-                "On-Time Guarantee",
-                "Vetted Contractors Only",
-              ].map((label, i) => (
-                <div key={label} className="flex items-center gap-4">
-                  <span className="flex items-center gap-2">
-                    <span style={{ color: "#C9A96E" }}>✓</span>
-                    <span
-                      style={{
-                        fontWeight: 400,
-                        fontSize: 13,
-                        color: "#F5F0EB",
-                        letterSpacing: "0.3px",
-                      }}
-                    >
-                      {label}
+            <AnimatedHeading
+              text={"Transform Your Home.\nNo Stress. No Surprises."}
+              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground mt-4"
+              style={{ fontWeight: 800, lineHeight: 1.05, letterSpacing: "-0.04em" }}
+            />
+
+            <FadeIn delay={800}>
+              <p className="text-muted-foreground text-base md:text-lg mt-5 max-w-xl leading-relaxed">
+                Reno manages your full renovation end-to-end — expert designers,
+                vetted contractors, and milestone-based payments. Specialising in
+                projects from AED 275,000 to AED 920,000.
+              </p>
+            </FadeIn>
+
+            <FadeIn delay={1200}>
+              <div className="flex flex-col sm:flex-row gap-3 mt-8">
+                <a
+                  href="#quiz"
+                  className="reno-cta inline-flex items-center justify-center bg-primary text-primary-foreground rounded-sh px-7 font-semibold text-sm"
+                  style={{ height: 52 }}
+                >
+                  Check Project Availability →
+                </a>
+                <a
+                  href={WHATSAPP_GENERAL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="liquid-glass inline-flex items-center justify-center rounded-sh px-7 font-medium text-sm text-foreground transition-colors hover:bg-white/10"
+                  style={{ height: 52 }}
+                >
+                  WhatsApp Us ↗
+                </a>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={1400}>
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-3 mt-10">
+                {[
+                  "200+ Projects Delivered",
+                  "On-Time Guarantee",
+                  "Vetted Contractors Only",
+                ].map((label, i) => (
+                  <div key={label} className="flex items-center gap-4">
+                    <span className="flex items-center gap-2">
+                      <span className="text-primary">✓</span>
+                      <span className="text-foreground text-xs md:text-sm" style={{ letterSpacing: "0.02em" }}>
+                        {label}
+                      </span>
                     </span>
-                  </span>
-                  {i < 2 && (
-                    <span style={{ color: "#1F1F1F" }} className="hidden sm:inline">
-                      |
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
+                    {i < 2 && (
+                      <span className="text-border hidden sm:inline">|</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </FadeIn>
           </div>
+
+          {/* Right column — glass tag */}
+          <FadeIn delay={1400} className="hidden lg:flex justify-end">
+            <div
+              className="liquid-glass rounded-sh-lg px-6 py-5"
+              style={{ maxWidth: 280 }}
+            >
+              <p className="text-primary uppercase text-[11px] font-medium" style={{ letterSpacing: "0.2em" }}>
+                Our Promise
+              </p>
+              <p className="text-foreground text-lg md:text-xl mt-2" style={{ fontWeight: 700, letterSpacing: "-0.02em" }}>
+                Design. Build. Deliver.
+              </p>
+              <p className="text-muted-foreground text-xs mt-2 leading-relaxed">
+                End-to-end renovation, fully managed.
+              </p>
+            </div>
+          </FadeIn>
         </div>
       </div>
 
       <a
         href="#gallery"
         aria-label="Scroll down"
-        className="absolute left-1/2 -translate-x-1/2 z-10 reno-bounce"
-        style={{ bottom: 28, color: "#C9A96E", fontSize: 20 }}
+        className="absolute left-1/2 -translate-x-1/2 z-10 reno-bounce text-primary"
+        style={{ bottom: 28 }}
       >
         <ChevronDown size={28} />
       </a>

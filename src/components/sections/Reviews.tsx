@@ -34,31 +34,21 @@ function GoogleIcon() {
 
 export function Reviews() {
   return (
-    <section id="reviews" style={{ background: "#0A0A0A" }} className="px-6 md:px-12 lg:px-16 py-16 md:py-24">
+    <section id="reviews" className="bg-background px-6 md:px-12 lg:px-16 py-16 md:py-24">
       <div className="mx-auto max-w-7xl">
         <Reveal>
-          <p
-            className="text-center"
-            style={{ fontWeight: 500, fontSize: 12, color: "#C9A96E", letterSpacing: "3px", textTransform: "uppercase" }}
-          >
+          <p className="text-center text-primary text-xs font-medium uppercase" style={{ letterSpacing: "0.25em" }}>
             HOMEOWNER STORIES
           </p>
-          <h2
-            className="text-center text-[28px] md:text-[42px]"
-            style={{ fontWeight: 700, color: "#F5F0EB", marginTop: 12 }}
-          >
+          <h2 className="text-center text-3xl md:text-5xl text-foreground mt-3" style={{ fontWeight: 700 }}>
             Trusted Across Dubai
           </h2>
 
-          <a
-            href="#"
-            className="mx-auto flex items-center justify-center"
-            style={{ gap: 10, margin: "20px auto 48px" }}
-          >
+          <a href="#" className="mx-auto flex items-center justify-center gap-3 my-5 mb-12">
             <GoogleIcon />
-            <span style={{ color: "#C9A96E", fontSize: 16 }}>★★★★★</span>
-            <span style={{ fontWeight: 700, fontSize: 15, color: "#F5F0EB" }}>4.9 out of 5</span>
-            <span style={{ fontWeight: 400, fontSize: 13, color: "#8C8C82" }}>· 140+ Google reviews</span>
+            <span className="text-primary text-base">★★★★★</span>
+            <span className="text-foreground text-base font-semibold">4.9 out of 5</span>
+            <span className="text-muted-foreground text-sm">· 140+ Google reviews</span>
           </a>
         </Reveal>
 
@@ -87,19 +77,16 @@ export function Reviews() {
 
 function ReviewCard({ quote, name, detail }: { quote: string; name: string; detail: string }) {
   return (
-    <div
-      className="h-full"
-      style={{ background: "#141414", border: "1px solid #1F1F1F", borderRadius: 16, padding: 28 }}
-    >
-      <div style={{ color: "#C9A96E", fontSize: 14, marginBottom: 16 }}>★★★★★</div>
-      <p style={{ fontWeight: 300, fontSize: 15, color: "#F5F0EB", lineHeight: 1.65, marginBottom: 24 }}>
+    <div className="h-full bg-card border border-border rounded-sh-lg p-7">
+      <div className="text-primary text-base mb-4">★★★★★</div>
+      <p className="text-foreground text-base leading-relaxed mb-6" style={{ fontWeight: 300 }}>
         {quote}
       </p>
-      <div className="flex items-center" style={{ gap: 12 }}>
-        <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#1F1F1F" }} />
+      <div className="flex items-center gap-3">
+        <div className="bg-secondary rounded-full" style={{ width: 40, height: 40 }} />
         <div>
-          <p style={{ fontWeight: 600, fontSize: 15, color: "#F5F0EB" }}>{name}</p>
-          <p style={{ fontWeight: 400, fontSize: 13, color: "#8C8C82" }}>{detail}</p>
+          <p className="text-foreground text-sm font-semibold">{name}</p>
+          <p className="text-muted-foreground text-xs">{detail}</p>
         </div>
       </div>
     </div>
