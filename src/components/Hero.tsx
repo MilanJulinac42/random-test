@@ -68,31 +68,10 @@ export function Hero() {
               </div>
             </FadeIn>
 
-            <FadeIn delay={1400}>
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-3 mt-10">
-                {[
-                  "200+ Projects Delivered",
-                  "On-Time Guarantee",
-                  "Vetted Contractors Only",
-                ].map((label, i) => (
-                  <div key={label} className="flex items-center gap-4">
-                    <span className="flex items-center gap-2">
-                      <span className="text-primary">✓</span>
-                      <span className="text-foreground text-xs md:text-sm" style={{ letterSpacing: "0.02em" }}>
-                        {label}
-                      </span>
-                    </span>
-                    {i < 2 && (
-                      <span className="text-border hidden sm:inline">|</span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </FadeIn>
           </div>
 
           {/* Right column — glass tag */}
-          <FadeIn delay={1400} className="hidden lg:flex justify-end">
+          <FadeIn delay={1200} className="hidden lg:flex justify-end">
             <div
               className="liquid-glass rounded-sh-lg px-6 py-5"
               style={{ maxWidth: 280 }}

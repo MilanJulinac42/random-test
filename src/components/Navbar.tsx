@@ -1,5 +1,5 @@
-import { Phone } from "lucide-react";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/constants";
+import { Instagram, Linkedin, MessageCircle } from "lucide-react";
+import { WHATSAPP_GENERAL, LINKEDIN_URL, INSTAGRAM_URL } from "@/lib/constants";
 
 export function Navbar() {
   return (
@@ -17,22 +17,49 @@ export function Navbar() {
           </span>
         </a>
 
-        <a
-          href={`tel:${PHONE_TEL}`}
-          className="hidden md:inline-flex items-center rounded-sh transition-colors border border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-          style={{ fontSize: 13, fontWeight: 500, padding: "8px 16px" }}
-        >
-          Call Us: {PHONE_DISPLAY}
-        </a>
+        <div className="flex items-center gap-2 md:gap-3">
+          <a
+            href={LINKEDIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="hidden md:inline-flex items-center justify-center rounded-sh text-muted-foreground hover:text-primary transition-colors"
+            style={{ width: 36, height: 36 }}
+          >
+            <Linkedin size={18} />
+          </a>
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="hidden md:inline-flex items-center justify-center rounded-sh text-muted-foreground hover:text-primary transition-colors"
+            style={{ width: 36, height: 36 }}
+          >
+            <Instagram size={18} />
+          </a>
 
-        <a
-          href={`tel:${PHONE_TEL}`}
-          aria-label={`Call ${PHONE_DISPLAY}`}
-          className="md:hidden inline-flex items-center justify-center rounded-sh border border-primary text-primary"
-          style={{ width: 40, height: 40 }}
-        >
-          <Phone size={16} />
-        </a>
+          <a
+            href={WHATSAPP_GENERAL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:inline-flex items-center rounded-sh transition-colors border border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+            style={{ fontSize: 13, fontWeight: 500, padding: "8px 16px" }}
+          >
+            Contact Us
+          </a>
+
+          <a
+            href={WHATSAPP_GENERAL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Contact us on WhatsApp"
+            className="md:hidden inline-flex items-center justify-center rounded-sh border border-primary text-primary"
+            style={{ width: 40, height: 40 }}
+          >
+            <MessageCircle size={16} />
+          </a>
+        </div>
       </div>
     </nav>
   );

@@ -34,41 +34,44 @@ function GoogleIcon() {
 
 export function Reviews() {
   return (
-    <section id="reviews" className="bg-background px-6 md:px-12 lg:px-16 py-16 md:py-24">
-      <div className="mx-auto max-w-7xl">
-        <Reveal>
-          <p className="text-center text-primary text-xs font-medium uppercase" style={{ letterSpacing: "0.25em" }}>
-            HOMEOWNER STORIES
-          </p>
-          <h2 className="text-center text-3xl md:text-5xl text-foreground mt-3" style={{ fontWeight: 700 }}>
-            Trusted Across Dubai
-          </h2>
+    <section id="reviews" className="bg-background px-6 md:px-12 lg:px-16 py-16 md:py-28">
+      <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 lg:gap-16">
+        {/* Left — sticky heading */}
+        <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-28">
+            <Reveal>
+              <p className="text-primary text-xs font-medium uppercase" style={{ letterSpacing: "0.25em" }}>
+                Homeowner Stories
+              </p>
+              <h2
+                className="text-foreground mt-4 text-4xl md:text-5xl lg:text-6xl"
+                style={{ fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.05 }}
+              >
+                Trusted Across Dubai
+              </h2>
+              <p className="text-muted-foreground text-base md:text-lg mt-6 max-w-md leading-relaxed">
+                Real homeowners. Real renovations. Hear how Reno turned anxious projects into delivered homes — on time, on budget, and fully managed.
+              </p>
 
-          <a href="#" className="mx-auto flex items-center justify-center gap-3 my-5 mb-12">
-            <GoogleIcon />
-            <span className="text-primary text-base">★★★★★</span>
-            <span className="text-foreground text-base font-semibold">4.9 out of 5</span>
-            <span className="text-muted-foreground text-sm">· 140+ Google reviews</span>
-          </a>
-        </Reveal>
-
-        <Reveal>
-          <div className="hidden md:grid grid-cols-3 gap-6 stagger-children">
-            {reviews.map((r) => (
-              <ReviewCard key={r.name} {...r} />
-            ))}
+              <div className="flex items-center gap-3 mt-8">
+                <GoogleIcon />
+                <span className="text-primary text-base">★★★★★</span>
+                <span className="text-foreground text-base font-semibold">4.9</span>
+                <span className="text-muted-foreground text-sm">· 140+ Google reviews</span>
+              </div>
+            </Reveal>
           </div>
-        </Reveal>
+        </div>
 
-        <div
-          className="md:hidden flex gap-4 overflow-x-auto no-scrollbar pb-2"
-          style={{ scrollSnapType: "x mandatory" }}
-        >
-          {reviews.map((r) => (
-            <div key={r.name} className="shrink-0 w-[85%]" style={{ scrollSnapAlign: "start" }}>
-              <ReviewCard {...r} />
+        {/* Right — testimonial stack */}
+        <div className="lg:col-span-7">
+          <Reveal>
+            <div className="flex flex-col gap-6 stagger-children">
+              {reviews.map((r) => (
+                <ReviewCard key={r.name} {...r} />
+              ))}
             </div>
-          ))}
+          </Reveal>
         </div>
       </div>
     </section>
@@ -76,14 +79,20 @@ export function Reviews() {
 }
 
 function ReviewCard({ quote, name, detail }: { quote: string; name: string; detail: string }) {
+  const initial = name.trim().charAt(0).toUpperCase();
   return (
-    <div className="hover-lift h-full bg-card border border-border rounded-sh-lg p-7">
+    <div className="hover-lift bg-card border border-border rounded-sh-lg p-7 md:p-8">
       <div className="text-primary text-base mb-4">★★★★★</div>
-      <p className="text-foreground text-base leading-relaxed mb-6" style={{ fontWeight: 300 }}>
-        {quote}
+      <p className="text-foreground text-base md:text-lg leading-relaxed mb-6" style={{ fontWeight: 300 }}>
+        "{quote}"
       </p>
-      <div className="flex items-center gap-3">
-        <div className="bg-secondary rounded-full" style={{ width: 40, height: 40 }} />
+      <div className="flex items-center gap-3 pt-4 border-t border-border">
+        <div
+          className="bg-primary text-primary-foreground rounded-full flex items-center justify-center"
+          style={{ width: 44, height: 44, fontWeight: 600, fontSize: 16 }}
+        >
+          {initial}
+        </div>
         <div>
           <p className="text-foreground text-sm font-semibold">{name}</p>
           <p className="text-muted-foreground text-xs">{detail}</p>
