@@ -50,10 +50,13 @@ export function Process() {
             style={{ top: 90, marginLeft: "16%", marginRight: "16%" }}
           />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-0 relative">
-            {steps.map((s, i) => (
-              <Reveal key={s.title} delay={i * 100}>
-                <div className="relative text-center px-6 lg:px-10">
+          <Reveal>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-0 relative stagger-children">
+              {steps.map((s) => (
+                <div
+                  key={s.title}
+                  className="hover-lift relative text-center px-6 lg:px-10 py-6 rounded-sh-lg border border-transparent"
+                >
                   <span className="bg-secondary text-primary rounded-full inline-block relative z-10 px-3 py-1 text-xs font-medium">
                     {s.badge}
                   </span>
@@ -76,9 +79,9 @@ export function Process() {
                     <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{s.body}</p>
                   </div>
                 </div>
-              </Reveal>
-            ))}
-          </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
 
         <div className="text-center mt-14">

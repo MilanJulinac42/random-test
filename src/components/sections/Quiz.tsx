@@ -92,7 +92,7 @@ export function Quiz() {
             )}
 
             {step === 1 && (
-              <div className="reno-step-in" key="s1">
+              <div className="reno-step-in" key={`s-${step}-1`}>
                 <p className="text-foreground text-lg font-semibold mb-2">Which areas are you renovating?</p>
                 <p className="text-muted-foreground text-sm mb-5">Select all that apply.</p>
                 <div className="grid grid-cols-2 gap-3">
@@ -129,7 +129,7 @@ export function Quiz() {
             )}
 
             {step === 2 && (
-              <div className="reno-step-in" key="s2">
+              <div className="reno-step-in" key={`s-${step}-2`}>
                 <p className="text-foreground text-lg font-semibold mb-5">What is your renovation budget?</p>
                 <div className="flex flex-col gap-3">
                   {BUDGETS.map((b) => {
@@ -171,7 +171,7 @@ export function Quiz() {
             )}
 
             {step === 3 && (
-              <div className="reno-step-in" key="s3">
+              <div className="reno-step-in" key={`s-${step}-3`}>
                 <p className="text-foreground text-lg font-semibold mb-5">Where should we reach you?</p>
                 <div className="flex flex-col gap-4">
                   <input className={fieldClass} style={{ height: 52 }} placeholder="Your name" value={name} maxLength={200} onChange={(e) => setName(e.target.value)} />

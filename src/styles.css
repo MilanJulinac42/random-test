@@ -214,3 +214,117 @@ body {
 /* Hide scrollbars on horizontal snap rows */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Staggered children entrance — uses fade-in-up keyframe */
+@keyframes reno-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stagger-children > * {
+  opacity: 0;
+  animation: reno-fade-up 0.6s ease-out both;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 80ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 160ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 320ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 480ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 560ms; }
+
+/* Shared hover elevation */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-sh-elevated);
+  border-color: hsl(var(--primary) / 0.6);
+}
+
+/* Expandable feature card */
+.feature-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+.feature-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-card);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.feature-card:hover,
+.feature-card[aria-expanded="true"] {
+  transform: translateY(-6px);
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 0 0 0 1px hsl(var(--primary) / 0.4), 0 14px 44px hsl(var(--primary) / 0.18);
+}
+.feature-card:hover::before,
+.feature-card[aria-expanded="true"]::before { opacity: 1; }
+.feature-card:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--ring));
+}
+
+.feature-card-icon {
+  transition: transform 0.4s ease, color 0.3s ease;
+}
+.feature-card:hover .feature-card-icon,
+.feature-card[aria-expanded="true"] .feature-card-icon {
+  transform: scale(1.12);
+}
+
+.feature-card-expand {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.45s ease, opacity 0.35s ease, margin-top 0.35s ease;
+  margin-top: 0;
+}
+.feature-card-expand > div { overflow: hidden; }
+.feature-card:hover .feature-card-expand,
+.feature-card[aria-expanded="true"] .feature-card-expand {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 0.85rem;
+}
+
+.feature-card-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.85rem;
+  color: hsl(var(--primary));
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease 0.1s, transform 0.35s ease 0.1s;
+}
+.feature-card:hover .feature-card-more,
+.feature-card[aria-expanded="true"] .feature-card-more {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CTA sheen sweep */
+.reno-cta { position: relative; overflow: hidden; isolation: isolate; }
+.reno-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+.reno-cta:hover::after { transform: translateX(100%); }

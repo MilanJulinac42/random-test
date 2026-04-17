@@ -52,13 +52,13 @@ export function Reviews() {
           </a>
         </Reveal>
 
-        <div className="hidden md:grid grid-cols-3 gap-6">
-          {reviews.map((r, i) => (
-            <Reveal key={r.name} delay={i * 100}>
-              <ReviewCard {...r} />
-            </Reveal>
-          ))}
-        </div>
+        <Reveal>
+          <div className="hidden md:grid grid-cols-3 gap-6 stagger-children">
+            {reviews.map((r) => (
+              <ReviewCard key={r.name} {...r} />
+            ))}
+          </div>
+        </Reveal>
 
         <div
           className="md:hidden flex gap-4 overflow-x-auto no-scrollbar pb-2"
@@ -77,7 +77,7 @@ export function Reviews() {
 
 function ReviewCard({ quote, name, detail }: { quote: string; name: string; detail: string }) {
   return (
-    <div className="h-full bg-card border border-border rounded-sh-lg p-7">
+    <div className="hover-lift h-full bg-card border border-border rounded-sh-lg p-7">
       <div className="text-primary text-base mb-4">★★★★★</div>
       <p className="text-foreground text-base leading-relaxed mb-6" style={{ fontWeight: 300 }}>
         {quote}

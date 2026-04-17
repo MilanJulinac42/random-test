@@ -60,7 +60,7 @@ function BeforeAfterCard({ item }: { item: Item }) {
     <div className="shrink-0 w-[85%] sm:w-auto" style={{ scrollSnapAlign: "start" }}>
       <div
         ref={containerRef}
-        className="relative overflow-hidden select-none bg-card rounded-sh-lg"
+        className="hover-lift relative overflow-hidden select-none bg-card rounded-sh-lg border border-border"
         style={{ aspectRatio: "16 / 9", touchAction: "none" }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -138,13 +138,13 @@ export function Gallery() {
           </p>
         </Reveal>
 
-        <div className="hidden md:grid grid-cols-3 gap-6">
-          {items.map((it, i) => (
-            <Reveal key={it.label} delay={i * 100}>
-              <BeforeAfterCard item={it} />
-            </Reveal>
-          ))}
-        </div>
+        <Reveal>
+          <div className="hidden md:grid grid-cols-3 gap-6 stagger-children">
+            {items.map((it) => (
+              <BeforeAfterCard key={it.label} item={it} />
+            ))}
+          </div>
+        </Reveal>
 
         <div
           className="md:hidden flex gap-4 overflow-x-auto no-scrollbar pb-2"
