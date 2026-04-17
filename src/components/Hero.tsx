@@ -16,6 +16,7 @@ export function Hero() {
         muted
         playsInline
       />
+      <div className="glow-aura-bottom" aria-hidden />
 
       <div
         className="relative z-10 flex-1 flex flex-col justify-end pb-12 lg:pb-16 px-6 md:px-12 lg:px-16"

@@ -57,8 +57,9 @@ export function WhyReno() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   return (
-    <section id="why-reno" className="bg-background px-6 md:px-12 lg:px-16 py-16 md:py-24">
-      <div className="mx-auto max-w-7xl grid gap-12 lg:gap-20 lg:grid-cols-[45%_55%] items-start">
+    <section id="why-reno" className="relative overflow-hidden bg-background px-6 md:px-12 lg:px-16 py-16 md:py-24 section-fade-bottom">
+      <div className="glow-aura-top" aria-hidden />
+      <div className="relative z-10 mx-auto max-w-7xl grid gap-12 lg:gap-20 lg:grid-cols-[45%_55%] items-start">
         <Reveal className="order-2 lg:order-1">
           <p className="text-primary text-xs font-medium uppercase" style={{ letterSpacing: "0.25em" }}>
             WHY RENO

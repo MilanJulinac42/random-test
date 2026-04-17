@@ -2,8 +2,8 @@ import { Reveal } from "@/components/Reveal";
 
 export function FinalCTA() {
   return (
-    <section className="bg-primary py-14 md:py-20 px-6 md:px-12 lg:px-16">
-      <div className="mx-auto max-w-3xl text-center">
+    <section className="relative overflow-hidden bg-primary py-14 md:py-20 px-6 md:px-12 lg:px-16 grain-overlay">
+      <div className="relative z-10 mx-auto max-w-3xl text-center">
         <Reveal>
           <h2
             className="text-3xl md:text-5xl text-primary-foreground"
