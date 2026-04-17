@@ -63,7 +63,7 @@ export function Quiz() {
   const progress = step === 1 ? 33 : step === 2 ? 66 : 100;
 
   return (
-    <section id="quiz" className="bg-card px-6 md:px-12 lg:px-16 py-16 md:py-24">
+    <section id="quiz" className="bg-background px-6 md:px-12 lg:px-16 py-16 md:py-24">
       <div className="mx-auto max-w-7xl">
         <Reveal>
           <p className="text-center text-primary text-xs font-medium uppercase" style={{ letterSpacing: "0.25em" }}>

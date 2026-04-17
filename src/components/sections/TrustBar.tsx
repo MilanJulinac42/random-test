@@ -10,7 +10,7 @@ const items = [
 
 export function TrustBar() {
   return (
-    <section className="bg-card border-y border-border py-8">
+    <section className="bg-background border-y border-border py-8">
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         <div className="hidden md:flex items-center justify-around">
           {items.map(({ Icon, label }, i) => (

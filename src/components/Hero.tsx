@@ -40,7 +40,7 @@ export function Hero() {
             />
 
             <FadeIn delay={800}>
-              <p className="text-muted-foreground text-base md:text-lg mt-5 leading-relaxed line-clamp-2">
+              <p className="text-muted-foreground text-base md:text-lg mt-5 leading-relaxed max-w-2xl">
                 End-to-end renovation by expert designers and vetted contractors — milestone-based payments, fully managed. Projects from AED 275k to 920k.
               </p>
             </FadeIn>
