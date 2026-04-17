@@ -30,39 +30,18 @@ const features = [
 
 export function WhyReno() {
   return (
-    <section id="why-reno" style={{ background: "#0A0A0A" }} className="px-6 md:px-12 lg:px-16 py-16 md:py-24">
+    <section id="why-reno" className="bg-background px-6 md:px-12 lg:px-16 py-16 md:py-24">
       <div className="mx-auto max-w-7xl grid gap-12 lg:gap-20 lg:grid-cols-[45%_55%] items-start">
-        {/* Right column shows first on mobile */}
         <Reveal className="order-2 lg:order-1">
-          <p
-            style={{
-              fontWeight: 500,
-              fontSize: 12,
-              color: "#C9A96E",
-              letterSpacing: "3px",
-              textTransform: "uppercase",
-            }}
-          >
+          <p className="text-primary text-xs font-medium uppercase" style={{ letterSpacing: "0.25em" }}>
             WHY RENO
           </p>
-          <h2
-            className="text-[26px] md:text-[40px]"
-            style={{ fontWeight: 700, color: "#F5F0EB", lineHeight: 1.15, marginTop: 12 }}
-          >
+          <h2 className="text-3xl md:text-5xl text-foreground mt-3" style={{ fontWeight: 700, lineHeight: 1.15 }}>
             We Built the System
             <br />
             Homeowners Deserve.
           </h2>
-          <p
-            style={{
-              fontWeight: 400,
-              fontSize: 16,
-              color: "#8C8C82",
-              lineHeight: 1.7,
-              maxWidth: 400,
-              marginTop: 20,
-            }}
-          >
+          <p className="text-muted-foreground text-base mt-5 max-w-md leading-relaxed">
             The Dubai renovation market is broken — late contractors, hidden costs,
             and zero visibility. Reno fixes that with a platform that keeps everyone
             accountable: your designer, your contractor, and us.
@@ -71,38 +50,17 @@ export function WhyReno() {
             Everything is tracked, inspected, and approved by you before money moves.
           </p>
 
-          <div className="flex items-center" style={{ marginTop: 32, gap: 14 }}>
-            <div
-              style={{
-                width: 64,
-                height: 64,
-                borderRadius: "50%",
-                background: "#1F1F1F",
-              }}
-            />
+          <div className="flex items-center gap-4 mt-8">
+            <div className="bg-secondary rounded-full" style={{ width: 64, height: 64 }} />
             <div>
-              <p style={{ fontWeight: 600, fontSize: 15, color: "#F5F0EB" }}>
-                Mohammed Al Rashed
-              </p>
-              <p style={{ fontWeight: 400, fontSize: 13, color: "#8C8C82" }}>
-                Head of Client Projects, Reno
-              </p>
+              <p className="text-foreground text-base font-semibold">Mohammed Al Rashed</p>
+              <p className="text-muted-foreground text-sm">Head of Client Projects, Reno</p>
             </div>
           </div>
 
           <a
             href="#"
-            className="inline-flex transition-colors hover:bg-[#C9A96E] hover:text-[#0A0A0A]"
-            style={{
-              marginTop: 24,
-              border: "1px solid #C9A96E",
-              color: "#C9A96E",
-              fontWeight: 500,
-              fontSize: 14,
-              padding: "10px 20px",
-              borderRadius: 8,
-              background: "transparent",
-            }}
+            className="inline-flex mt-6 border border-primary text-primary rounded-sh px-5 py-2.5 text-sm font-medium transition-colors hover:bg-primary hover:text-primary-foreground"
           >
             Meet the Team →
           </a>
@@ -111,30 +69,10 @@ export function WhyReno() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 order-1 lg:order-2">
           {features.map(({ Icon, title, body }, i) => (
             <Reveal key={title} delay={i * 100}>
-              <div
-                className="h-full transition-all"
-                style={{
-                  background: "#141414",
-                  border: "1px solid #1F1F1F",
-                  borderRadius: 16,
-                  padding: 24,
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(201,169,110,0.35)";
-                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = "#1F1F1F";
-                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-                }}
-              >
-                <Icon size={28} color="#C9A96E" style={{ marginBottom: 16 }} />
-                <h3 style={{ fontWeight: 600, fontSize: 16, color: "#F5F0EB", marginBottom: 8 }}>
-                  {title}
-                </h3>
-                <p style={{ fontWeight: 400, fontSize: 14, color: "#8C8C82", lineHeight: 1.6 }}>
-                  {body}
-                </p>
+              <div className="h-full bg-card border border-border rounded-sh-lg p-6 transition-all hover:border-primary hover:shadow-sh-elevated hover:-translate-y-0.5">
+                <Icon size={28} className="text-primary mb-4" />
+                <h3 className="text-foreground text-base font-semibold mb-2">{title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{body}</p>
               </div>
             </Reveal>
           ))}
