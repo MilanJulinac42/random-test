@@ -1,80 +1,55 @@
 
 
-## Reno — Site Structure Plan (for review before build)
+## Plan — Apply RENO design system + revert hero layout
 
-### Font reality check
-You uploaded 4 ZT Talk files (all "Expanded" cuts):
-- `ZTTalk-LightExpanded.ttf` → weight 300
-- `ZTTalk-SemiExpanded.ttf` → weight 400 (regular)
-- `ZTTalk-SemiBoldExpanded.ttf` → weight 600
-- `ZTTalk-BoldExpanded.ttf` → weight 700
+### Approach
+The site stays **dark by default** (apply `.dark` to `<html>`). We adopt the RENO design system (Electric/Deep Indigo `#3D1AFF` primary, Obsidian `#1C1C21` background, semantic HSL tokens) and replace the gold/beige palette everywhere. Hero layout returns to the VEX-style (raw video, bottom-aligned content, AnimatedHeading, glass tag) but keeps the current Reno copy and the 3 checkmark trust badges.
 
-The prompt asks for 6 weights (incl. Medium 500 and ExtraBold 800). I'll register the 4 you have and map the missing weights to nearest neighbors:
-- 500 (Medium) → 600 SemiBold
-- 800 (ExtraBold) → 700 Bold
+### 1. Design system migration (`src/styles.css`)
+- Replace current `@theme inline` color block with semantic HSL tokens from the spec (Tailwind v4 syntax: `--color-background: hsl(...)` etc.) for both `:root` and `.dark`.
+- Keep ZT Talk @font-face declarations as-is.
+- Add gradient tokens: `--gradient-hero`, `--gradient-subtle`, `--gradient-card`.
+- Add `.liquid-glass` utility (restored from earlier hero version) for the glass tag.
+- Drop gold-specific helpers; rename `.reno-cta-gold` → `.reno-cta` using `bg-primary`.
+- Force dark mode globally: add `class="dark"` on `<html>` in `__root.tsx`.
 
-If you want true Medium/ExtraBold, please upload those .ttf files too.
+### 2. Hero revert (`src/components/Hero.tsx`)
+Restore the VEX layout structure with Reno content:
+- Full-screen video, **no overlay** (raw video).
+- Container: `flex-1 flex flex-col justify-end`, bottom padding `pb-12 lg:pb-16`, page padding `px-6 md:px-12 lg:px-16`.
+- 2-column grid on `lg`, items-end.
+- **Left column**:
+  - Eyebrow: "DUBAI'S HOME RENOVATION PLATFORM" — `text-primary` (renders white in dark via `.dark .text-primary` rule), small uppercase tracking.
+  - `<AnimatedHeading text={"Transform Your Home.\nNo Stress. No Surprises."} />` with `text-4xl md:text-5xl lg:text-6xl xl:text-7xl`, `letterSpacing: -0.04em`.
+  - `<FadeIn delay={800}>` subhead (current Reno copy about end-to-end management, AED 275k–920k).
+  - `<FadeIn delay={1200}>` CTAs row: "Check Project Availability →" (`bg-primary text-primary-foreground`) + "WhatsApp Us ↗" (`liquid-glass border-white/20`).
+  - `<FadeIn delay={1400}>` checkmark trust row (3 badges with `text-primary` ticks).
+- **Right column**: `<FadeIn delay={1400}>` liquid-glass tag card "Design. Build. Deliver." aligned bottom-right on `lg`.
+- Scroll chevron stays at bottom-center.
 
-### Page architecture
-Single-page scroll (as the prompt requires) at `/`. Hash anchors used for in-page CTAs only. No new routes.
+### 3. Navbar (`src/components/Navbar.tsx`)
+- Wrap in `liquid-glass rounded-xl` floating bar (VEX pattern) with `pt-6` outer padding.
+- Logo "Reno" + "Dubai" pill using `bg-secondary text-muted-foreground`.
+- Call button: `border-primary text-primary` → hover `bg-primary text-primary-foreground`.
+- Drop the scrolled-bg toggle (glass bar is always glass).
 
-```
-/  (src/routes/index.tsx)
-├── <Navbar/>            sticky, transparent → solid after 80px scroll
-├── <Hero/>              video bg + dark gradient overlay (REPLACES current hero)
-├── <Gallery/>           #gallery   — 3 before/after sliders (custom drag)
-├── <Quiz/>              #quiz      — 3-step + success state, Supabase save
-├── <WhyReno/>           #why-reno  — 2-col, 4 feature cards
-├── <Process/>           #how-it-works — 3 steps with dashed connector
-├── <Reviews/>           #reviews   — Google badge + 3 testimonials
-├── <TrustBar/>          5 trust icons
-├── <FinalCTA/>          gold band
-├── <Footer/>            4 columns + bottom strip
-└── <WhatsAppFAB/>       fixed, appears after 100vh scroll
-```
+### 4. Section restyle (token swap only — no layout changes)
+Across `Gallery`, `Quiz`, `WhyReno`, `Process`, `Reviews`, `TrustBar`, `FinalCTA`, `Footer`, `WhatsAppFAB`:
+- Hardcoded `#0A0A0A` → `bg-background`
+- `#141414` → `bg-card` / `bg-secondary`
+- `#1F1F1F` → `border-border`
+- `#C9A96E` (gold) → `text-primary` / `bg-primary`
+- `#F5F0EB` → `text-foreground`
+- `#8C8C82` → `text-muted-foreground`
+- CTAs: `bg-primary text-primary-foreground` with `shadow-sh-elevated` on hover.
+- Section reveal animation (`.fade-in-up`) and Reveal hook untouched.
 
-### File plan
-**New / replaced:**
-- `public/fonts/zt-talk/` — 4 .ttf files copied from uploads
-- `src/styles.css` — replace Inter with ZT Talk @font-face, new color tokens (`--bg`, `--surface`, `--border`, `--gold`, `--text`, `--muted`), keep `.liquid-glass` only if reused (it isn't — remove), add `.fade-in-up` entrance class
-- `src/routes/__root.tsx` — remove Google Fonts `<link>`s, update meta to "Reno — Dubai's Home Renovation Platform"
-- `src/routes/index.tsx` — compose all sections
-- `src/components/Hero.tsx` — rewrite per Part 1.3 (eyebrow, new H1, subhead, 2 CTAs, trust strip, scroll chevron)
-- `src/components/Navbar.tsx` — new (Reno + Dubai pill + Call Us button, scroll state)
-- `src/components/sections/Gallery.tsx` — new, custom mouse/touch drag slider
-- `src/components/sections/Quiz.tsx` — new, 3 steps + success, useState machine
-- `src/components/sections/WhyReno.tsx` — new
-- `src/components/sections/Process.tsx` — new
-- `src/components/sections/Reviews.tsx` — new
-- `src/components/sections/TrustBar.tsx` — new
-- `src/components/sections/FinalCTA.tsx` — new
-- `src/components/sections/Footer.tsx` — new
-- `src/components/WhatsAppFAB.tsx` — new
-- `src/hooks/useInView.ts` — IntersectionObserver for fade-in-up
-- `src/hooks/useScrolled.ts` — for navbar bg toggle
-- Tailwind tokens via `@theme` in `styles.css` (no separate tailwind.config.js — project uses Tailwind v4)
+### 5. Files touched
+Modified: `src/styles.css`, `src/routes/__root.tsx`, `src/components/Hero.tsx`, `src/components/Navbar.tsx`, `src/components/WhatsAppFAB.tsx`, all 8 files in `src/components/sections/`.
+Unchanged: `AnimatedHeading.tsx`, `FadeIn.tsx`, `Reveal.tsx`, hooks, routes, Supabase, fonts.
 
-**Keep:** `AnimatedHeading.tsx`, `FadeIn.tsx` (will repurpose FadeIn for fade-in-up wrapper if useful, otherwise leave unused).
-
-### Backend (Lovable Cloud / Supabase)
-The quiz Step 3 submit needs a `lead_submissions` table:
-- `id uuid pk`, `name text`, `phone text`, `area text`, `timeline text`, `rooms text[]`, `budget text`, `submitted_at timestamptz default now()`
-- RLS: enable; allow anonymous INSERT only (public lead form). No SELECT for anon.
-
-This requires enabling Lovable Cloud. If you'd rather skip backend for now, the form will fall back to console.log + open WhatsApp (per spec).
-
-### Key technical decisions
-- **Tailwind v4** is used here (not v3) — fonts/colors go in `@theme` inside `styles.css`, not a `tailwind.config.js`.
-- **Before/after slider**: native pointer events updating `clip-path: inset(0 0 0 X%)` on the "after" image.
-- **Quiz state**: single `useReducer` with `{step, rooms[], budget, name, phone, area, timeline, status}`.
-- **Section reveal**: shared `useInView` hook + `.fade-in-up` / `.visible` classes with stagger via `style={{transitionDelay}}`.
-- **Phone number placeholder**: `+971 4 XXX XXXX` and `wa.me/971XXXXXXXXX` will be left as written until you give the real number.
-- **Images**: Unsplash dark interior placeholders with `?auto=format&fit=crop&w=1200&q=80`.
-
-### Open questions (will assume defaults if not answered)
-1. Real WhatsApp number + phone? → defaulting to placeholders from the spec.
-2. Enable Lovable Cloud for `lead_submissions`? → defaulting to **yes**; without it, submit just opens WhatsApp.
-3. Upload Medium (500) and ExtraBold (800) ZT Talk files? → defaulting to weight fallback (600 / 700).
-
-Reply "go" to proceed, or answer the questions above first.
+### Out of scope
+- No theme toggle (site is dark-only per your choice).
+- No light-mode QA — `:root` tokens defined per spec but not exercised.
+- Content stays identical to current build.
 
