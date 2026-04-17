@@ -1,42 +1,56 @@
 
 
-## Plan — Logo, socials, hero copy, backgrounds, footer, FAB
+## Plan — Subtle radial gradients across sections (Xtract-inspired)
 
-### 1. Logo swap (`Navbar.tsx` + `Footer.tsx`)
-- Copy `user-uploads://Logo-06.png` → `src/assets/logo.png`.
-- Replace the "Reno" text + "Dubai" pill in Navbar with `<img src={logo} alt="Reno" className="h-7 md:h-8 w-auto" />`.
-- Same swap in Footer (slightly larger, `h-9`).
+### Pattern observed on Xtract
+Pure black canvas with **soft, low-opacity radial "auras"** — large blurred blobs of brand purple positioned behind hero copy, behind feature cards, and at section transitions. They never compete with content; they sit at ~10–20% opacity, heavily blurred (200–400px), and fade to transparent. Section seams blend because each section is the same black with one subtle glow placed strategically.
 
-### 2. Filled social icons (`Navbar.tsx` + `Footer.tsx`)
-Lucide's `Linkedin`/`Instagram` are stroke-only. Replace with inline SVG brand glyphs filled white (`fill="currentColor"`, `text-white`), hover `text-primary`. Single small `SocialIcons.tsx` helper with `<LinkedInIcon />` and `<InstagramIcon />` exports to reuse in Navbar + Footer.
+We'll replicate this using **CSS radial-gradient overlays** + a few reusable utility classes — no images, no JS, no perf cost.
 
-### 3. Hero body — no truncation (`Hero.tsx`)
-Remove `line-clamp-2` from the subhead `<p>`. Let it wrap naturally. Keep `max-w-2xl` so it doesn't span the full width awkwardly on `lg+`.
+### Gradient utilities to add (`src/styles.css`)
+Three reusable absolutely-positioned glow utilities (placed in a relative section wrapper, `pointer-events-none`, `z-0`, content sits on `z-10`):
 
-### 4. Unified `#1A1A1A` background
-Audit every section (`Stats`, `Gallery`, `Quiz`, `WhyReno`, `Process`, `Reviews`, `TrustBar`, `FinalCTA`, `Footer`) and remove any `bg-card`, `bg-secondary`, `bg-muted`, gradient overlays, or off-black backgrounds at the section level. All sections inherit `bg-background` (`#1A1A1A`). Cards within sections keep their `bg-card` for elevation contrast — only the section backdrops are unified.
+```css
+.glow-aura-center  /* large center radial, 900px, primary @ 14% → transparent 60% */
+.glow-aura-top     /* top-center elliptical, 1200×600, primary @ 10% */
+.glow-aura-corner  /* bottom-right offset radial, 700px, primary @ 12% */
+.grain-overlay     /* optional faint noise layer for texture */
+```
 
-### 5. Minimal footer (`Footer.tsx`)
-Rewrite to a single clean layout:
-- Left: logo image + 1-line tagline ("Dubai's Home Renovation Platform").
-- Middle: short About paragraph (2 lines max).
-- Right: address block — `101, EIB Building, Dubai Media City, Dubai, UAE` + social icons (LinkedIn, Instagram) below.
-- Bottom row: copyright + Privacy/Terms.
-- Remove the 4-column Company / Homeowners / Contact link grid entirely.
+Plus a section-seam helper:
+```css
+.section-fade-top    /* linear-gradient bg → transparent at top edge, 120px */
+.section-fade-bottom /* mirror at bottom — softens hard section borders */
+```
 
-### 6. Restyled WhatsApp FAB (`WhatsAppFAB.tsx`)
-Replace bright green circle with a refined pill:
-- Glass surface (`liquid-glass`), rounded-full, `px-5 py-3`.
-- WhatsApp glyph (white) + "Chat with us" label (hidden on mobile, visible `md+`).
-- Subtle indigo glow on hover (`box-shadow: 0 0 24px hsl(var(--primary)/0.4)`).
-- Keep pulse dot but recolor to `hsl(var(--primary))`.
-- Mobile: icon-only circular glass button (56px).
+### Where each gradient goes
+
+| Section | Gradient | Purpose |
+|---|---|---|
+| **Hero** (already has video) | `glow-aura-bottom` (indigo, behind CTA area) | Pulls eye to the CTA — replaces current `--gradient-hero` linear |
+| **Stats** | `glow-aura-center` low-opacity | Halo behind the "200+" counter |
+| **Gallery** | `glow-aura-corner` top-left | Soft warmth so the section isn't a flat black slab |
+| **WhyReno** (feature cards) | `glow-aura-top` | Indigo wash behind the eyebrow + heading; cards float on top |
+| **Process** | `glow-aura-center` very faint | Centers attention on the 3-step row |
+| **Quiz** | `glow-aura-corner` bottom-right | Adds depth to the form panel |
+| **Reviews** | `glow-aura-top` left-aligned | Sits behind the sticky heading column |
+| **FinalCTA** | Keep solid primary bg, add `grain-overlay` only | Already vibrant, just add texture |
+| **Footer** | `section-fade-top` | Softens the seam coming out of FinalCTA |
+| **Section seams** (between every section) | `section-fade-bottom` on the preceding section | Eliminates hard edges everywhere — the Xtract "one continuous canvas" feel |
+
+### Color & opacity rules (the "subtle" part)
+- All glows use `hsl(var(--primary) / 0.08–0.16)` — never higher.
+- Radial size: 60–80% of section width, `filter: blur(80px)` for extra softness.
+- Always `pointer-events-none` and behind content (`z-0` vs content `z-10 relative`).
+- On mobile, scale glows down 40% (`@media (max-width: 768px)`) to avoid washing out small viewports.
 
 ### Files touched
-- New: `src/assets/logo.png`, `src/components/SocialIcons.tsx`
-- Modified: `src/components/Navbar.tsx`, `src/components/Hero.tsx`, `src/components/WhatsAppFAB.tsx`, `src/components/sections/Footer.tsx`, `src/components/sections/{Stats,Gallery,Quiz,WhyReno,Process,Reviews,TrustBar,FinalCTA}.tsx` (background audit only).
+- `src/styles.css` — add the 4 glow utilities + 2 fade helpers (~40 lines).
+- `src/components/Hero.tsx` — wrap with `relative`, add bottom aura div.
+- `src/components/sections/{Stats,Gallery,WhyReno,Process,Quiz,Reviews,FinalCTA,Footer}.tsx` — each gets a `relative overflow-hidden` wrapper + one `<div className="glow-aura-*" aria-hidden />` and content moved to `relative z-10`.
 
 ### Out of scope
-- No real social URLs (still placeholders).
-- No light-mode adjustments.
+- No starfield/particle background (Xtract has one — too noisy for a renovation brand).
+- No gradient borders on cards (kept clean).
+- No animated/moving gradients.
 
