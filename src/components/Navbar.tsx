@@ -43,8 +43,8 @@ export function Navbar() {
             href={WHATSAPP_GENERAL}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:inline-flex items-center rounded-sh transition-colors border border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-            style={{ fontSize: 13, fontWeight: 500, padding: "8px 16px" }}
+            className="liquid-glass hidden md:inline-flex items-center rounded-sh text-foreground transition-colors hover:bg-white/10"
+            style={{ fontSize: 13, fontWeight: 500, padding: "8px 16px", height: 36 }}
           >
             Contact Us
           </a>
@@ -54,7 +54,7 @@ export function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Contact us on WhatsApp"
-            className="md:hidden inline-flex items-center justify-center rounded-sh border border-primary text-primary"
+            className="liquid-glass md:hidden inline-flex items-center justify-center rounded-sh text-foreground hover:bg-white/10 transition-colors"
             style={{ width: 40, height: 40 }}
           >
             <MessageCircle size={16} />

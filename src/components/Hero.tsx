@@ -1,7 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { AnimatedHeading } from "@/components/AnimatedHeading";
 import { FadeIn } from "@/components/FadeIn";
-import { WHATSAPP_GENERAL } from "@/lib/constants";
 
 export function Hero() {
   return (
@@ -23,7 +22,7 @@ export function Hero() {
       >
         <div className="grid lg:grid-cols-2 gap-8 items-end">
           {/* Left column */}
-          <div className="max-w-2xl">
+          <div className="max-w-3xl lg:max-w-none">
             <FadeIn delay={200}>
               <p
                 className="text-primary uppercase text-xs md:text-sm font-medium"
@@ -35,15 +34,14 @@ export function Hero() {
 
             <AnimatedHeading
               text={"Transform Your Home.\nNo Stress. No Surprises."}
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground mt-4"
+              className="text-4xl md:text-5xl lg:text-6xl text-foreground mt-4"
+              lineClassName="whitespace-nowrap"
               style={{ fontWeight: 800, lineHeight: 1.05, letterSpacing: "-0.04em" }}
             />
 
             <FadeIn delay={800}>
-              <p className="text-muted-foreground text-base md:text-lg mt-5 max-w-xl leading-relaxed">
-                Reno manages your full renovation end-to-end — expert designers,
-                vetted contractors, and milestone-based payments. Specialising in
-                projects from AED 275,000 to AED 920,000.
+              <p className="text-muted-foreground text-base md:text-lg mt-5 leading-relaxed line-clamp-2">
+                End-to-end renovation by expert designers and vetted contractors — milestone-based payments, fully managed. Projects from AED 275k to 920k.
               </p>
             </FadeIn>
 
@@ -55,15 +53,6 @@ export function Hero() {
                   style={{ height: 52 }}
                 >
                   Check Project Availability →
-                </a>
-                <a
-                  href={WHATSAPP_GENERAL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="liquid-glass inline-flex items-center justify-center rounded-sh px-7 font-medium text-sm text-foreground transition-colors hover:bg-white/10"
-                  style={{ height: 52 }}
-                >
-                  WhatsApp Us ↗
                 </a>
               </div>
             </FadeIn>

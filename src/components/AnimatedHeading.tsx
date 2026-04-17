@@ -3,6 +3,7 @@ import { useEffect, useState, type CSSProperties } from "react";
 interface AnimatedHeadingProps {
   text: string;
   className?: string;
+  lineClassName?: string;
   style?: CSSProperties;
   initialDelay?: number;
   charDelay?: number;
@@ -12,6 +13,7 @@ interface AnimatedHeadingProps {
 export function AnimatedHeading({
   text,
   className = "",
+  lineClassName = "",
   style,
   initialDelay = 200,
   charDelay = 30,
@@ -28,7 +30,7 @@ export function AnimatedHeading({
   return (
     <h1 className={className} style={style}>
       {lines.map((line, lineIndex) => (
-        <span key={lineIndex} className="block">
+        <span key={lineIndex} className={`block ${lineClassName}`}>
           {Array.from(line).map((char, charIndex) => {
             const delay = lineIndex * line.length * charDelay + charIndex * charDelay;
             return (
