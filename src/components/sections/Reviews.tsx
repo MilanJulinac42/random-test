@@ -34,8 +34,9 @@ function GoogleIcon() {
 
 export function Reviews() {
   return (
-    <section id="reviews" className="bg-background px-6 md:px-12 lg:px-16 py-16 md:py-28">
-      <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 lg:gap-16">
+    <section id="reviews" className="relative overflow-hidden bg-background px-6 md:px-12 lg:px-16 py-16 md:py-28 section-fade-bottom">
+      <div className="glow-aura-top left-aligned" aria-hidden />
+      <div className="relative z-10 mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 lg:gap-16">
         {/* Left — sticky heading */}
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-28">

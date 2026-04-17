@@ -33,8 +33,9 @@ export function Stats() {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.3 });
 
   return (
-    <section className="bg-background border-y border-border px-6 md:px-12 lg:px-16 py-16 md:py-20">
-      <div className="mx-auto max-w-7xl">
+    <section className="relative overflow-hidden bg-background border-y border-border px-6 md:px-12 lg:px-16 py-16 md:py-20 section-fade-bottom">
+      <div className="glow-aura-center" aria-hidden style={{ opacity: 0.7 }} />
+      <div className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
           <p
             className="text-center text-primary uppercase text-xs font-medium mb-10"

@@ -121,8 +121,9 @@ function BeforeAfterCard({ item }: { item: Item }) {
 
 export function Gallery() {
   return (
-    <section id="gallery" className="bg-background px-6 md:px-12 lg:px-16 py-16 md:py-24">
-      <div className="mx-auto max-w-7xl">
+    <section id="gallery" className="relative overflow-hidden bg-background px-6 md:px-12 lg:px-16 py-16 md:py-24 section-fade-bottom">
+      <div className="glow-aura-corner top-left" aria-hidden />
+      <div className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
           <p
             className="text-center text-primary text-xs font-medium uppercase"

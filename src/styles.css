@@ -316,6 +316,94 @@ body {
   transform: translateY(0);
 }
 
+/* ===== Subtle radial gradient auras (Xtract-inspired) ===== */
+.glow-aura-center,
+.glow-aura-top,
+.glow-aura-bottom,
+.glow-aura-corner {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+}
+.glow-aura-center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.14) 0%, transparent 60%);
+}
+.glow-aura-top {
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, hsl(var(--primary) / 0.12) 0%, transparent 65%);
+}
+.glow-aura-top.left-aligned {
+  left: 20%;
+}
+.glow-aura-bottom {
+  bottom: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, hsl(var(--primary) / 0.16) 0%, transparent 65%);
+}
+.glow-aura-corner {
+  width: 60%;
+  height: 70%;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.12) 0%, transparent 60%);
+}
+.glow-aura-corner.top-left { top: -10%; left: -10%; }
+.glow-aura-corner.bottom-right { bottom: -10%; right: -10%; }
+
+@media (max-width: 768px) {
+  .glow-aura-center,
+  .glow-aura-top,
+  .glow-aura-bottom,
+  .glow-aura-corner {
+    opacity: 0.6;
+    filter: blur(60px);
+  }
+}
+
+.section-fade-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, hsl(var(--background)), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+.section-fade-bottom::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to top, hsl(var(--background)), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.grain-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+  opacity: 0.06;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
 /* CTA sheen sweep */
 .reno-cta { position: relative; overflow: hidden; isolation: isolate; }
 .reno-cta::after {

@@ -4,8 +4,8 @@ import logo from "@/assets/logo.png";
 
 export function Footer() {
   return (
-    <footer className="bg-background border-t border-border pt-16 pb-8 px-6 md:px-12 lg:px-16">
-      <div className="mx-auto max-w-7xl">
+    <footer className="relative overflow-hidden bg-background border-t border-border pt-16 pb-8 px-6 md:px-12 lg:px-16 section-fade-top">
+      <div className="relative z-10 mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
           {/* Logo + tagline */}
           <div>
