@@ -1,55 +1,59 @@
 
 
-## Plan — Apply RENO design system + revert hero layout
+## Plan — Interactive expandable feature cards + subtle motion
 
-### Approach
-The site stays **dark by default** (apply `.dark` to `<html>`). We adopt the RENO design system (Electric/Deep Indigo `#3D1AFF` primary, Obsidian `#1C1C21` background, semantic HSL tokens) and replace the gold/beige palette everywhere. Hero layout returns to the VEX-style (raw video, bottom-aligned content, AnimatedHeading, glass tag) but keeps the current Reno copy and the 3 checkmark trust badges.
+### Scope
+Upgrade the existing `WhyReno` section into the showcase for interactive cards, and apply consistent motion polish (stagger, hover elevation, smooth state transitions) across `Process`, `Reviews`, `Gallery`, and `Quiz`. No new routes, no backend changes.
 
-### 1. Design system migration (`src/styles.css`)
-- Replace current `@theme inline` color block with semantic HSL tokens from the spec (Tailwind v4 syntax: `--color-background: hsl(...)` etc.) for both `:root` and `.dark`.
-- Keep ZT Talk @font-face declarations as-is.
-- Add gradient tokens: `--gradient-hero`, `--gradient-subtle`, `--gradient-card`.
-- Add `.liquid-glass` utility (restored from earlier hero version) for the glass tag.
-- Drop gold-specific helpers; rename `.reno-cta-gold` → `.reno-cta` using `bg-primary`.
-- Force dark mode globally: add `class="dark"` on `<html>` in `__root.tsx`.
+### 1. Expandable feature cards (`src/components/sections/WhyReno.tsx`)
+Replace the current static 4-card grid with interactive cards that expand on hover (desktop) and tap (mobile).
 
-### 2. Hero revert (`src/components/Hero.tsx`)
-Restore the VEX layout structure with Reno content:
-- Full-screen video, **no overlay** (raw video).
-- Container: `flex-1 flex flex-col justify-end`, bottom padding `pb-12 lg:pb-16`, page padding `px-6 md:px-12 lg:px-16`.
-- 2-column grid on `lg`, items-end.
-- **Left column**:
-  - Eyebrow: "DUBAI'S HOME RENOVATION PLATFORM" — `text-primary` (renders white in dark via `.dark .text-primary` rule), small uppercase tracking.
-  - `<AnimatedHeading text={"Transform Your Home.\nNo Stress. No Surprises."} />` with `text-4xl md:text-5xl lg:text-6xl xl:text-7xl`, `letterSpacing: -0.04em`.
-  - `<FadeIn delay={800}>` subhead (current Reno copy about end-to-end management, AED 275k–920k).
-  - `<FadeIn delay={1200}>` CTAs row: "Check Project Availability →" (`bg-primary text-primary-foreground`) + "WhatsApp Us ↗" (`liquid-glass border-white/20`).
-  - `<FadeIn delay={1400}>` checkmark trust row (3 badges with `text-primary` ticks).
-- **Right column**: `<FadeIn delay={1400}>` liquid-glass tag card "Design. Build. Deliver." aligned bottom-right on `lg`.
-- Scroll chevron stays at bottom-center.
+**Per-card structure**
+- Collapsed state: icon, title, 1-line teaser.
+- Expanded state: icon scales up slightly, full body copy fades in, a small "Learn more →" link slides up from the bottom, accent gradient (`var(--gradient-card)`) washes in.
+- Subtle indigo border-glow ring (`box-shadow: 0 0 0 1px hsl(var(--primary)/0.4), 0 12px 40px hsl(var(--primary)/0.15)`) on hover.
+- Lift: `-translate-y-1.5` with `transition-all duration-300 ease-out`.
 
-### 3. Navbar (`src/components/Navbar.tsx`)
-- Wrap in `liquid-glass rounded-xl` floating bar (VEX pattern) with `pt-6` outer padding.
-- Logo "Reno" + "Dubai" pill using `bg-secondary text-muted-foreground`.
-- Call button: `border-primary text-primary` → hover `bg-primary text-primary-foreground`.
-- Drop the scrolled-bg toggle (glass bar is always glass).
+**Content additions** (extend each feature with a `details` paragraph + bullet list)
+- Vetted Contractors: 3 bullets — background checks, rating system, quarterly performance reviews.
+- On-Time Guarantee: 3 bullets — written timeline, daily delays compensated, milestone-tracked.
+- Full Transparency: 3 bullets — live photo feed, milestone approvals, payment ledger.
+- Pay As You Go: 3 bullets — 0% interest options, no upfront deposit, milestone-gated.
 
-### 4. Section restyle (token swap only — no layout changes)
-Across `Gallery`, `Quiz`, `WhyReno`, `Process`, `Reviews`, `TrustBar`, `FinalCTA`, `Footer`, `WhatsAppFAB`:
-- Hardcoded `#0A0A0A` → `bg-background`
-- `#141414` → `bg-card` / `bg-secondary`
-- `#1F1F1F` → `border-border`
-- `#C9A96E` (gold) → `text-primary` / `bg-primary`
-- `#F5F0EB` → `text-foreground`
-- `#8C8C82` → `text-muted-foreground`
-- CTAs: `bg-primary text-primary-foreground` with `shadow-sh-elevated` on hover.
-- Section reveal animation (`.fade-in-up`) and Reveal hook untouched.
+**Interaction model**
+- Pure CSS hover on `lg+` (`group-hover:` reveals expanded content with `max-h` + `opacity` transition).
+- On touch devices: tap toggles an `expanded` state per card via local `useState<number | null>`. Only one card expanded at a time on mobile.
+- Accessibility: each card is a `<button>` with `aria-expanded`, focus-visible ring.
+
+### 2. Stagger + entrance motion
+- Add a new utility `.stagger-children > *` in `styles.css` that applies `animation: fade-in-up 0.6s ease-out both` with `nth-child` delays (0ms, 80ms, 160ms, 240ms…) up to 8 children.
+- Apply to: `WhyReno` card grid, `Process` step row, `Reviews` grid, `Gallery` slider row.
+- Replace per-card `<Reveal delay={i*100}>` wrappers with a single `<Reveal>` on the grid + the stagger utility (cleaner DOM, same effect).
+
+### 3. Hover elevation system (shared utility)
+Add `.hover-lift` class to `styles.css`:
+```
+transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+```
+Hover: `translateY(-4px)`, `shadow-sh-elevated`, `border-primary/60`.
+Apply to: `WhyReno` cards, `Reviews` cards, `Process` step containers, `Gallery` thumbnail.
+
+### 4. Smooth state transitions
+- **Quiz step changes**: wrap step content in a keyed div with `reno-step-in` animation already in CSS — verify it triggers on every step swap by keying on `step` index.
+- **Quiz success state**: add a checkmark SVG with stroke-dashoffset draw animation (`reno-draw` keyframe already exists — wire it up).
+- **Navbar**: add `transition-all duration-300` so the glass bar smoothly tightens on scroll.
+- **CTA buttons**: extend `.reno-cta` with a subtle gradient sheen that slides across on hover (pseudo-element with `translateX` from `-100%` to `100%`, 600ms).
 
 ### 5. Files touched
-Modified: `src/styles.css`, `src/routes/__root.tsx`, `src/components/Hero.tsx`, `src/components/Navbar.tsx`, `src/components/WhatsAppFAB.tsx`, all 8 files in `src/components/sections/`.
-Unchanged: `AnimatedHeading.tsx`, `FadeIn.tsx`, `Reveal.tsx`, hooks, routes, Supabase, fonts.
+- `src/styles.css` — add `.stagger-children`, `.hover-lift`, `.cta-sheen`, expandable-card transition helpers.
+- `src/components/sections/WhyReno.tsx` — rewrite for expandable cards (biggest change).
+- `src/components/sections/Process.tsx` — apply `.hover-lift` + stagger.
+- `src/components/sections/Reviews.tsx` — apply `.hover-lift` + stagger.
+- `src/components/sections/Gallery.tsx` — apply `.hover-lift` to slider frame.
+- `src/components/sections/Quiz.tsx` — key step container for transition; animate success check.
+- `src/components/Navbar.tsx` — add transition timing.
 
 ### Out of scope
-- No theme toggle (site is dark-only per your choice).
-- No light-mode QA — `:root` tokens defined per spec but not exercised.
-- Content stays identical to current build.
+- No new sections, no route changes, no Supabase changes.
+- No third-party animation libs (framer-motion) — pure CSS + small React state for tap toggle.
 
