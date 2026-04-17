@@ -1,59 +1,48 @@
 
 
-## Plan — Interactive expandable feature cards + subtle motion
+## Plan — Navbar socials, Stats counter section, Reviews redesign
 
-### Scope
-Upgrade the existing `WhyReno` section into the showcase for interactive cards, and apply consistent motion polish (stagger, hover elevation, smooth state transitions) across `Process`, `Reviews`, `Gallery`, and `Quiz`. No new routes, no backend changes.
+### 1. Navbar update (`src/components/Navbar.tsx`)
+- Replace "Call Us" button with **"Contact Us"** → links to `WHATSAPP_GENERAL` (opens WhatsApp in new tab).
+- Add **LinkedIn** and **Instagram** icon links (lucide-react `Linkedin`, `Instagram`) before the Contact Us button. Icon-only, ghost style, hover → `text-primary`.
+- Mobile: keep icon-only Contact Us (WhatsApp icon instead of Phone), socials hidden on mobile to save space.
+- Add `LINKEDIN_URL` and `INSTAGRAM_URL` constants in `src/lib/constants.ts` (placeholders).
 
-### 1. Expandable feature cards (`src/components/sections/WhyReno.tsx`)
-Replace the current static 4-card grid with interactive cards that expand on hover (desktop) and tap (mobile).
+### 2. New Stats section (`src/components/sections/Stats.tsx`)
+Pulled out of the hero. Sits **right after `<Hero />`**, before `<Gallery />`.
 
-**Per-card structure**
-- Collapsed state: icon, title, 1-line teaser.
-- Expanded state: icon scales up slightly, full body copy fades in, a small "Learn more →" link slides up from the bottom, accent gradient (`var(--gradient-card)`) washes in.
-- Subtle indigo border-glow ring (`box-shadow: 0 0 0 1px hsl(var(--primary)/0.4), 0 12px 40px hsl(var(--primary)/0.15)`) on hover.
-- Lift: `-translate-y-1.5` with `transition-all duration-300 ease-out`.
+Layout (inspired by "Stats and Facts" pattern):
+- Full-width section, `bg-background` with subtle top/bottom border.
+- Centered eyebrow "TRUSTED BY DUBAI HOMEOWNERS".
+- Three stats in a horizontal stack (3-col on `md+`, stacked on mobile), separated by thin vertical dividers:
+  1. **200+** — "Projects Delivered"
+  2. **100%** — "On-Time Guarantee" (animates 0→100)
+  3. **50+** — "Vetted Contractors" (animates 0→50)
+- Each number: huge display type (`text-6xl md:text-7xl`, primary color), label below in muted-foreground.
+- **Counter animation**: custom hook `useCountUp(target, duration)` triggered by `IntersectionObserver` (reuse existing `useInView`). Uses `requestAnimationFrame` with ease-out cubic; preserves the `+`/`%` suffix.
 
-**Content additions** (extend each feature with a `details` paragraph + bullet list)
-- Vetted Contractors: 3 bullets — background checks, rating system, quarterly performance reviews.
-- On-Time Guarantee: 3 bullets — written timeline, daily delays compensated, milestone-tracked.
-- Full Transparency: 3 bullets — live photo feed, milestone approvals, payment ledger.
-- Pay As You Go: 3 bullets — 0% interest options, no upfront deposit, milestone-gated.
+### 3. Hero cleanup (`src/components/Hero.tsx`)
+- Remove the 3-checkmark trust row (`FadeIn delay={1400}` block).
+- Keep eyebrow, heading, subhead, CTAs, and the right-side glass tag.
+- Re-time the glass tag to `delay={1200}` so it lands with the CTAs.
 
-**Interaction model**
-- Pure CSS hover on `lg+` (`group-hover:` reveals expanded content with `max-h` + `opacity` transition).
-- On touch devices: tap toggles an `expanded` state per card via local `useState<number | null>`. Only one card expanded at a time on mobile.
-- Accessibility: each card is a `<button>` with `aria-expanded`, focus-visible ring.
+### 4. Reviews redesign (`src/components/sections/Reviews.tsx`)
+Replicate the lgpsmstudio "Architecting tomorrow's mind" pattern:
+- **Two-column layout on `lg+`**:
+  - Left column (sticky on desktop): eyebrow "HOMEOWNER STORIES", large heading "Trusted Across Dubai", short intro paragraph, Google rating row (4.9★ · 140+ reviews).
+  - Right column: vertical stack of 3 testimonial cards (one per row), each with quote, then author block (circular initial avatar with primary bg + name + role/location).
+- Mobile: heading block on top, then stacked cards below (no horizontal scroll).
+- Cards keep `.hover-lift` and stagger entrance.
+- Avatar = circle showing first letter of name in `bg-primary text-primary-foreground`.
 
-### 2. Stagger + entrance motion
-- Add a new utility `.stagger-children > *` in `styles.css` that applies `animation: fade-in-up 0.6s ease-out both` with `nth-child` delays (0ms, 80ms, 160ms, 240ms…) up to 8 children.
-- Apply to: `WhyReno` card grid, `Process` step row, `Reviews` grid, `Gallery` slider row.
-- Replace per-card `<Reveal delay={i*100}>` wrappers with a single `<Reveal>` on the grid + the stagger utility (cleaner DOM, same effect).
+### 5. Wire-up (`src/routes/index.tsx`)
+Insert `<Stats />` between `<Hero />` and `<Gallery />`. Existing `<TrustBar />` stays where it is (different content — insurance/license badges).
 
-### 3. Hover elevation system (shared utility)
-Add `.hover-lift` class to `styles.css`:
-```
-transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
-```
-Hover: `translateY(-4px)`, `shadow-sh-elevated`, `border-primary/60`.
-Apply to: `WhyReno` cards, `Reviews` cards, `Process` step containers, `Gallery` thumbnail.
-
-### 4. Smooth state transitions
-- **Quiz step changes**: wrap step content in a keyed div with `reno-step-in` animation already in CSS — verify it triggers on every step swap by keying on `step` index.
-- **Quiz success state**: add a checkmark SVG with stroke-dashoffset draw animation (`reno-draw` keyframe already exists — wire it up).
-- **Navbar**: add `transition-all duration-300` so the glass bar smoothly tightens on scroll.
-- **CTA buttons**: extend `.reno-cta` with a subtle gradient sheen that slides across on hover (pseudo-element with `translateX` from `-100%` to `100%`, 600ms).
-
-### 5. Files touched
-- `src/styles.css` — add `.stagger-children`, `.hover-lift`, `.cta-sheen`, expandable-card transition helpers.
-- `src/components/sections/WhyReno.tsx` — rewrite for expandable cards (biggest change).
-- `src/components/sections/Process.tsx` — apply `.hover-lift` + stagger.
-- `src/components/sections/Reviews.tsx` — apply `.hover-lift` + stagger.
-- `src/components/sections/Gallery.tsx` — apply `.hover-lift` to slider frame.
-- `src/components/sections/Quiz.tsx` — key step container for transition; animate success check.
-- `src/components/Navbar.tsx` — add transition timing.
+### Files touched
+- New: `src/components/sections/Stats.tsx`, `src/hooks/useCountUp.ts`
+- Modified: `src/components/Navbar.tsx`, `src/components/Hero.tsx`, `src/components/sections/Reviews.tsx`, `src/routes/index.tsx`, `src/lib/constants.ts`
 
 ### Out of scope
-- No new sections, no route changes, no Supabase changes.
-- No third-party animation libs (framer-motion) — pure CSS + small React state for tap toggle.
+- No real LinkedIn/Instagram URLs — placeholders (`#`) until you provide them.
+- No changes to TrustBar, Gallery, Quiz, Process, WhyReno, Footer.
 
