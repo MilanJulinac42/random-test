@@ -1,48 +1,38 @@
 
 
-## Plan — Navbar socials, Stats counter section, Reviews redesign
+## Plan — Hero refinements + darker background
 
-### 1. Navbar update (`src/components/Navbar.tsx`)
-- Replace "Call Us" button with **"Contact Us"** → links to `WHATSAPP_GENERAL` (opens WhatsApp in new tab).
-- Add **LinkedIn** and **Instagram** icon links (lucide-react `Linkedin`, `Instagram`) before the Contact Us button. Icon-only, ghost style, hover → `text-primary`.
-- Mobile: keep icon-only Contact Us (WhatsApp icon instead of Phone), socials hidden on mobile to save space.
-- Add `LINKEDIN_URL` and `INSTAGRAM_URL` constants in `src/lib/constants.ts` (placeholders).
+### 1. Background color (`src/styles.css`)
+Current dark bg is `240 9% 12%` ≈ **#1C1C21** (Obsidian from RENO spec).
+Switch `.dark --background` to `#1A1A1A` → HSL `0 0% 10%`. Also nudge `--card` to `0 0% 13%` and `--secondary`/`--muted` to `0 0% 15%` to keep the elevation hierarchy readable against the new base. Border stays neutral (`0 0% 20%`).
 
-### 2. New Stats section (`src/components/sections/Stats.tsx`)
-Pulled out of the hero. Sits **right after `<Hero />`**, before `<Gallery />`.
+### 2. Heading in 2 lines (`src/components/Hero.tsx`)
+Change `AnimatedHeading` text from:
+```
+"Transform Your Home.\nNo Stress. No Surprises."
+```
+to the same string (already 2 lines via `\n`). The wrapping to 4 lines is caused by the responsive font size + container width. Fix by:
+- Adding `whitespace-nowrap` to each line span inside `AnimatedHeading` (each `<span className="block">` gets `whitespace-nowrap`), OR simpler: add `whitespace-nowrap` via a new optional `lineClassName` prop and pass it from Hero.
+- Reduce heading max size slightly on `xl` (`xl:text-6xl` instead of `xl:text-7xl`) so "No Stress. No Surprises." fits on one line at 1064px viewport without overflow.
+- Allow horizontal room: change left column from `max-w-2xl` to `max-w-3xl lg:max-w-none` and let the 2-col grid breathe.
 
-Layout (inspired by "Stats and Facts" pattern):
-- Full-width section, `bg-background` with subtle top/bottom border.
-- Centered eyebrow "TRUSTED BY DUBAI HOMEOWNERS".
-- Three stats in a horizontal stack (3-col on `md+`, stacked on mobile), separated by thin vertical dividers:
-  1. **200+** — "Projects Delivered"
-  2. **100%** — "On-Time Guarantee" (animates 0→100)
-  3. **50+** — "Vetted Contractors" (animates 0→50)
-- Each number: huge display type (`text-6xl md:text-7xl`, primary color), label below in muted-foreground.
-- **Counter animation**: custom hook `useCountUp(target, duration)` triggered by `IntersectionObserver` (reuse existing `useInView`). Uses `requestAnimationFrame` with ease-out cubic; preserves the `+`/`%` suffix.
+### 3. Hero body copy in 2 lines (`src/components/Hero.tsx`)
+Current subhead is one long paragraph that wraps to 3–4 lines. Rewrite to a tight 2-line version, then force exactly 2 lines using `line-clamp-2` + `max-w-none` removed so it spans naturally:
+- New copy (shorter): *"End-to-end renovation by expert designers and vetted contractors — milestone-based payments, fully managed. Projects from AED 275k to 920k."*
+- Apply `line-clamp-2` so any width still renders 2 lines max.
+- Remove `max-w-xl` constraint.
 
-### 3. Hero cleanup (`src/components/Hero.tsx`)
-- Remove the 3-checkmark trust row (`FadeIn delay={1400}` block).
-- Keep eyebrow, heading, subhead, CTAs, and the right-side glass tag.
-- Re-time the glass tag to `delay={1200}` so it lands with the CTAs.
-
-### 4. Reviews redesign (`src/components/sections/Reviews.tsx`)
-Replicate the lgpsmstudio "Architecting tomorrow's mind" pattern:
-- **Two-column layout on `lg+`**:
-  - Left column (sticky on desktop): eyebrow "HOMEOWNER STORIES", large heading "Trusted Across Dubai", short intro paragraph, Google rating row (4.9★ · 140+ reviews).
-  - Right column: vertical stack of 3 testimonial cards (one per row), each with quote, then author block (circular initial avatar with primary bg + name + role/location).
-- Mobile: heading block on top, then stacked cards below (no horizontal scroll).
-- Cards keep `.hover-lift` and stagger entrance.
-- Avatar = circle showing first letter of name in `bg-primary text-primary-foreground`.
-
-### 5. Wire-up (`src/routes/index.tsx`)
-Insert `<Stats />` between `<Hero />` and `<Gallery />`. Existing `<TrustBar />` stays where it is (different content — insurance/license badges).
+### 4. CTA cleanup (`src/components/Hero.tsx` + `src/components/Navbar.tsx`)
+- **Hero**: remove the second "WhatsApp Us ↗" button. Only "Check Project Availability →" remains (primary indigo CTA).
+- **Navbar**: restyle "Contact Us" to match the removed Hero WhatsApp button — `liquid-glass` background, `border-white/15`, white text, hover `bg-white/10`. Same height/padding feel as nav (h-9, px-4, text-[13px]). Mobile icon button gets the same glass treatment.
 
 ### Files touched
-- New: `src/components/sections/Stats.tsx`, `src/hooks/useCountUp.ts`
-- Modified: `src/components/Navbar.tsx`, `src/components/Hero.tsx`, `src/components/sections/Reviews.tsx`, `src/routes/index.tsx`, `src/lib/constants.ts`
+- `src/styles.css` — dark token values
+- `src/components/Hero.tsx` — heading sizing/wrap, subhead copy + clamp, remove WhatsApp button
+- `src/components/AnimatedHeading.tsx` — add optional `lineClassName` prop for `whitespace-nowrap`
+- `src/components/Navbar.tsx` — Contact Us → liquid-glass style (desktop + mobile)
 
 ### Out of scope
-- No real LinkedIn/Instagram URLs — placeholders (`#`) until you provide them.
-- No changes to TrustBar, Gallery, Quiz, Process, WhyReno, Footer.
+- No layout changes to Stats, Reviews, or other sections.
+- No light-mode adjustments.
 
