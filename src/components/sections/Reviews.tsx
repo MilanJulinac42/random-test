@@ -1,104 +1,166 @@
+import { useEffect, useState } from "react";
 import { Reveal } from "@/components/Reveal";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
-const reviews = [
+type Testimonial = {
+  stat: string;
+  statLabel: string;
+  photo: string;
+  quote: string;
+  name: string;
+  location: string;
+};
+
+const testimonials: Testimonial[] = [
   {
+    stat: "98%",
+    statLabel: "Projects delivered on time",
+    photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=800&fit=crop",
     quote:
-      "We were nervous about handing over our villa to anyone. Reno completely changed that. Every payment was tied to a milestone we approved ourselves. No surprises, no chasing — exactly what we were promised.",
+      "Every payment was tied to a milestone we approved ourselves. No surprises, no chasing — exactly what we were promised.",
     name: "Fatima A.",
-    detail: "Villa owner · Arabian Ranches",
+    location: "Villa · Arabian Ranches",
   },
   {
+    stat: "4.9★",
+    statLabel: "Average homeowner rating",
+    photo: "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=800&h=800&fit=crop",
     quote:
-      "We were travelling for six weeks during the renovation. The app meant we could see photos, approve decisions, and track costs from our phones. We felt completely in control the entire time.",
+      "We were travelling for six weeks. The app meant we could see photos, approve decisions, and track costs from our phones. Completely in control.",
     name: "Khalid & Sara M.",
-    detail: "Apartment · Downtown Dubai",
+    location: "Apartment · Downtown Dubai",
   },
   {
+    stat: "200+",
+    statLabel: "Homes renovated across Dubai",
+    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=800&fit=crop",
     quote:
-      "They finished two weeks early. I've never had a contractor deliver on time, let alone early. Reno is genuinely different — they delivered exactly what they promised.",
+      "They finished two weeks early. I've never had a contractor deliver on time, let alone early. Reno is genuinely different.",
     name: "James R.",
-    detail: "Townhouse · JVC",
+    location: "Townhouse · JVC",
   },
 ];
 
-function GoogleIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden>
-      <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.6 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.7 1.1 7.8 3l5.7-5.7C33.6 6.1 29 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.3-.4-3.5z"/>
-      <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19 13 24 13c3 0 5.7 1.1 7.8 3l5.7-5.7C33.6 6.1 29 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
-      <path fill="#4CAF50" d="M24 44c5 0 9.6-1.9 13-5l-6-5c-2 1.4-4.4 2.2-7 2.2-5.2 0-9.6-3.4-11.2-8l-6.6 5.1C9.6 39.6 16.2 44 24 44z"/>
-      <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.3 5.6l6 5C40.9 35.7 44 30.4 44 24c0-1.3-.1-2.3-.4-3.5z"/>
-    </svg>
-  );
-}
-
 export function Reviews() {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+    setCurrent(api.selectedScrollSnap());
+    api.on("select", () => setCurrent(api.selectedScrollSnap()));
+  }, [api]);
+
   return (
-    <section id="reviews" className="relative overflow-hidden bg-background px-6 md:px-12 lg:px-16 py-16 md:py-28 section-fade-bottom">
+    <section
+      id="reviews"
+      className="relative overflow-hidden bg-background px-6 md:px-12 lg:px-16 py-16 md:py-28 section-fade-bottom"
+    >
       <div className="glow-aura-top left-aligned" aria-hidden />
-      <div className="relative z-10 mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 lg:gap-16">
-        {/* Left — sticky heading */}
-        <div className="lg:col-span-5">
-          <div className="lg:sticky lg:top-28">
-            <Reveal>
-              <p className="text-primary text-xs font-medium uppercase" style={{ letterSpacing: "0.25em" }}>
-                Homeowner Stories
-              </p>
-              <h2
-                className="text-foreground mt-4 text-4xl md:text-5xl lg:text-6xl"
-                style={{ fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.05 }}
-              >
-                Trusted Across Dubai
-              </h2>
-              <p className="text-muted-foreground text-base md:text-lg mt-6 max-w-md leading-relaxed">
-                Real homeowners. Real renovations. Hear how Reno turned anxious projects into delivered homes — on time, on budget, and fully managed.
-              </p>
-
-              <div className="flex items-center gap-3 mt-8">
-                <GoogleIcon />
-                <span className="text-primary text-base">★★★★★</span>
-                <span className="text-foreground text-base font-semibold">4.9</span>
-                <span className="text-muted-foreground text-sm">· 140+ Google reviews</span>
-              </div>
-            </Reveal>
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <Reveal>
+          <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
+            <p
+              className="text-primary text-xs font-medium uppercase"
+              style={{ letterSpacing: "0.25em" }}
+            >
+              Homeowner Stories
+            </p>
+            <h2
+              className="text-foreground mt-4 text-4xl md:text-5xl lg:text-6xl"
+              style={{ fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.05 }}
+            >
+              Trusted Across Dubai
+            </h2>
           </div>
-        </div>
+        </Reveal>
 
-        {/* Right — testimonial stack */}
-        <div className="lg:col-span-7">
-          <Reveal>
-            <div className="flex flex-col gap-6 stagger-children">
-              {reviews.map((r) => (
-                <ReviewCard key={r.name} {...r} />
+        <Reveal>
+          <Carousel setApi={setApi} opts={{ loop: true, align: "start" }}>
+            <CarouselContent>
+              {testimonials.map((t) => (
+                <CarouselItem key={t.name}>
+                  <div className="grid md:grid-cols-12 gap-5 md:gap-6 items-stretch">
+                    {/* Stat card */}
+                    <div className="md:col-span-3 bg-card border border-border rounded-sh-lg p-8 md:p-10 flex flex-col justify-between min-h-[260px] md:min-h-0">
+                      <div
+                        className="text-foreground"
+                        style={{
+                          fontWeight: 700,
+                          fontSize: "clamp(3rem, 6vw, 5rem)",
+                          letterSpacing: "-0.04em",
+                          lineHeight: 1,
+                        }}
+                      >
+                        {t.stat}
+                      </div>
+                      <p className="text-muted-foreground text-sm md:text-base mt-6 leading-snug">
+                        {t.statLabel}
+                      </p>
+                    </div>
+
+                    {/* Portrait */}
+                    <div className="md:col-span-4">
+                      <div className="relative w-full aspect-square overflow-hidden rounded-sh-lg border border-border">
+                        <img
+                          src={t.photo}
+                          alt={t.name}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Quote */}
+                    <div className="md:col-span-5 flex flex-col justify-between bg-card/40 border border-border rounded-sh-lg p-8 md:p-10">
+                      <p
+                        className="text-foreground text-2xl md:text-3xl lg:text-4xl leading-tight"
+                        style={{ fontWeight: 400, letterSpacing: "-0.02em" }}
+                      >
+                        “{t.quote}”
+                      </p>
+                      <div className="mt-8 pt-6 border-t border-border">
+                        <p className="text-foreground text-base font-semibold">{t.name}</p>
+                        <p className="text-muted-foreground text-sm mt-1">{t.location}</p>
+                      </div>
+                    </div>
+                  </div>
+                </CarouselItem>
               ))}
+            </CarouselContent>
+
+            {/* Controls */}
+            <div className="flex items-center justify-between mt-10">
+              {/* Dots */}
+              <div className="flex items-center gap-2">
+                {testimonials.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => api?.scrollTo(i)}
+                    aria-label={`Go to testimonial ${i + 1}`}
+                    className={`h-1.5 rounded-full transition-all ${
+                      current === i ? "w-8 bg-primary" : "w-4 bg-border hover:bg-muted-foreground/40"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Arrows bottom-right */}
+              <div className="relative flex items-center gap-3">
+                <CarouselPrevious className="static translate-y-0 h-11 w-11 rounded-full bg-card border-border hover:bg-muted" />
+                <CarouselNext className="static translate-y-0 h-11 w-11 rounded-full bg-card border-border hover:bg-muted" />
+              </div>
             </div>
-          </Reveal>
-        </div>
+          </Carousel>
+        </Reveal>
       </div>
     </section>
-  );
-}
-
-function ReviewCard({ quote, name, detail }: { quote: string; name: string; detail: string }) {
-  const initial = name.trim().charAt(0).toUpperCase();
-  return (
-    <div className="hover-lift bg-card border border-border rounded-sh-lg p-7 md:p-8">
-      <div className="text-primary text-base mb-4">★★★★★</div>
-      <p className="text-foreground text-base md:text-lg leading-relaxed mb-6" style={{ fontWeight: 300 }}>
-        "{quote}"
-      </p>
-      <div className="flex items-center gap-3 pt-4 border-t border-border">
-        <div
-          className="bg-primary text-primary-foreground rounded-full flex items-center justify-center"
-          style={{ width: 44, height: 44, fontWeight: 600, fontSize: 16 }}
-        >
-          {initial}
-        </div>
-        <div>
-          <p className="text-foreground text-sm font-semibold">{name}</p>
-          <p className="text-muted-foreground text-xs">{detail}</p>
-        </div>
-      </div>
-    </div>
   );
 }
