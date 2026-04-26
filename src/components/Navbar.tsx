@@ -19,6 +19,7 @@ export function Navbar() {
   const theme = useNavbarTheme();
   const isLight = theme === "light";
   const active = useActiveSection(NAV_LINKS.map((l) => l.id));
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   // On light sections: dark glass tint + dark icons/text. On dark: keep current white styling.
   const glassClass = isLight ? "liquid-glass-light" : "liquid-glass";
