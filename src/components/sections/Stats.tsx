@@ -42,7 +42,7 @@ export function Stats() {
         <Reveal>
           <p
             className="text-center uppercase text-xs font-medium mb-10"
-            style={{ letterSpacing: "0.25em", color: "#4A24FF" }}
+            style={{ letterSpacing: "0.25em", color: "#9D85FF" }}
           >
             Trusted by Dubai Homeowners
           </p>
