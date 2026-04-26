@@ -1,8 +1,10 @@
-import { MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { MessageCircle, Menu } from "lucide-react";
 import { WHATSAPP_GENERAL, LINKEDIN_URL, INSTAGRAM_URL } from "@/lib/constants";
 import { LinkedInIcon, InstagramIcon } from "@/components/SocialIcons";
 import { useNavbarTheme } from "@/hooks/useNavbarTheme";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from "@/components/ui/sheet";
 import logoLight from "@/assets/logo.png";
 import logoDark from "@/assets/logo-dark.png";
 
