@@ -13,7 +13,7 @@ function StatItem({ target, suffix, label, start }: { target: number; suffix: st
   return (
     <div className="flex flex-col items-center text-center px-4 py-6">
       <span
-        style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1, color: "#4A24FF" }}
+        style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1, color: "#9D85FF" }}
       >
         {value}
         {suffix}
