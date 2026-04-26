@@ -340,8 +340,10 @@ export function Quiz() {
       </div>
 
       <style>{`
-        .reno-lead-input:focus { border-color: #0D0D0D !important; }
-        .reno-lead-cta:hover:not(:disabled) { background-color: #3A1AE0 !important; }
+        .reno-lead-input:focus {
+          border-color: #4A24FF !important;
+          box-shadow: 0 0 0 3px rgba(74, 36, 255, 0.18) !important;
+        }
       `}</style>
     </section>
   );
