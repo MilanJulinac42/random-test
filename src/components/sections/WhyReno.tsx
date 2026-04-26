@@ -1,26 +1,24 @@
 import { Reveal } from "@/components/Reveal";
+import { Clock, ShieldCheck, Star } from "lucide-react";
 
 const stats = [
   {
-    direction: "up" as const,
-    arrowColor: "#1D9E75",
+    Icon: Clock,
     number: "98%",
     label: "ON-TIME DELIVERY",
-    story: "Of Reno projects finish on or before the agreed handover date.",
+    story: "Of all completed Reno projects, delivered on or before the agreed date.",
   },
   {
-    direction: "down" as const,
-    arrowColor: "#D85A30",
+    Icon: ShieldCheck,
     number: "<10%",
-    label: "CONTRACTOR ACCEPTANCE",
-    story: "Less than 1 in 10 contractors who apply make it onto the Reno platform.",
+    label: "CONTRACTOR ACCEPTANCE RATE",
+    story: "Less than 1 in 10 applicants pass our contractor vetting process.",
   },
   {
-    direction: "up" as const,
-    arrowColor: "#1D9E75",
+    Icon: Star,
     number: "4.9★",
     label: "HOMEOWNER RATING",
-    story: "Average across 200+ completed projects. Verified by post-handover survey.",
+    story: "Verified post-handover survey average across 200+ delivered projects.",
   },
 ];
 
@@ -79,15 +77,25 @@ export function WhyReno() {
             {stats.map((s) => (
               <div
                 key={s.label}
+                className="flex flex-col items-center text-center"
                 style={{
                   background: "#FFFFFF",
                   border: "1.5px solid #EBEBEB",
                   borderRadius: 16,
-                  padding: "32px 28px",
+                  padding: "36px 28px",
                 }}
               >
-                <div style={{ color: s.arrowColor, fontSize: 22, lineHeight: 1, fontWeight: 700 }}>
-                  {s.direction === "up" ? "↑" : "↓"}
+                <s.Icon size={36} color="#C2A97A" strokeWidth={1.5} />
+                <div
+                  style={{
+                    fontSize: 11,
+                    letterSpacing: "0.1em",
+                    color: "#AAA",
+                    marginTop: 8,
+                    fontWeight: 500,
+                  }}
+                >
+                  {s.label}
                 </div>
                 <div
                   style={{
@@ -95,28 +103,17 @@ export function WhyReno() {
                     fontWeight: 800,
                     color: "#0D0D0D",
                     lineHeight: 1,
-                    marginTop: 12,
+                    marginTop: 8,
                     letterSpacing: "-0.03em",
                   }}
                 >
                   {s.number}
                 </div>
-                <div
-                  style={{
-                    fontSize: 11,
-                    letterSpacing: "0.1em",
-                    color: "#AAA",
-                    marginTop: 12,
-                    fontWeight: 500,
-                  }}
-                >
-                  {s.label}
-                </div>
                 <p
                   style={{
                     fontSize: 14,
-                    color: "#666",
-                    marginTop: 12,
+                    color: "#777",
+                    marginTop: 10,
                     lineHeight: 1.6,
                   }}
                 >
