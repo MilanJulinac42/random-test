@@ -7,6 +7,7 @@ import { Quiz } from "@/components/sections/Quiz";
 import { WhyReno } from "@/components/sections/WhyReno";
 import { Process } from "@/components/sections/Process";
 import { Reviews } from "@/components/sections/Reviews";
+import { InstagramFeed } from "@/components/sections/InstagramFeed";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Footer } from "@/components/sections/Footer";
@@ -27,6 +28,7 @@ function Index() {
       <WhyReno />
       <Process />
       <Reviews />
+      <InstagramFeed />
       <TrustBar />
       <FinalCTA />
       <Footer />
