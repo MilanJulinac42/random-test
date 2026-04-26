@@ -314,18 +314,14 @@ export function Quiz() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="reno-lead-cta"
+                  className="reno-btn-purple"
                   style={{
-                    background: "#4A24FF",
-                    color: "#FFFFFF",
                     borderRadius: 8,
                     padding: 16,
                     fontSize: 15,
                     fontWeight: 600,
                     width: "100%",
                     cursor: submitting ? "wait" : "pointer",
-                    opacity: submitting ? 0.7 : 1,
-                    transition: "background-color 200ms ease",
                   }}
                 >
                   {submitting ? "Sending..." : "Get my project assessment →"}
@@ -344,8 +340,10 @@ export function Quiz() {
       </div>
 
       <style>{`
-        .reno-lead-input:focus { border-color: #0D0D0D !important; }
-        .reno-lead-cta:hover:not(:disabled) { background-color: #3A1AE0 !important; }
+        .reno-lead-input:focus {
+          border-color: #4A24FF !important;
+          box-shadow: 0 0 0 3px rgba(74, 36, 255, 0.18) !important;
+        }
       `}</style>
     </section>
   );
