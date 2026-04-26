@@ -1,16 +1,42 @@
 import { ChevronDown } from "lucide-react";
+import { useEffect, useRef } from "react";
+import Hls from "hls.js";
 import { AnimatedHeading } from "@/components/AnimatedHeading";
 import { FadeIn } from "@/components/FadeIn";
 
+const HLS_SRC = "https://stream.mux.com/4IMYGcL01xjs7ek5ANO17JC4VQVUTsojZlnw4fXzwSxc.m3u8";
+
 export function Hero() {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Safari (and iOS) supports HLS natively
+    if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = HLS_SRC;
+      return;
+    }
+
+    if (Hls.isSupported()) {
+      const hls = new Hls({ enableWorker: true, lowLatencyMode: false });
+      hls.loadSource(HLS_SRC);
+      hls.attachMedia(video);
+      return () => {
+        hls.destroy();
+      };
+    }
+  }, []);
+
   return (
     <section
       id="top"
       className="relative min-h-screen w-full overflow-hidden flex flex-col bg-background text-foreground"
     >
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
-        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260422_112520_ee819691-f2e8-4c54-bb77-3fb72c84eaa5.mp4"
         autoPlay
         loop
         muted
