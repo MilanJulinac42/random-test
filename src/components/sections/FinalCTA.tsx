@@ -28,7 +28,7 @@ export function FinalCTA() {
           <a
             href="#quiz"
             className="inline-flex items-center justify-center rounded-sh px-8 font-semibold text-sm transition-colors"
-            style={{ height: 52, backgroundColor: "#4A24FF", color: "#0D0D0D" }}
+            style={{ height: 52, backgroundColor: "#4A24FF", color: "#FFFFFF" }}
           >
             Book My Assessment →
           </a>
