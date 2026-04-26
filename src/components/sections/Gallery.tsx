@@ -217,7 +217,7 @@ export function Gallery() {
         <Reveal>
           <p
             className="uppercase"
-            style={{ color: "#8C7B5E", fontSize: 11, letterSpacing: "0.12em", fontWeight: 500 }}
+            style={{ color: "#4A24FF", fontSize: 11, letterSpacing: "0.12em", fontWeight: 500 }}
           >
             OUR WORK
           </p>
