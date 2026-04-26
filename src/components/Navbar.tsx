@@ -8,7 +8,7 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 pt-4 md:pt-6 px-4 md:px-8">
       <div className="mx-auto max-w-7xl liquid-glass rounded-sh-lg flex items-center justify-between px-5 md:px-6 py-3 transition-all duration-300">
         <a href="#top" className="flex items-center">
-          <img src={logo} alt="Reno" className="h-7 md:h-8 w-auto" />
+          <img src={logo} alt="Reno" className="h-10 md:h-12 w-auto" />
         </a>
 
         <div className="flex items-center gap-2 md:gap-3">
