@@ -209,6 +209,7 @@ export function Gallery() {
   return (
     <section
       id="gallery"
+      data-nav-theme="light"
       className="relative overflow-hidden px-6 md:px-12 lg:px-16"
       style={{ backgroundColor: "#FFFFFF", paddingTop: "clamp(64px, 8vw, 96px)", paddingBottom: "clamp(64px, 8vw, 96px)" }}
     >
