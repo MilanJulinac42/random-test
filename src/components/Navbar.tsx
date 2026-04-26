@@ -11,6 +11,7 @@ import logoDark from "@/assets/logo-dark.png";
 const NAV_LINKS = [
   { id: "gallery", label: "Gallery" },
   { id: "how-it-works", label: "How It Works" },
+  { id: "quiz", label: "Get Quote" },
   { id: "reviews", label: "Reviews" },
   { id: "social", label: "Social" },
 ];
