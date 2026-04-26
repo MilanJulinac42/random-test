@@ -56,15 +56,16 @@ export function WhatsAppFAB() {
       </svg>
       <span className="hidden md:inline text-sm font-medium">Chat with us</span>
       <span
-        className="absolute reno-pulse"
+        aria-hidden
         style={{
-          top: -3,
-          right: -3,
+          position: "absolute",
+          top: -2,
+          right: -2,
           width: 10,
           height: 10,
           borderRadius: "50%",
-          background: "#FFFFFF",
-          boxShadow: "0 0 0 2px " + WA_GREEN,
+          background: WA_GREEN,
+          boxShadow: "0 0 0 2px #FFFFFF",
         }}
       />
     </a>
