@@ -316,7 +316,7 @@ export function Quiz() {
                   disabled={submitting}
                   className="reno-lead-cta"
                   style={{
-                    background: "#0D0D0D",
+                    background: "#4A24FF",
                     color: "#FFFFFF",
                     borderRadius: 8,
                     padding: 16,
