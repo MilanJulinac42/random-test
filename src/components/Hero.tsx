@@ -77,7 +77,7 @@ export function Hero() {
               <div className="flex flex-col sm:flex-row gap-3 mt-8">
                 <a
                   href="#quiz"
-                  className="reno-cta inline-flex items-center justify-center bg-primary text-primary-foreground rounded-sh px-7 font-semibold text-sm"
+                  className="reno-btn-purple reno-cta inline-flex items-center justify-center rounded-sh px-7 font-semibold text-sm"
                   style={{ height: 52 }}
                 >
                   Check Project Availability →
