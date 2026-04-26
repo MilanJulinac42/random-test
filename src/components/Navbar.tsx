@@ -2,17 +2,28 @@ import { MessageCircle } from "lucide-react";
 import { WHATSAPP_GENERAL, LINKEDIN_URL, INSTAGRAM_URL } from "@/lib/constants";
 import { LinkedInIcon, InstagramIcon } from "@/components/SocialIcons";
 import { useNavbarTheme } from "@/hooks/useNavbarTheme";
+import { useActiveSection } from "@/hooks/useActiveSection";
 import logoLight from "@/assets/logo.png";
 import logoDark from "@/assets/logo-dark.png";
+
+const NAV_LINKS = [
+  { id: "gallery", label: "Gallery" },
+  { id: "how-it-works", label: "How It Works" },
+  { id: "reviews", label: "Reviews" },
+  { id: "social", label: "Social" },
+];
 
 export function Navbar() {
   const theme = useNavbarTheme();
   const isLight = theme === "light";
+  const active = useActiveSection(NAV_LINKS.map((l) => l.id));
 
   // On light sections: dark glass tint + dark icons/text. On dark: keep current white styling.
   const glassClass = isLight ? "liquid-glass-light" : "liquid-glass";
   const iconColor = isLight ? "#0D0D0D" : "#FFFFFF";
   const textColor = isLight ? "#0D0D0D" : "#FFFFFF";
+  const mutedColor = isLight ? "rgba(13,13,13,0.6)" : "rgba(255,255,255,0.65)";
+  const activeUnderline = isLight ? "#0D0D0D" : "#C2A97A";
   const hoverBg = isLight ? "hover:bg-black/5" : "hover:bg-white/10";
 
   // Shared color/fill transition so every theme swap (icons, text, WhatsApp glyph) crossfades together.
@@ -39,6 +50,38 @@ export function Navbar() {
             style={{ opacity: isLight ? 1 : 0, transition: "opacity 300ms ease" }}
           />
         </a>
+
+        {/* Center section nav — desktop only */}
+        <div className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+          {NAV_LINKS.map((link) => {
+            const isActive = active === link.id;
+            return (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                aria-current={isActive ? "location" : undefined}
+                className="relative inline-flex items-center px-3 py-2 rounded-sh"
+                style={{
+                  fontSize: 13,
+                  fontWeight: isActive ? 600 : 500,
+                  color: isActive ? textColor : mutedColor,
+                  transition: `${colorTransition}, font-weight 200ms ease`,
+                }}
+              >
+                {link.label}
+                <span
+                  aria-hidden
+                  className="absolute left-3 right-3 -bottom-0.5 h-px origin-left"
+                  style={{
+                    backgroundColor: activeUnderline,
+                    transform: isActive ? "scaleX(1)" : "scaleX(0)",
+                    transition: "transform 300ms ease, background-color 300ms ease",
+                  }}
+                />
+              </a>
+            );
+          })}
+        </div>
 
         <div className="flex items-center gap-2 md:gap-3">
           <a
