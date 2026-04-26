@@ -3,36 +3,36 @@ import { Reveal } from "@/components/Reveal";
 type Testimonial = {
   name: string;
   meta: string;
-  initials: string;
-  gradient: string;
+  tint: string;
+  image: string;
   quote: string;
 };
 
 const testimonials: Testimonial[] = [
   {
     name: "Fatima A.",
-    meta: "Villa, Arabian Ranches",
-    initials: "FA",
-    gradient:
-      "linear-gradient(145deg, #8B4513 0%, #C2892A 40%, #E8C170 75%, #F5DFA0 100%)",
+    meta: "Villa · Arabian Ranches",
+    tint: "#8B4513",
+    image:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=1100&fit=crop&crop=face&q=80",
     quote:
-      "Every payment was tied to a milestone we approved. No surprises — exactly what we were promised.",
+      "Every payment was tied to a milestone we approved ourselves. No surprises, no chasing — exactly what we were promised.",
   },
   {
     name: "Khalid & Sara M.",
-    meta: "Apartment, Downtown Dubai",
-    initials: "KS",
-    gradient:
-      "linear-gradient(145deg, #0F3D3A 0%, #1D7A6B 40%, #2AABA0 75%, #7DD4CC 100%)",
+    meta: "Apartment · Downtown Dubai",
+    tint: "#1D6B5A",
+    image:
+      "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=800&h=1100&fit=crop&crop=face&q=80",
     quote:
-      "We were travelling for six weeks. The app meant we could see photos, approve decisions, and track costs from our phones.",
+      "We were travelling for six weeks. The app meant we could see photos, approve decisions, and track costs from our phones. Completely in control.",
   },
   {
     name: "James R.",
-    meta: "Townhouse, JVC",
-    initials: "JR",
-    gradient:
-      "linear-gradient(145deg, #1A1F3A 0%, #2A3D6E 40%, #3D5FA0 75%, #7090CC 100%)",
+    meta: "Townhouse · JVC",
+    tint: "#1F3560",
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1100&fit=crop&crop=face&q=80",
     quote:
       "They finished two weeks early. I've never had a contractor deliver on time, let alone early. Reno is genuinely different.",
   },
@@ -45,67 +45,62 @@ function TestimonialCard({ t }: { t: Testimonial }) {
       style={{
         borderRadius: 20,
         aspectRatio: "3 / 4",
-        background: t.gradient,
+        backgroundColor: t.tint,
       }}
     >
-      {/* Top-right name label */}
-      <div
-        className="absolute top-0 right-0"
+      {/* Layer 2: duotone image */}
+      <img
+        src={t.image}
+        alt={t.name}
+        loading="lazy"
         style={{
-          padding: "16px",
-          fontSize: 12,
-          color: "#FFFFFF",
-          fontWeight: 500,
-          maxWidth: "75%",
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          display: "block",
+          filter: "grayscale(100%) contrast(1.15) brightness(0.95)",
+          mixBlendMode: "multiply",
+        }}
+      />
+
+      {/* Layer 3: gradient scrim */}
+      <div
+        className="absolute left-0 right-0 bottom-0 pointer-events-none"
+        style={{
+          height: "55%",
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)",
+        }}
+      />
+
+      {/* Layer 4: name tag */}
+      <div
+        className="absolute"
+        style={{
+          top: 16,
+          right: 16,
           textAlign: "right",
+          fontSize: 12,
+          color: "rgba(255,255,255,0.9)",
           lineHeight: 1.4,
         }}
       >
-        {t.name} · {t.meta}
+        <div style={{ fontWeight: 600 }}>{t.name}</div>
+        <div>{t.meta}</div>
       </div>
 
-      {/* Monogram circle */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div
-          className="flex items-center justify-center"
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: "50%",
-            background: "rgba(255,255,255,0.2)",
-            backdropFilter: "blur(4px)",
-            WebkitBackdropFilter: "blur(4px)",
-            border: "1px solid rgba(255,255,255,0.3)",
-            color: "#FFFFFF",
-            fontSize: 28,
-            fontWeight: 600,
-            letterSpacing: "0.02em",
-          }}
-        >
-          {t.initials}
-        </div>
-      </div>
-
-      {/* Bottom gradient overlay with quote */}
+      {/* Layer 5: quote */}
       <div
-        className="absolute left-0 right-0 bottom-0 flex items-end"
+        className="absolute left-0 right-0 bottom-0"
         style={{
-          height: "50%",
-          background:
-            "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
+          padding: "0 22px 24px",
+          fontSize: 15,
+          color: "#FFFFFF",
+          fontStyle: "italic",
+          lineHeight: 1.55,
         }}
       >
-        <p
-          style={{
-            fontSize: 15,
-            color: "#FFFFFF",
-            fontStyle: "italic",
-            lineHeight: 1.5,
-            padding: "20px 20px 24px",
-          }}
-        >
-          "{t.quote}"
-        </p>
+        "{t.quote}"
       </div>
     </div>
   );
@@ -126,7 +121,12 @@ export function Reviews() {
         <Reveal>
           <p
             className="text-center uppercase"
-            style={{ color: "#888", fontSize: 11, letterSpacing: "0.1em", fontWeight: 500 }}
+            style={{
+              color: "#888",
+              fontSize: 11,
+              letterSpacing: "0.12em",
+              fontWeight: 500,
+            }}
           >
             HOMEOWNER STORIES
           </p>
@@ -151,13 +151,16 @@ export function Reviews() {
               fontWeight: 500,
             }}
           >
-            4.9★ average rating across 200+ completed projects
+            4.9 star average across 200+ completed projects
           </p>
         </Reveal>
       </div>
 
       {/* Desktop grid */}
-      <div className="hidden md:block mx-auto max-w-7xl px-6 md:px-12 lg:px-16" style={{ marginTop: 56 }}>
+      <div
+        className="hidden md:block mx-auto max-w-7xl px-6 md:px-12 lg:px-16"
+        style={{ marginTop: 56 }}
+      >
         <Reveal>
           <div className="grid grid-cols-3" style={{ gap: 16 }}>
             {testimonials.map((t) => (
