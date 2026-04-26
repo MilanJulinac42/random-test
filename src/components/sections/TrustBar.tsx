@@ -29,7 +29,7 @@ export function TrustBar() {
         <div className="grid grid-cols-2 md:hidden gap-6">
           {items.map(({ Icon, label }) => (
             <div key={label} className="flex items-center gap-2">
-              <Icon size={20} style={{ color: "#4A24FF" }} />
+              <Icon size={20} style={{ color: "#9D85FF" }} />
               <span className="text-sm" style={{ color: "#999" }}>{label}</span>
             </div>
           ))}
