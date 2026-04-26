@@ -1,255 +1,351 @@
 import { useState } from "react";
+import { z } from "zod";
 import { Reveal } from "@/components/Reveal";
 import { supabase } from "@/integrations/supabase/client";
 import { WHATSAPP_POSTLEAD } from "@/lib/constants";
 
-const ROOMS = [
-  { icon: "🍳", label: "Kitchen" },
-  { icon: "🛁", label: "Bathroom(s)" },
-  { icon: "🛏", label: "Bedroom(s)" },
-  { icon: "🏠", label: "Full Home / Villa" },
-];
+type IconProps = { active: boolean };
 
-const BUDGETS = [
-  { range: "AED 275,000 – 500,000", desc: "Mid-scale transformation" },
-  { range: "AED 500,000 – 900,000", desc: "Premium full-home renovation" },
-  { range: "AED 900,000+", desc: "High-end custom project" },
-];
+const KitchenIcon = ({ active }: IconProps) => {
+  const stroke = active ? "#FFFFFF" : "#0D0D0D";
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden>
+      <rect x="5" y="11" width="22" height="16" rx="1.5" stroke={stroke} strokeWidth="1.5" />
+      <line x1="5" y1="17" x2="27" y2="17" stroke={stroke} strokeWidth="1.5" />
+      <circle cx="11" cy="22" r="2" stroke={stroke} strokeWidth="1.5" />
+      <circle cx="21" cy="22" r="2" stroke={stroke} strokeWidth="1.5" />
+      <line x1="10" y1="11" x2="10" y2="6" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="16" y1="11" x2="16" y2="6" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="22" y1="11" x2="22" y2="6" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+};
 
-const TIMELINES = ["Within 1 month", "1–3 months", "3–6 months", "Just exploring"];
+const BathroomIcon = ({ active }: IconProps) => {
+  const stroke = active ? "#FFFFFF" : "#0D0D0D";
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden>
+      <path d="M5 17 H27 V20 A5 5 0 0 1 22 25 H10 A5 5 0 0 1 5 20 Z" stroke={stroke} strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M9 17 V8 A2.5 2.5 0 0 1 14 8" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="11" y1="11" x2="16" y2="11" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="9" y1="27" x2="9" y2="29" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="23" y1="27" x2="23" y2="29" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+};
 
-const fieldClass =
-  "h-13 bg-background border border-border rounded-sh px-4 text-base text-foreground w-full outline-none focus:border-primary transition-colors";
+const BedroomIcon = ({ active }: IconProps) => {
+  const stroke = active ? "#FFFFFF" : "#0D0D0D";
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden>
+      <path d="M4 22 V13 H17 A6 6 0 0 1 23 19 V22" stroke={stroke} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
+      <path d="M4 22 H28 V25" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M28 22 V19 A2 2 0 0 0 26 17 H23" stroke={stroke} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
+      <circle cx="9" cy="16.5" r="2" stroke={stroke} strokeWidth="1.5" />
+    </svg>
+  );
+};
+
+const HouseIcon = ({ active }: IconProps) => {
+  const stroke = active ? "#FFFFFF" : "#0D0D0D";
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden>
+      <path d="M5 14 L16 5 L27 14 V26 A1 1 0 0 1 26 27 H6 A1 1 0 0 1 5 26 Z" stroke={stroke} strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M13 27 V18 H19 V27" stroke={stroke} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
+    </svg>
+  );
+};
+
+const TILES = [
+  { key: "Kitchen", label: "Kitchen", sub: "Cooking & dining", Icon: KitchenIcon },
+  { key: "Bathroom(s)", label: "Bathroom(s)", sub: "One or more", Icon: BathroomIcon },
+  { key: "Bedroom(s)", label: "Bedroom(s)", sub: "Master or guest", Icon: BedroomIcon },
+  { key: "Full home / villa", label: "Full home / villa", sub: "End-to-end", Icon: HouseIcon },
+] as const;
+
+const BUDGETS = ["AED 100k – 200k", "AED 200k – 500k", "AED 500k+"] as const;
+
+const leadSchema = z.object({
+  name: z.string().trim().min(1, "Please enter your name").max(100, "Name is too long"),
+  phone: z
+    .string()
+    .trim()
+    .min(7, "Please enter a valid phone number")
+    .max(30, "Phone number is too long")
+    .regex(/^[0-9+\-()\s]+$/, "Phone number contains invalid characters"),
+  rooms: z.array(z.string()).min(1, "Please select at least one area"),
+  budget: z.string().min(1, "Please select a budget range"),
+});
 
 export function Quiz() {
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [rooms, setRooms] = useState<string[]>([]);
   const [budget, setBudget] = useState<string>("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [area, setArea] = useState("");
-  const [timeline, setTimeline] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const toggleRoom = (label: string) =>
-    setRooms((prev) => (prev.includes(label) ? prev.filter((r) => r !== label) : [...prev, label]));
+  const toggleRoom = (key: string) =>
+    setRooms((prev) => (prev.includes(key) ? prev.filter((r) => r !== key) : [...prev, key]));
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setError(null);
-    if (!name.trim() || !phone.trim() || !area.trim()) {
-      setError("Please fill in name, phone, and area.");
+
+    const parsed = leadSchema.safeParse({ name, phone, rooms, budget });
+    if (!parsed.success) {
+      setError(parsed.error.issues[0]?.message ?? "Please complete all fields.");
       return;
     }
+
     setSubmitting(true);
     try {
-      const { error: e } = await supabase.from("lead_submissions").insert({
-        name: name.trim(),
-        phone: phone.trim(),
-        area: area.trim(),
-        timeline: timeline || null,
-        rooms,
-        budget,
+      const { error: dbError } = await supabase.from("lead_submissions").insert({
+        name: parsed.data.name,
+        phone: parsed.data.phone,
+        area: "—",
+        rooms: parsed.data.rooms,
+        budget: parsed.data.budget,
+        timeline: null,
       });
-      if (e) console.error("Lead submit error:", e);
-    } catch (e) {
-      console.error("Lead submit exception:", e);
+      if (dbError) console.error("Lead submit error:", dbError);
+    } catch (err) {
+      console.error("Lead submit exception:", err);
     } finally {
       setSubmitting(false);
-      setStep(4);
+      setSubmitted(true);
     }
   };
 
-  const progress = step === 1 ? 33 : step === 2 ? 66 : 100;
-
   return (
-    <section id="quiz" className="relative overflow-hidden bg-background px-6 md:px-12 lg:px-16 py-16 md:py-24 section-fade-bottom">
-      <div className="glow-aura-corner bottom-right" aria-hidden />
+    <section
+      id="quiz"
+      className="relative overflow-hidden w-full px-6 md:px-12 lg:px-16"
+      style={{
+        backgroundColor: "#F7F5F2",
+        paddingTop: "clamp(64px, 8vw, 100px)",
+        paddingBottom: "clamp(64px, 8vw, 100px)",
+      }}
+    >
       <div className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
-          <p className="text-center text-primary text-xs font-medium uppercase" style={{ letterSpacing: "0.25em" }}>
-            GET STARTED
-          </p>
-          <h2 className="text-center text-3xl md:text-5xl text-foreground mt-3" style={{ fontWeight: 700 }}>
-            Is Reno Right for Your Project?
+          <h2
+            className="text-center"
+            style={{
+              fontSize: "clamp(36px, 5.5vw, 52px)",
+              fontWeight: 700,
+              color: "#0D0D0D",
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            What are you
+            <br />
+            planning?
           </h2>
-          <p className="text-center text-muted-foreground text-base mx-auto mt-3 mb-10" style={{ maxWidth: 460 }}>
-            3 quick questions. We'll confirm availability and reach out within 24 hours.
+          <p
+            className="text-center mx-auto mt-5"
+            style={{ fontSize: 15, color: "#777", maxWidth: 480, lineHeight: 1.55 }}
+          >
+            Tell us what you're thinking. We'll confirm availability and call you back within 24 hours.
           </p>
         </Reveal>
 
-        <Reveal delay={100}>
-          <div className="mx-auto bg-background border border-border rounded-2xl p-6 md:p-8" style={{ maxWidth: 560 }}>
-            {step !== 4 && (
-              <div className="mb-7">
-                <div className="bg-secondary rounded-full" style={{ height: 3, width: "100%" }}>
-                  <div
-                    className="bg-primary h-full rounded-full transition-all"
-                    style={{ width: `${progress}%`, transition: "width 0.4s ease" }}
-                  />
-                </div>
-                <p className="text-muted-foreground text-xs mt-2">Step {step} of 3</p>
-              </div>
-            )}
-
-            {step === 1 && (
-              <div className="reno-step-in" key={`s-${step}-1`}>
-                <p className="text-foreground text-lg font-semibold mb-2">Which areas are you renovating?</p>
-                <p className="text-muted-foreground text-sm mb-5">Select all that apply.</p>
-                <div className="grid grid-cols-2 gap-3">
-                  {ROOMS.map((r) => {
-                    const active = rooms.includes(r.label);
-                    return (
-                      <button
-                        type="button"
-                        key={r.label}
-                        onClick={() => toggleRoom(r.label)}
-                        className={`text-left relative bg-card rounded-sh-lg p-5 transition-colors ${active ? "border-2 border-primary" : "border border-border"}`}
+        {submitted ? (
+          <Reveal>
+            <div className="mx-auto text-center mt-12" style={{ maxWidth: 480 }}>
+              <svg width="56" height="56" viewBox="0 0 64 64" className="mx-auto" aria-hidden>
+                <circle cx="32" cy="32" r="28" fill="none" stroke="#0D0D0D" strokeWidth="2" />
+                <path d="M20 33 L29 42 L45 24" fill="none" stroke="#0D0D0D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <h3 className="mt-6" style={{ fontSize: 28, fontWeight: 700, color: "#0D0D0D" }}>
+                You're on the list.
+              </h3>
+              <p className="mt-3" style={{ fontSize: 15, color: "#777", lineHeight: 1.55 }}>
+                We'll reach out via WhatsApp within 24 hours to confirm your assessment.
+              </p>
+              <a
+                href={WHATSAPP_POSTLEAD}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center mt-6"
+                style={{
+                  background: "#0D0D0D",
+                  color: "white",
+                  borderRadius: 8,
+                  padding: "14px 28px",
+                  fontSize: 14,
+                  fontWeight: 600,
+                }}
+              >
+                WhatsApp us now
+              </a>
+            </div>
+          </Reveal>
+        ) : (
+          <Reveal>
+            <form onSubmit={handleSubmit} className="mt-12">
+              {/* Scope tiles 2x2 */}
+              <div
+                className="grid grid-cols-1 sm:grid-cols-2 mx-auto"
+                style={{ maxWidth: 480, gap: 12 }}
+              >
+                {TILES.map((t) => {
+                  const active = rooms.includes(t.key);
+                  return (
+                    <button
+                      type="button"
+                      key={t.key}
+                      onClick={() => toggleRoom(t.key)}
+                      className="text-left transition-colors"
+                      style={{
+                        background: active ? "#0D0D0D" : "#FFFFFF",
+                        border: `1.5px solid ${active ? "#0D0D0D" : "#E0E0E0"}`,
+                        borderRadius: 12,
+                        padding: 20,
+                        cursor: "pointer",
+                      }}
+                      aria-pressed={active}
+                    >
+                      <t.Icon active={active} />
+                      <div
+                        style={{
+                          fontSize: 15,
+                          fontWeight: 600,
+                          color: active ? "#FFFFFF" : "#0D0D0D",
+                          marginTop: 12,
+                        }}
                       >
-                        <div style={{ fontSize: 22 }}>{r.icon}</div>
-                        <div className="text-foreground text-base font-semibold mt-2">{r.label}</div>
-                        {active && (
-                          <span className="absolute top-2.5 right-2.5 flex items-center justify-center bg-primary text-primary-foreground rounded-full text-[10px] font-bold" style={{ width: 16, height: 16 }}>
-                            ✓
-                          </span>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-                <button
-                  type="button"
-                  disabled={rooms.length === 0}
-                  onClick={() => setStep(2)}
-                  className="reno-cta w-full bg-primary text-primary-foreground rounded-sh font-semibold text-sm mt-6 disabled:opacity-40 disabled:pointer-events-none"
-                  style={{ height: 52 }}
-                >
-                  Next →
-                </button>
-              </div>
-            )}
-
-            {step === 2 && (
-              <div className="reno-step-in" key={`s-${step}-2`}>
-                <p className="text-foreground text-lg font-semibold mb-5">What is your renovation budget?</p>
-                <div className="flex flex-col gap-3">
-                  {BUDGETS.map((b) => {
-                    const active = budget === b.range;
-                    return (
-                      <button
-                        type="button"
-                        key={b.range}
-                        onClick={() => setBudget(b.range)}
-                        className={`relative flex items-center justify-between text-left bg-card rounded-sh-lg p-5 transition-colors ${active ? "border-2 border-primary" : "border border-border"}`}
+                        {t.label}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 12,
+                          color: active ? "#AAAAAA" : "#888888",
+                          marginTop: 2,
+                        }}
                       >
-                        <span className="text-foreground text-base font-bold">{b.range}</span>
-                        <span className="text-muted-foreground text-sm hidden sm:inline">{b.desc}</span>
-                        {active && (
-                          <span className="absolute top-2.5 right-2.5 flex items-center justify-center bg-primary text-primary-foreground rounded-full text-[10px] font-bold" style={{ width: 16, height: 16 }}>
-                            ✓
-                          </span>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-                <p className="text-muted-foreground text-xs mt-3">Reno specialises in projects above AED 275,000.</p>
-                <div className="flex items-center justify-between mt-6">
-                  <button type="button" onClick={() => setStep(1)} className="text-muted-foreground text-sm hover:text-foreground transition-colors">
-                    ← Back
-                  </button>
-                  <button
-                    type="button"
-                    disabled={!budget}
-                    onClick={() => setStep(3)}
-                    className="reno-cta bg-primary text-primary-foreground rounded-sh font-semibold text-sm px-7 disabled:opacity-40 disabled:pointer-events-none"
-                    style={{ height: 52 }}
-                  >
-                    Next →
-                  </button>
-                </div>
+                        {t.sub}
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
-            )}
 
-            {step === 3 && (
-              <div className="reno-step-in" key={`s-${step}-3`}>
-                <p className="text-foreground text-lg font-semibold mb-5">Where should we reach you?</p>
-                <div className="flex flex-col gap-4">
-                  <input className={fieldClass} style={{ height: 52 }} placeholder="Your name" value={name} maxLength={200} onChange={(e) => setName(e.target.value)} />
-                  <div>
-                    <input className={fieldClass} style={{ height: 52 }} type="tel" placeholder="+971 XX XXX XXXX" value={phone} maxLength={50} onChange={(e) => setPhone(e.target.value)} />
-                    <p className="text-muted-foreground text-xs mt-1.5">We'll send your confirmation via WhatsApp</p>
-                  </div>
-                  <input className={fieldClass} style={{ height: 52 }} placeholder="e.g. Arabian Ranches, JVC, Palm Jumeirah" value={area} maxLength={200} onChange={(e) => setArea(e.target.value)} />
-                  <select className={fieldClass} style={{ height: 52, appearance: "none" }} value={timeline} onChange={(e) => setTimeline(e.target.value)}>
-                    <option value="">When are you looking to start?</option>
-                    {TIMELINES.map((t) => (
-                      <option key={t} value={t}>{t}</option>
-                    ))}
-                  </select>
-                </div>
-                {error && <p className="text-destructive text-sm mt-3">{error}</p>}
-                <div className="flex justify-end mt-4">
-                  <button type="button" onClick={() => setStep(2)} className="text-muted-foreground text-sm hover:text-foreground transition-colors">
-                    ← Back
-                  </button>
-                </div>
+              {/* Budget pills */}
+              <div
+                className="flex flex-wrap items-center justify-center"
+                style={{ marginTop: 24, gap: 10 }}
+              >
+                {BUDGETS.map((b) => {
+                  const active = budget === b;
+                  return (
+                    <button
+                      type="button"
+                      key={b}
+                      onClick={() => setBudget(b)}
+                      className="transition-colors"
+                      style={{
+                        border: `1.5px solid ${active ? "#0D0D0D" : "#DDDDDD"}`,
+                        background: active ? "#0D0D0D" : "#FFFFFF",
+                        color: active ? "#FFFFFF" : "#555555",
+                        borderRadius: 20,
+                        padding: "10px 24px",
+                        fontSize: 14,
+                        fontWeight: 500,
+                        cursor: "pointer",
+                      }}
+                      aria-pressed={active}
+                    >
+                      {b}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Fields */}
+              <div
+                className="mx-auto flex flex-col"
+                style={{ maxWidth: 400, marginTop: 24, gap: 12 }}
+              >
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  value={name}
+                  maxLength={100}
+                  onChange={(e) => setName(e.target.value)}
+                  className="reno-lead-input"
+                  style={{
+                    border: "1.5px solid #DDDDDD",
+                    borderRadius: 8,
+                    padding: "14px 16px",
+                    fontSize: 15,
+                    background: "white",
+                    color: "#0D0D0D",
+                    outline: "none",
+                    width: "100%",
+                  }}
+                />
+                <input
+                  type="tel"
+                  placeholder="WhatsApp number (e.g. +971 50...)"
+                  value={phone}
+                  maxLength={30}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="reno-lead-input"
+                  style={{
+                    border: "1.5px solid #DDDDDD",
+                    borderRadius: 8,
+                    padding: "14px 16px",
+                    fontSize: 15,
+                    background: "white",
+                    color: "#0D0D0D",
+                    outline: "none",
+                    width: "100%",
+                  }}
+                />
+
+                {error && (
+                  <p style={{ fontSize: 13, color: "#B91C1C", marginTop: 2 }}>{error}</p>
+                )}
+
                 <button
-                  type="button"
-                  onClick={handleSubmit}
+                  type="submit"
                   disabled={submitting}
-                  className="reno-cta w-full bg-primary text-primary-foreground rounded-sh font-semibold text-sm mt-2 disabled:opacity-60"
-                  style={{ height: 52 }}
+                  className="reno-lead-cta"
+                  style={{
+                    background: "#0D0D0D",
+                    color: "#FFFFFF",
+                    borderRadius: 8,
+                    padding: 16,
+                    fontSize: 15,
+                    fontWeight: 600,
+                    width: "100%",
+                    cursor: submitting ? "wait" : "pointer",
+                    opacity: submitting ? 0.7 : 1,
+                    transition: "background-color 200ms ease",
+                  }}
                 >
-                  {submitting ? "Submitting..." : "Book My Project Assessment"}
+                  {submitting ? "Sending..." : "Get my project assessment →"}
                 </button>
-                <p className="text-muted-foreground text-xs text-center mt-3">
-                  No spam. A Reno consultant will contact you within 24 hours.
-                </p>
-              </div>
-            )}
 
-            {step === 4 && (
-              <div className="reno-step-in text-center" key="s4">
-                <svg width="64" height="64" viewBox="0 0 64 64" className="mx-auto" aria-hidden>
-                  <circle
-                    cx="32" cy="32" r="28" fill="none" stroke="hsl(var(--primary))" strokeWidth="3"
-                    strokeDasharray="176" strokeDashoffset="176"
-                    style={{ animation: "reno-draw 0.5s ease forwards" }}
-                  />
-                  <path
-                    d="M20 33 L29 42 L45 24" fill="none" stroke="hsl(var(--primary))" strokeWidth="3"
-                    strokeLinecap="round" strokeLinejoin="round"
-                    strokeDasharray="40" strokeDashoffset="40"
-                    style={{ animation: "reno-draw 0.4s ease 0.5s forwards" }}
-                  />
-                </svg>
-                <h3 className="text-foreground text-3xl mt-6" style={{ fontWeight: 700 }}>You're confirmed.</h3>
-                <p className="text-muted-foreground text-base mx-auto mt-3 mb-8 leading-relaxed" style={{ maxWidth: 360 }}>
-                  We've received your details and will confirm availability within 24 hours.
-                  Keep an eye on your WhatsApp for a message from our team.
+                <p
+                  className="text-center"
+                  style={{ fontSize: 12, color: "#AAAAAA", marginTop: 12, lineHeight: 1.5 }}
+                >
+                  We assess 15–20 new projects each month. You'll hear from us within 24 hours.
                 </p>
-                <a
-                  href={WHATSAPP_POSTLEAD}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="reno-cta inline-flex w-full items-center justify-center bg-primary text-primary-foreground rounded-sh font-semibold text-sm"
-                  style={{ height: 52 }}
-                >
-                  WhatsApp Us Now
-                </a>
-                <button
-                  type="button"
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                  className="block mx-auto mt-4 text-muted-foreground text-sm hover:text-foreground transition-colors"
-                >
-                  ↑ Back to top
-                </button>
               </div>
-            )}
-          </div>
-        </Reveal>
+            </form>
+          </Reveal>
+        )}
       </div>
+
+      <style>{`
+        .reno-lead-input:focus { border-color: #0D0D0D !important; }
+        .reno-lead-cta:hover:not(:disabled) { background-color: #333333 !important; }
+      `}</style>
     </section>
   );
 }
