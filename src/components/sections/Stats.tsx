@@ -33,13 +33,17 @@ export function Stats() {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.3 });
 
   return (
-    <section data-nav-theme="light" className="relative overflow-hidden bg-background border-y border-border px-6 md:px-12 lg:px-16 py-16 md:py-20 section-fade-bottom">
-      <div className="glow-aura-center" aria-hidden style={{ opacity: 0.7 }} />
+    <section
+      data-nav-theme="dark"
+      className="relative overflow-hidden px-6 md:px-12 lg:px-16 py-16 md:py-20"
+      style={{ backgroundColor: "#0D0D0D", borderTop: "1px solid #1E1E1E", borderBottom: "1px solid #1E1E1E" }}
+    >
+      <div className="glow-aura-center" aria-hidden style={{ opacity: 0.5 }} />
       <div className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
           <p
-            className="text-center text-primary uppercase text-xs font-medium mb-10"
-            style={{ letterSpacing: "0.25em" }}
+            className="text-center uppercase text-xs font-medium mb-10"
+            style={{ letterSpacing: "0.25em", color: "#C2A97A" }}
           >
             Trusted by Dubai Homeowners
           </p>
@@ -47,7 +51,8 @@ export function Stats() {
 
         <div
           ref={ref}
-          className="grid grid-cols-1 md:grid-cols-3 md:divide-x divide-border divide-y md:divide-y-0"
+          className="grid grid-cols-1 md:grid-cols-3 md:divide-x md:divide-y-0 divide-y"
+          style={{ ["--tw-divide-opacity" as string]: 1 }}
         >
           {stats.map((s) => (
             <StatItem key={s.label} {...s} start={inView} />
