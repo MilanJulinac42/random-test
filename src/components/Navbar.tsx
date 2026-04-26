@@ -187,7 +187,7 @@ export function Navbar() {
                             className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 origin-center"
                             style={{
                               height: 24,
-                              backgroundColor: "#4A24FF",
+                              backgroundColor: "#9D85FF",
                               transform: isActive
                                 ? "translateY(-50%) scaleY(1)"
                                 : "translateY(-50%) scaleY(0)",
