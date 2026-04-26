@@ -132,7 +132,7 @@ export function InstagramFeed() {
           >
             <div>
               <div className="flex items-center" style={{ gap: 8 }}>
-                <LinkedInIcon size={20} color="#4DA8DA" />
+                <LinkedInIcon size={20} color="#9D85FF" />
                 <span style={{ fontSize: 16, fontWeight: 500, color: "#FFFFFF" }}>
                   Reno on LinkedIn
                 </span>
