@@ -316,7 +316,7 @@ export function Quiz() {
                   disabled={submitting}
                   className="reno-lead-cta"
                   style={{
-                    background: "#0D0D0D",
+                    background: "#4A24FF",
                     color: "#FFFFFF",
                     borderRadius: 8,
                     padding: 16,
@@ -345,7 +345,7 @@ export function Quiz() {
 
       <style>{`
         .reno-lead-input:focus { border-color: #0D0D0D !important; }
-        .reno-lead-cta:hover:not(:disabled) { background-color: #333333 !important; }
+        .reno-lead-cta:hover:not(:disabled) { background-color: #3A1AE0 !important; }
       `}</style>
     </section>
   );
