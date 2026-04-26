@@ -1,26 +1,24 @@
 import { Reveal } from "@/components/Reveal";
+import { Clock, ShieldCheck, Star } from "lucide-react";
 
 const stats = [
   {
-    direction: "up" as const,
-    arrowColor: "#1D9E75",
+    Icon: Clock,
     number: "98%",
     label: "ON-TIME DELIVERY",
-    story: "Of Reno projects finish on or before the agreed handover date.",
+    story: "Of all completed Reno projects, delivered on or before the agreed date.",
   },
   {
-    direction: "down" as const,
-    arrowColor: "#D85A30",
+    Icon: ShieldCheck,
     number: "<10%",
-    label: "CONTRACTOR ACCEPTANCE",
-    story: "Less than 1 in 10 contractors who apply make it onto the Reno platform.",
+    label: "CONTRACTOR ACCEPTANCE RATE",
+    story: "Less than 1 in 10 applicants pass our contractor vetting process.",
   },
   {
-    direction: "up" as const,
-    arrowColor: "#1D9E75",
+    Icon: Star,
     number: "4.9★",
     label: "HOMEOWNER RATING",
-    story: "Average across 200+ completed projects. Verified by post-handover survey.",
+    story: "Verified post-handover survey average across 200+ delivered projects.",
   },
 ];
 
