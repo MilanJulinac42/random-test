@@ -50,7 +50,7 @@ export function Hero() {
         <div className="grid lg:grid-cols-2 gap-8 items-end">
           {/* Left column */}
           <div className="max-w-3xl lg:max-w-none">
-            <FadeIn delay={200}>
+            <FadeIn delay={150}>
               <p
                 className="text-primary uppercase text-xs md:text-sm font-medium"
                 style={{ letterSpacing: "0.2em" }}
@@ -64,15 +64,16 @@ export function Hero() {
               className="text-4xl md:text-5xl lg:text-6xl text-foreground mt-4"
               lineClassName="whitespace-nowrap"
               style={{ fontWeight: 800, lineHeight: 1.05, letterSpacing: "-0.04em" }}
+              initialDelay={150}
             />
 
-            <FadeIn delay={800}>
+            <FadeIn delay={350}>
               <p className="text-muted-foreground text-base md:text-lg mt-5 leading-relaxed max-w-2xl">
                 End-to-end renovation by expert designers and vetted contractors — milestone-based payments, fully managed. Projects from AED 275k to 920k.
               </p>
             </FadeIn>
 
-            <FadeIn delay={1200}>
+            <FadeIn delay={550}>
               <div className="flex flex-col sm:flex-row gap-3 mt-8">
                 <a
                   href="#quiz"
@@ -87,7 +88,7 @@ export function Hero() {
           </div>
 
           {/* Right column — glass tag */}
-          <FadeIn delay={1200} className="hidden lg:flex justify-end">
+          <FadeIn delay={750} className="hidden lg:flex justify-end">
             <div
               className="liquid-glass rounded-sh-lg px-6 py-5"
               style={{ maxWidth: 280 }}
