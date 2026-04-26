@@ -26,6 +26,7 @@ export function WhyReno() {
   return (
     <section
       id="why-reno"
+      data-nav-theme="light"
       className="relative overflow-hidden w-full px-6 md:px-12 lg:px-16"
       style={{
         backgroundColor: "#FFFFFF",

@@ -121,6 +121,7 @@ export function Quiz() {
   return (
     <section
       id="quiz"
+      data-nav-theme="light"
       className="relative overflow-hidden w-full px-6 md:px-12 lg:px-16"
       style={{
         backgroundColor: "#F7F5F2",
