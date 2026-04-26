@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { WHATSAPP_GENERAL } from "@/lib/constants";
 
+// WhatsApp brand green — high contrast against both white and dark sections.
+const WA_GREEN = "#25D366";
+const WA_GREEN_DARK = "#1FB856";
+
 export function WhatsAppFAB() {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -16,7 +20,7 @@ export function WhatsAppFAB() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      className="liquid-glass fixed flex items-center gap-2 text-foreground transition-all hover:bg-white/10"
+      className="fixed flex items-center gap-2"
       style={{
         bottom: 28,
         right: 28,
@@ -24,19 +28,27 @@ export function WhatsAppFAB() {
         height: 52,
         padding: "0 20px",
         borderRadius: 9999,
+        backgroundColor: WA_GREEN,
+        color: "#FFFFFF",
+        boxShadow: "0 8px 24px rgba(37, 211, 102, 0.35), 0 2px 6px rgba(0,0,0,0.15)",
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? "auto" : "none",
-        transition: "opacity 0.4s, transform 0.2s, box-shadow 0.3s",
+        transition:
+          "opacity 0.4s ease, transform 0.2s ease, box-shadow 0.3s ease, background-color 0.2s ease",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLAnchorElement;
         el.style.transform = "translateY(-2px)";
-        el.style.boxShadow = "0 0 28px hsl(var(--primary) / 0.45)";
+        el.style.backgroundColor = WA_GREEN_DARK;
+        el.style.boxShadow =
+          "0 12px 32px rgba(37, 211, 102, 0.45), 0 4px 10px rgba(0,0,0,0.18)";
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLAnchorElement;
         el.style.transform = "translateY(0)";
-        el.style.boxShadow = "none";
+        el.style.backgroundColor = WA_GREEN;
+        el.style.boxShadow =
+          "0 8px 24px rgba(37, 211, 102, 0.35), 0 2px 6px rgba(0,0,0,0.15)";
       }}
     >
       <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor" aria-hidden>
@@ -51,7 +63,8 @@ export function WhatsAppFAB() {
           width: 10,
           height: 10,
           borderRadius: "50%",
-          background: "hsl(var(--primary))",
+          background: "#FFFFFF",
+          boxShadow: "0 0 0 2px " + WA_GREEN,
         }}
       />
     </a>

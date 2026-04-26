@@ -76,7 +76,7 @@ export function Navbar() {
               transition: `${colorTransition}, background-color 300ms ease`,
             }}
           >
-            Contact Us
+            Chat With Us
           </a>
 
           <a
