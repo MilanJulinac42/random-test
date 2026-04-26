@@ -147,7 +147,7 @@ export function Reviews() {
             className="text-center"
             style={{
               fontSize: 16,
-              color: "#C2A97A",
+              color: "#4A24FF",
               fontWeight: 500,
             }}
           >

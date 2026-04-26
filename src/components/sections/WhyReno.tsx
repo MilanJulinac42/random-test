@@ -86,7 +86,7 @@ export function WhyReno() {
                   padding: "36px 28px",
                 }}
               >
-                <s.Icon size={36} color="#C2A97A" strokeWidth={1.5} />
+                <s.Icon size={36} color="#4A24FF" strokeWidth={1.5} />
                 <div
                   style={{
                     fontSize: 11,
@@ -140,7 +140,7 @@ export function WhyReno() {
             <div>
               <p
                 className="uppercase"
-                style={{ color: "#C2A97A", fontSize: 11, letterSpacing: "0.1em", fontWeight: 500 }}
+                style={{ color: "#4A24FF", fontSize: 11, letterSpacing: "0.1em", fontWeight: 500 }}
               >
                 OUR GUARANTEE
               </p>
