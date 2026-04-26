@@ -27,7 +27,7 @@ export function Navbar() {
   const iconColor = isLight ? "#0D0D0D" : "#FFFFFF";
   const textColor = isLight ? "#0D0D0D" : "#FFFFFF";
   const mutedColor = isLight ? "rgba(13,13,13,0.6)" : "rgba(255,255,255,0.65)";
-  const activeUnderline = isLight ? "#0D0D0D" : "#4A24FF";
+  const activeUnderline = isLight ? "#0D0D0D" : "#9D85FF";
   const hoverBg = isLight ? "hover:bg-black/5" : "hover:bg-white/10";
 
   // Shared color/fill transition so every theme swap (icons, text, WhatsApp glyph) crossfades together.
