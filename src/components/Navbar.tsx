@@ -12,11 +12,11 @@ export function Navbar() {
   // On light sections: dark glass tint + dark icons/text. On dark: keep current white styling.
   const glassClass = isLight ? "liquid-glass-light" : "liquid-glass";
   const iconColor = isLight ? "#0D0D0D" : "#FFFFFF";
-  const iconHoverClass = isLight
-    ? "transition-colors hover:opacity-70"
-    : "text-white hover:text-primary transition-colors";
   const textColor = isLight ? "#0D0D0D" : "#FFFFFF";
   const hoverBg = isLight ? "hover:bg-black/5" : "hover:bg-white/10";
+
+  // Shared color/fill transition so every theme swap (icons, text, WhatsApp glyph) crossfades together.
+  const colorTransition = "color 300ms ease, fill 300ms ease, stroke 300ms ease, opacity 300ms ease";
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 pt-4 md:pt-6 px-4 md:px-8">
@@ -46,8 +46,8 @@ export function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            className={`hidden md:inline-flex items-center justify-center rounded-sh ${iconHoverClass}`}
-            style={{ width: 36, height: 36, color: iconColor }}
+            className="hidden md:inline-flex items-center justify-center rounded-sh hover:opacity-70"
+            style={{ width: 36, height: 36, color: iconColor, transition: colorTransition }}
           >
             <LinkedInIcon size={18} />
           </a>
@@ -56,8 +56,8 @@ export function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
-            className={`hidden md:inline-flex items-center justify-center rounded-sh ${iconHoverClass}`}
-            style={{ width: 36, height: 36, color: iconColor }}
+            className="hidden md:inline-flex items-center justify-center rounded-sh hover:opacity-70"
+            style={{ width: 36, height: 36, color: iconColor, transition: colorTransition }}
           >
             <InstagramIcon size={18} />
           </a>
@@ -66,8 +66,15 @@ export function Navbar() {
             href={WHATSAPP_GENERAL}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${glassClass} hidden md:inline-flex items-center rounded-sh transition-colors ${hoverBg}`}
-            style={{ fontSize: 13, fontWeight: 500, padding: "8px 16px", height: 36, color: textColor }}
+            className={`${glassClass} hidden md:inline-flex items-center rounded-sh ${hoverBg}`}
+            style={{
+              fontSize: 13,
+              fontWeight: 500,
+              padding: "8px 16px",
+              height: 36,
+              color: textColor,
+              transition: `${colorTransition}, background-color 300ms ease`,
+            }}
           >
             Contact Us
           </a>
@@ -77,10 +84,15 @@ export function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Contact us on WhatsApp"
-            className={`${glassClass} md:hidden inline-flex items-center justify-center rounded-sh transition-colors ${hoverBg}`}
-            style={{ width: 40, height: 40, color: textColor }}
+            className={`${glassClass} md:hidden inline-flex items-center justify-center rounded-sh ${hoverBg}`}
+            style={{
+              width: 40,
+              height: 40,
+              color: textColor,
+              transition: `${colorTransition}, background-color 300ms ease`,
+            }}
           >
-            <MessageCircle size={16} />
+            <MessageCircle size={16} style={{ transition: colorTransition }} />
           </a>
         </div>
       </div>
