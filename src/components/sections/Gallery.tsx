@@ -160,7 +160,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
             className="inline-block"
             style={{
               background: "#F5F2EE",
-              color: "#8C7B5E",
+              color: "#4A24FF",
               fontSize: 12,
               borderRadius: 20,
               padding: "4px 12px",
