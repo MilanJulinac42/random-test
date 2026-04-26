@@ -4,7 +4,7 @@ type Testimonial = {
   name: string;
   meta: string;
   initials: string;
-  bg: string;
+  gradient: string;
   quote: string;
 };
 
@@ -13,15 +13,17 @@ const testimonials: Testimonial[] = [
     name: "Fatima A.",
     meta: "Villa, Arabian Ranches",
     initials: "FA",
-    bg: "#C2892A",
+    gradient:
+      "linear-gradient(145deg, #8B4513 0%, #C2892A 40%, #E8C170 75%, #F5DFA0 100%)",
     quote:
-      "Every payment was tied to a milestone we approved. No surprises, exactly what we needed.",
+      "Every payment was tied to a milestone we approved. No surprises — exactly what we were promised.",
   },
   {
     name: "Khalid & Sara M.",
     meta: "Apartment, Downtown Dubai",
     initials: "KS",
-    bg: "#7A9E7E",
+    gradient:
+      "linear-gradient(145deg, #0F3D3A 0%, #1D7A6B 40%, #2AABA0 75%, #7DD4CC 100%)",
     quote:
       "We were travelling for six weeks. The app meant we could see photos, approve decisions, and track costs from our phones.",
   },
@@ -29,27 +31,28 @@ const testimonials: Testimonial[] = [
     name: "James R.",
     meta: "Townhouse, JVC",
     initials: "JR",
-    bg: "#2A7A8C",
+    gradient:
+      "linear-gradient(145deg, #1A1F3A 0%, #2A3D6E 40%, #3D5FA0 75%, #7090CC 100%)",
     quote:
-      "They finished two weeks early. I've never had a contractor deliver on time, let alone early.",
+      "They finished two weeks early. I've never had a contractor deliver on time, let alone early. Reno is genuinely different.",
   },
 ];
 
 function TestimonialCard({ t }: { t: Testimonial }) {
   return (
     <div
-      className="relative overflow-hidden shrink-0"
+      className="relative overflow-hidden shrink-0 w-full"
       style={{
         borderRadius: 20,
         aspectRatio: "3 / 4",
-        background: t.bg,
+        background: t.gradient,
       }}
     >
       {/* Top-right name label */}
       <div
         className="absolute top-0 right-0"
         style={{
-          padding: "12px 16px",
+          padding: "16px",
           fontSize: 12,
           color: "#FFFFFF",
           fontWeight: 500,
@@ -69,9 +72,12 @@ function TestimonialCard({ t }: { t: Testimonial }) {
             width: 80,
             height: 80,
             borderRadius: "50%",
-            background: "rgba(255,255,255,0.15)",
+            background: "rgba(255,255,255,0.2)",
+            backdropFilter: "blur(4px)",
+            WebkitBackdropFilter: "blur(4px)",
+            border: "1px solid rgba(255,255,255,0.3)",
             color: "#FFFFFF",
-            fontSize: 32,
+            fontSize: 28,
             fontWeight: 600,
             letterSpacing: "0.02em",
           }}
@@ -84,18 +90,18 @@ function TestimonialCard({ t }: { t: Testimonial }) {
       <div
         className="absolute left-0 right-0 bottom-0 flex items-end"
         style={{
-          height: "45%",
+          height: "50%",
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%)",
+            "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
         }}
       >
         <p
           style={{
-            fontSize: 16,
+            fontSize: 15,
             color: "#FFFFFF",
             fontStyle: "italic",
             lineHeight: 1.5,
-            padding: "0 20px 24px",
+            padding: "20px 20px 24px",
           }}
         >
           "{t.quote}"
@@ -145,7 +151,7 @@ export function Reviews() {
               fontWeight: 500,
             }}
           >
-            4.9★ average across 200+ projects
+            4.9★ average rating across 200+ completed projects
           </p>
         </Reveal>
       </div>
@@ -165,7 +171,7 @@ export function Reviews() {
       <div
         className="md:hidden flex overflow-x-auto no-scrollbar"
         style={{
-          marginTop: 40,
+          marginTop: 56,
           gap: 12,
           paddingLeft: 24,
           paddingRight: 24,
@@ -177,7 +183,7 @@ export function Reviews() {
           <div
             key={t.name}
             style={{
-              width: "80vw",
+              width: "82vw",
               flexShrink: 0,
               scrollSnapAlign: "start",
             }}
@@ -185,7 +191,6 @@ export function Reviews() {
             <TestimonialCard t={t} />
           </div>
         ))}
-        {/* trailing space so last card can snap fully */}
         <div style={{ width: 12, flexShrink: 0 }} />
       </div>
     </section>
