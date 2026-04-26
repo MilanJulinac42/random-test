@@ -28,7 +28,7 @@ export function InstagramFeed() {
       id="social"
       className="relative w-full px-6 md:px-12 lg:px-16"
       style={{
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#0D0D0D",
         paddingTop: "clamp(56px, 6vw, 80px)",
         paddingBottom: "clamp(56px, 6vw, 80px)",
       }}
@@ -45,14 +45,14 @@ export function InstagramFeed() {
                 style={{
                   fontSize: "clamp(28px, 4vw, 40px)",
                   fontWeight: 700,
-                  color: "#0D0D0D",
+                  color: "#FFFFFF",
                   letterSpacing: "-0.02em",
                   lineHeight: 1.1,
                 }}
               >
                 Follow the build.
               </h2>
-              <p style={{ fontSize: 15, color: "#777", marginTop: 6 }}>
+              <p style={{ fontSize: 15, color: "#999", marginTop: 6 }}>
                 Behind the scenes of every Reno project.
               </p>
             </div>
@@ -64,13 +64,13 @@ export function InstagramFeed() {
                 className="reno-social-link inline-flex items-center"
                 style={{
                   fontSize: 14,
-                  color: "#0D0D0D",
+                  color: "#FFFFFF",
                   fontWeight: 500,
                   textDecoration: "none",
                   gap: 8,
                 }}
               >
-                <InstagramIcon size={16} color="#0D0D0D" />
+                <InstagramIcon size={16} color="#FFFFFF" />
                 @reno_app ↗
               </a>
               <a
@@ -80,13 +80,13 @@ export function InstagramFeed() {
                 className="reno-social-link inline-flex items-center"
                 style={{
                   fontSize: 14,
-                  color: "#0D0D0D",
+                  color: "#FFFFFF",
                   fontWeight: 500,
                   textDecoration: "none",
                   gap: 8,
                 }}
               >
-                <LinkedInIcon size={16} color="#0077B5" />
+                <LinkedInIcon size={16} color="#4DA8DA" />
                 Reno on LinkedIn ↗
               </a>
             </div>
@@ -123,7 +123,7 @@ export function InstagramFeed() {
           <div
             className="reno-li-card flex flex-col md:flex-row md:items-center md:justify-between"
             style={{
-              background: "#F7F5F2",
+              background: "#1A1A1A",
               borderRadius: 16,
               padding: "28px 32px",
               marginTop: 20,
@@ -132,12 +132,12 @@ export function InstagramFeed() {
           >
             <div>
               <div className="flex items-center" style={{ gap: 8 }}>
-                <LinkedInIcon size={20} color="#0077B5" />
-                <span style={{ fontSize: 16, fontWeight: 500, color: "#0D0D0D" }}>
+                <LinkedInIcon size={20} color="#4DA8DA" />
+                <span style={{ fontSize: 16, fontWeight: 500, color: "#FFFFFF" }}>
                   Reno on LinkedIn
                 </span>
               </div>
-              <p style={{ fontSize: 13, color: "#777", marginTop: 4 }}>
+              <p style={{ fontSize: 13, color: "#999", marginTop: 4 }}>
                 Project updates, team news, and industry insights.
               </p>
             </div>
@@ -147,8 +147,8 @@ export function InstagramFeed() {
               rel="noopener noreferrer"
               className="reno-li-btn inline-flex items-center justify-center"
               style={{
-                border: "1.5px solid #0D0D0D",
-                color: "#0D0D0D",
+                border: "1.5px solid #FFFFFF",
+                color: "#FFFFFF",
                 background: "transparent",
                 borderRadius: 6,
                 padding: "10px 22px",
@@ -202,8 +202,8 @@ export function InstagramFeed() {
           text-decoration: underline;
         }
         .reno-li-btn:hover {
-          background-color: #0D0D0D !important;
-          color: #FFFFFF !important;
+          background-color: #FFFFFF !important;
+          color: #0D0D0D !important;
         }
         @media (max-width: 767px) {
           .reno-li-btn {
