@@ -5,9 +5,17 @@ interface FadeInProps {
   delay?: number;
   duration?: number;
   className?: string;
+  /** If true, slides up 16px while fading in (used for hero entrance). */
+  slide?: boolean;
 }
 
-export function FadeIn({ children, delay = 0, duration = 1000, className = "" }: FadeInProps) {
+export function FadeIn({
+  children,
+  delay = 0,
+  duration = 1000,
+  className = "",
+  slide = true,
+}: FadeInProps) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -17,8 +25,15 @@ export function FadeIn({ children, delay = 0, duration = 1000, className = "" }:
 
   return (
     <div
-      className={`transition-opacity ${className}`}
-      style={{ opacity: visible ? 1 : 0, transitionDuration: `${duration}ms` }}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: slide ? `translateY(${visible ? 0 : 16}px)` : undefined,
+        transition: slide
+          ? `opacity ${duration}ms cubic-bezier(0.22, 1, 0.36, 1), transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`
+          : `opacity ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`,
+        willChange: visible ? "auto" : "transform, opacity",
+      }}
     >
       {children}
     </div>
