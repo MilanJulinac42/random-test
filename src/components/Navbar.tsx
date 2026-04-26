@@ -140,6 +140,91 @@ export function Navbar() {
           >
             <MessageCircle size={16} style={{ transition: colorTransition }} />
           </a>
+
+          {/* Mobile menu trigger — lg:hidden so it shows on mobile + tablet */}
+          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+            <SheetTrigger asChild>
+              <button
+                type="button"
+                aria-label="Open menu"
+                className={`${glassClass} lg:hidden inline-flex items-center justify-center rounded-sh ${hoverBg}`}
+                style={{
+                  width: 40,
+                  height: 40,
+                  color: textColor,
+                  transition: `${colorTransition}, background-color 300ms ease`,
+                }}
+              >
+                <Menu size={18} style={{ transition: colorTransition }} />
+              </button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="w-[80%] sm:max-w-sm border-l p-0"
+              style={{ backgroundColor: "#0D0D0D", borderColor: "#1E1E1E", color: "#FFFFFF" }}
+            >
+              <SheetTitle className="sr-only">Navigation menu</SheetTitle>
+              <div className="flex flex-col h-full pt-20 pb-8 px-6">
+                <nav className="flex flex-col gap-1">
+                  {NAV_LINKS.map((link) => {
+                    const isActive = active === link.id;
+                    return (
+                      <SheetClose asChild key={link.id}>
+                        <a
+                          href={`#${link.id}`}
+                          aria-current={isActive ? "location" : undefined}
+                          className="relative inline-flex items-center px-3 py-4 rounded-sh"
+                          style={{
+                            fontSize: 18,
+                            fontWeight: isActive ? 600 : 500,
+                            color: isActive ? "#FFFFFF" : "rgba(255,255,255,0.65)",
+                            transition: "color 200ms ease, font-weight 200ms ease",
+                          }}
+                        >
+                          <span
+                            aria-hidden
+                            className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 origin-center"
+                            style={{
+                              height: 24,
+                              backgroundColor: "#C2A97A",
+                              transform: isActive
+                                ? "translateY(-50%) scaleY(1)"
+                                : "translateY(-50%) scaleY(0)",
+                              transition: "transform 300ms ease",
+                            }}
+                          />
+                          {link.label}
+                        </a>
+                      </SheetClose>
+                    );
+                  })}
+                </nav>
+
+                <div className="mt-auto flex items-center gap-3 pt-6 border-t" style={{ borderColor: "#1E1E1E" }}>
+                  <a
+                    href={LINKEDIN_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="inline-flex items-center justify-center rounded-sh hover:opacity-70"
+                    style={{ width: 40, height: 40, color: "#FFFFFF" }}
+                  >
+                    <LinkedInIcon size={18} />
+                  </a>
+                  <a
+                    href={INSTAGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="inline-flex items-center justify-center rounded-sh hover:opacity-70"
+                    style={{ width: 40, height: 40, color: "#FFFFFF" }}
+                  >
+                    <InstagramIcon size={18} />
+                  </a>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </nav>
