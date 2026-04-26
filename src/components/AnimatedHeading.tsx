@@ -6,18 +6,22 @@ interface AnimatedHeadingProps {
   lineClassName?: string;
   style?: CSSProperties;
   initialDelay?: number;
+  /** kept for backward-compat, ignored */
   charDelay?: number;
+  /** kept for backward-compat, ignored */
   charDuration?: number;
 }
 
+/**
+ * Hero heading entrance. Fade + small translateY, no per-character
+ * animation, no rotate/skew — fires once on mount.
+ */
 export function AnimatedHeading({
   text,
   className = "",
   lineClassName = "",
   style,
-  initialDelay = 200,
-  charDelay = 30,
-  charDuration = 500,
+  initialDelay = 150,
 }: AnimatedHeadingProps) {
   const [start, setStart] = useState(false);
   const lines = text.split("\n");
@@ -28,26 +32,20 @@ export function AnimatedHeading({
   }, [initialDelay]);
 
   return (
-    <h1 className={className} style={style}>
-      {lines.map((line, lineIndex) => (
-        <span key={lineIndex} className={`block ${lineClassName}`}>
-          {Array.from(line).map((char, charIndex) => {
-            const delay = lineIndex * line.length * charDelay + charIndex * charDelay;
-            return (
-              <span
-                key={charIndex}
-                className="inline-block"
-                style={{
-                  opacity: start ? 1 : 0,
-                  transform: start ? "translateX(0)" : "translateX(-18px)",
-                  transition: `opacity ${charDuration}ms ease, transform ${charDuration}ms ease`,
-                  transitionDelay: `${delay}ms`,
-                }}
-              >
-                {char === " " ? "\u00A0" : char}
-              </span>
-            );
-          })}
+    <h1
+      className={className}
+      style={{
+        ...style,
+        opacity: start ? 1 : 0,
+        transform: `translateY(${start ? 0 : 16}px)`,
+        transition:
+          "opacity 1000ms cubic-bezier(0.22, 1, 0.36, 1), transform 1000ms cubic-bezier(0.22, 1, 0.36, 1)",
+        willChange: start ? "auto" : "transform, opacity",
+      }}
+    >
+      {lines.map((line, i) => (
+        <span key={i} className={`block ${lineClassName}`}>
+          {line}
         </span>
       ))}
     </h1>
