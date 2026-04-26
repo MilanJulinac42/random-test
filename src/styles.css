@@ -198,15 +198,30 @@ body {
   transform: translateY(0);
 }
 
-/* Reduced motion — disable all transitions/animations globally */
+/* Reduced motion — disable transitions, animations, and staggered cascades */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Force reveal/stagger elements to their final visible state so nothing stays hidden */
+  .fade-in-up,
+  .stagger-children > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Stop infinite decorative loops (hero chevron bounce, WhatsApp pulse) */
+  .reno-bounce,
+  .reno-pulse {
+    animation: none !important;
   }
 }
 
