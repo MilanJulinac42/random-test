@@ -157,12 +157,22 @@ body {
 /* Dark-mode primary text reads white for legibility */
 .dark .text-primary { color: hsl(0 0% 100%); }
 
-/* Liquid glass surface (VEX-style) */
+/* Liquid glass surface (VEX-style) — default dark-bg variant */
 .liquid-glass {
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background 300ms ease, border-color 300ms ease, color 300ms ease;
+}
+
+/* Light-bg variant: tints + dark border so it reads on white sections */
+.liquid-glass-light {
+  background: rgba(13, 13, 13, 0.05);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(13, 13, 13, 0.12);
+  transition: background 300ms ease, border-color 300ms ease, color 300ms ease;
 }
 
 /* Section reveal — universal pattern */
