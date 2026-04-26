@@ -329,7 +329,7 @@ export function Quiz() {
 
                 <p
                   className="text-center"
-                  style={{ fontSize: 12, color: "#AAAAAA", marginTop: 12, lineHeight: 1.5 }}
+                  style={{ fontSize: 12, color: "#6B6B6B", marginTop: 12, lineHeight: 1.5 }}
                 >
                   We assess 15–20 new projects each month. You'll hear from us within 24 hours.
                 </p>
