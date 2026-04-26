@@ -27,7 +27,7 @@ export function Navbar() {
   const iconColor = isLight ? "#0D0D0D" : "#FFFFFF";
   const textColor = isLight ? "#0D0D0D" : "#FFFFFF";
   const mutedColor = isLight ? "rgba(13,13,13,0.6)" : "rgba(255,255,255,0.65)";
-  const activeUnderline = isLight ? "#0D0D0D" : "#9D85FF";
+  const activeUnderline = isLight ? "#0D0D0D" : "#A78BFA";
   const hoverBg = isLight ? "hover:bg-black/5" : "hover:bg-white/10";
 
   // Shared color/fill transition so every theme swap (icons, text, WhatsApp glyph) crossfades together.
@@ -187,7 +187,7 @@ export function Navbar() {
                             className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 origin-center"
                             style={{
                               height: 24,
-                              backgroundColor: "#9D85FF",
+                              backgroundColor: "#A78BFA",
                               transform: isActive
                                 ? "translateY(-50%) scaleY(1)"
                                 : "translateY(-50%) scaleY(0)",

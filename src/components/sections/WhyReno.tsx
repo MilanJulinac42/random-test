@@ -140,7 +140,7 @@ export function WhyReno() {
             <div>
               <p
                 className="uppercase"
-                style={{ color: "#9D85FF", fontSize: 11, letterSpacing: "0.1em", fontWeight: 500 }}
+                style={{ color: "#A78BFA", fontSize: 11, letterSpacing: "0.1em", fontWeight: 500 }}
               >
                 OUR GUARANTEE
               </p>
