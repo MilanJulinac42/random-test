@@ -2,7 +2,8 @@ import { MessageCircle } from "lucide-react";
 import { WHATSAPP_GENERAL, LINKEDIN_URL, INSTAGRAM_URL } from "@/lib/constants";
 import { LinkedInIcon, InstagramIcon } from "@/components/SocialIcons";
 import { useNavbarTheme } from "@/hooks/useNavbarTheme";
-import logo from "@/assets/logo.png";
+import logoLight from "@/assets/logo.png";
+import logoDark from "@/assets/logo-dark.png";
 
 export function Navbar() {
   const theme = useNavbarTheme();
@@ -22,15 +23,20 @@ export function Navbar() {
       <div
         className={`mx-auto max-w-7xl ${glassClass} rounded-sh-lg flex items-center justify-between px-5 md:px-6 py-3`}
       >
-        <a href="#top" className="flex items-center">
+        <a href="#top" className="relative flex items-center" aria-label="Reno home">
+          {/* Dual-logo crossfade — sharp on every browser regardless of brightness */}
           <img
-            src={logo}
+            src={logoLight}
             alt="Reno"
-            className="h-10 md:h-12 lg:h-14 w-auto max-h-[calc(100%-0.5rem)]"
-            style={{
-              filter: isLight ? "invert(1) brightness(0.1)" : "none",
-              transition: "filter 300ms ease",
-            }}
+            className="h-10 md:h-12 lg:h-14 w-auto max-h-[calc(100%-0.5rem)] block"
+            style={{ opacity: isLight ? 0 : 1, transition: "opacity 300ms ease" }}
+          />
+          <img
+            src={logoDark}
+            alt=""
+            aria-hidden
+            className="h-10 md:h-12 lg:h-14 w-auto max-h-[calc(100%-0.5rem)] absolute inset-0"
+            style={{ opacity: isLight ? 1 : 0, transition: "opacity 300ms ease" }}
           />
         </a>
 
