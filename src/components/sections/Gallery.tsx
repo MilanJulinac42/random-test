@@ -22,7 +22,7 @@ const projects: Project[] = [
   {
     before: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1600&q=80",
     after: "https://images.unsplash.com/photo-1556909211-d5b0e2bedd5e?auto=format&fit=crop&w=1600&q=80",
-    title: "Open-plan kitchen rebuild",
+    title: "Kitchen",
     neighbourhood: "Arabian Ranches",
     specs: "AED 180k · 8 weeks · 1 kitchen",
     quote: "Fixed price held to the day — and the finish exceeded what we'd seen on Pinterest.",
