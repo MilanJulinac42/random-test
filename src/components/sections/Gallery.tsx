@@ -38,7 +38,7 @@ const projects: Project[] = [
     after: kidsAfter,
     title: "Kid’s Bedroom",
     neighbourhood: "Downtown Dubai",
-    specs: "AED 95k · 5 weeks · 1 bathroom",
+    specs: "AED 95k · 5 weeks · 1 bedroom",
     quote: "This three-bedroom family apartment was reconfigured to include a dedicated home office, with custom walnut joinery and integrated lighting bringing warmth and structure to the workspace. In the children’s room, a bespoke bunk bed and dual built-in desks create individual corners for study and rest, balancing privacy with a sense of shared comfort.",
   },
 ];
