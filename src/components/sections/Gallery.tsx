@@ -33,7 +33,7 @@ const projects: Project[] = [
     title: "Kid’s Bedroom",
     neighbourhood: "Palm Jumeirah",
     specs: "AED 95k · 5 weeks · 1 bathroom",
-    quote: "Every milestone needed our approval before money moved — it built real trust.",
+    quote: "This three-bedroom family apartment was reconfigured to include a dedicated home office, with custom walnut joinery and integrated lighting bringing warmth and structure to the workspace. In the children’s room, a bespoke bunk bed and dual built-in desks create individual corners for study and rest, balancing privacy with a sense of shared comfort.",
   },
 ];
 
