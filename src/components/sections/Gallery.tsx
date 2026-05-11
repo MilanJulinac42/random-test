@@ -205,13 +205,13 @@ function ProjectCard({ project }: { project: Project }) {
       <div style={{ padding: "20px 24px 24px" }}>
         {/* Row 1 */}
         <div className="flex items-start justify-between gap-4">
-          <h3 style={{ fontSize: 17, fontWeight: 500, color: "#0D0D0D", lineHeight: 1.3 }}>
+          <h3 style={{ fontSize: "clamp(24px, 2.4vw, 28px)", fontWeight: 600, color: "#0D0D0D", lineHeight: 1.25 }}>
             {project.name}
           </h3>
           <span
             style={{
-              fontSize: 15,
-              fontWeight: 500,
+              fontSize: 22,
+              fontWeight: 700,
               color: "#0D0D0D",
               whiteSpace: "nowrap",
             }}
@@ -221,14 +221,14 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
 
         {/* Row 2 */}
-        <div className="flex items-center" style={{ gap: 16, marginTop: 6 }}>
-          <span className="inline-flex items-center" style={{ gap: 6, fontSize: 12, color: "#777" }}>
-            <Clock size={16} strokeWidth={1.75} />
+        <div className="flex items-center" style={{ gap: 14, marginTop: 10 }}>
+          <span className="inline-flex items-center" style={{ gap: 8, fontSize: 20, fontWeight: 700, color: "#0D0D0D" }}>
+            <Clock size={20} strokeWidth={1.75} />
             {project.duration}
           </span>
-          <span style={{ width: 3, height: 3, borderRadius: 999, background: "rgba(0,0,0,0.18)" }} />
-          <span className="inline-flex items-center" style={{ gap: 6, fontSize: 12, color: "#777" }}>
-            <LayoutGrid size={16} strokeWidth={1.75} />
+          <span style={{ fontSize: 20, fontWeight: 400, color: "rgba(0,0,0,0.3)" }}>·</span>
+          <span className="inline-flex items-center" style={{ gap: 8, fontSize: 20, fontWeight: 700, color: "#0D0D0D" }}>
+            <LayoutGrid size={20} strokeWidth={1.75} />
             {project.rooms}
           </span>
         </div>
@@ -302,12 +302,11 @@ export function Gallery() {
           <h2
             className="mt-4"
             style={{
-              fontSize: "clamp(28px, 5vw, 56px)",
+              fontSize: "clamp(36px, 5vw, 48px)",
               fontWeight: 700,
               color: "#0D0D0D",
               letterSpacing: "-0.02em",
               lineHeight: 1.05,
-              whiteSpace: "nowrap",
             }}
           >
             Delivered projects, not renders.

@@ -18,8 +18,8 @@ export function TrustBar() {
         <div className="hidden md:flex items-center justify-around">
           {items.map(({ Icon, label }, i) => (
             <div key={label} className="flex items-center gap-2">
-              <Icon size={20} style={{ color: "#A78BFA" }} />
-              <span className="text-sm" style={{ color: "#999" }}>{label}</span>
+              <Icon size={22} style={{ color: "#A78BFA" }} />
+              <span style={{ color: "#CCC", fontSize: 16, fontWeight: 500 }}>{label}</span>
               {i < items.length - 1 && (
                 <span className="ml-4" style={{ width: 1, height: 24, backgroundColor: "#1E1E1E" }} />
               )}
@@ -29,8 +29,8 @@ export function TrustBar() {
         <div className="grid grid-cols-2 md:hidden gap-6">
           {items.map(({ Icon, label }) => (
             <div key={label} className="flex items-center gap-2">
-              <Icon size={20} style={{ color: "#A78BFA" }} />
-              <span className="text-sm" style={{ color: "#999" }}>{label}</span>
+              <Icon size={22} style={{ color: "#A78BFA" }} />
+              <span style={{ color: "#CCC", fontSize: 15, fontWeight: 500 }}>{label}</span>
             </div>
           ))}
         </div>

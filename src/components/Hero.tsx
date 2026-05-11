@@ -78,51 +78,43 @@ export function Hero() {
         <div className="grid lg:grid-cols-2 gap-8 items-end">
           {/* Left column */}
           <div className="max-w-3xl lg:max-w-none">
-            <FadeIn delay={100}>
-              <div
-                className="liquid-glass rounded-sh-lg px-6 py-5 mb-6 inline-block"
-                style={{ maxWidth: 280 }}
-              >
-                <p className="text-primary uppercase text-[11px] font-medium" style={{ letterSpacing: "0.2em" }}>
-                  Why Reno
-                </p>
-                <p className="text-foreground text-lg md:text-xl mt-2" style={{ fontWeight: 700, letterSpacing: "-0.02em" }}>
-                  Design. Build. Deliver.
-                </p>
-                <p className="text-muted-foreground text-xs mt-2 leading-relaxed">
-                  One team. One contract. Full accountability.
-                </p>
-              </div>
-            </FadeIn>
-
             <FadeIn delay={150}>
               <p
-                className="text-primary uppercase text-xs md:text-sm font-medium"
-                style={{ letterSpacing: "0.2em" }}
+                className="text-primary uppercase font-medium"
+                style={{ letterSpacing: "0.22em", fontSize: "14px" }}
               >
                 End-to-end renovation in Dubai
               </p>
             </FadeIn>
 
+            <FadeIn delay={200}>
+              <p
+                className="text-foreground uppercase mt-5"
+                style={{ fontWeight: 700, letterSpacing: "0.18em", fontSize: "16px" }}
+              >
+                Design. Build. Deliver.
+              </p>
+            </FadeIn>
+
             <AnimatedHeading
               text={"Your renovation, \nfully handled."}
-              className="text-4xl md:text-5xl lg:text-6xl text-foreground mt-4"
-              style={{ fontWeight: 800, lineHeight: 1.05, letterSpacing: "-0.04em" }}
+              className="text-foreground mt-3"
+              style={{ fontWeight: 800, lineHeight: 1.02, letterSpacing: "-0.04em", fontSize: "clamp(48px, 7vw, 72px)" }}
               initialDelay={150}
             />
 
             <FadeIn delay={350}>
-              <p className="text-muted-foreground text-base md:text-lg mt-5 leading-relaxed max-w-2xl">
+              <p className="text-muted-foreground mt-6 max-w-2xl" style={{ fontSize: "clamp(18px, 1.4vw, 20px)", lineHeight: 1.6 }}>
                 We manage the designers, contractors, and payments with{"\n"}daily photo updates and a written on-time guarantee.
               </p>
             </FadeIn>
 
             <FadeIn delay={550}>
-              <div className="flex flex-col sm:flex-row gap-3 mt-8">
+              <div className="flex flex-col sm:flex-row gap-3 mt-9">
                 <a
                   href="#quiz"
-                  className="reno-btn-purple reno-cta inline-flex items-center justify-center rounded-sh px-7 font-semibold text-sm"
-                  style={{ height: 52 }}
+                  className="reno-btn-purple reno-cta inline-flex items-center justify-center rounded-sh font-semibold"
+                  style={{ height: 60, padding: "0 36px", fontSize: 18 }}
                 >
                   Check availability →
                 </a>

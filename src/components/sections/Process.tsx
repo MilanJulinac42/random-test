@@ -112,7 +112,7 @@ export function Process() {
           <h2
             className="text-white mt-5"
             style={{
-              fontSize: "clamp(36px, 5.5vw, 56px)",
+              fontSize: "clamp(36px, 4.6vw, 44px)",
               fontWeight: 700,
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
@@ -160,12 +160,12 @@ export function Process() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-white mt-6" style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.01em" }}>
+                <h3 className="text-white mt-6" style={{ fontSize: "clamp(24px, 2.4vw, 28px)", fontWeight: 700, letterSpacing: "-0.01em" }}>
                   {s.title}
                 </h3>
 
                 {/* Body */}
-                <p className="mt-3" style={{ fontSize: 14, color: "#999", lineHeight: 1.6 }}>
+                <p className="mt-4" style={{ fontSize: 17, color: "#bbb", lineHeight: 1.6 }}>
                   {s.body}
                 </p>
               </Reveal>
