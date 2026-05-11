@@ -101,7 +101,7 @@ export function Footer() {
           <div>
             <img src={logo} alt="Reno" className="h-9 w-auto" />
             <p style={{ fontSize: 14, color: "#777", marginTop: 14 }}>
-              Dubai's home renovation platform.
+              Dubai's home renovation partner.
             </p>
             <p style={{ fontSize: 13, color: "#555", marginTop: 8, lineHeight: 1.6 }}>
               End-to-end renovation, fully managed — from first brief to final handover.
