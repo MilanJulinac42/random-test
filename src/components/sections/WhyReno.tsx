@@ -12,7 +12,7 @@ const stats = [
     Icon: ShieldCheck,
     number: "<10%",
     label: "CONTRACTOR ACCEPTANCE RATE",
-    story: "Less than 1 in 10 applicants pass our contractor vetting process.",
+    story: "Fewer than 1 in 10 contractors who apply make\n             it onto the Reno platform.",
   },
   {
     Icon: Star,
