@@ -71,7 +71,6 @@ function TestimonialCard({ t }: { t: Testimonial }) {
           fontSize: 21,
           lineHeight: 1.55,
           color: "#1A1A1A",
-          fontStyle: "italic",
           flex: 1,
         }}
       >
