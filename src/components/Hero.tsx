@@ -88,9 +88,8 @@ export function Hero() {
             </FadeIn>
 
             <AnimatedHeading
-              text={"Transform Your Home.\nNo Stress. No Surprises."}
+              text={"Transform Your Home. No Stress. No Surprises."}
               className="text-4xl md:text-5xl lg:text-6xl text-foreground mt-4"
-              lineClassName="whitespace-nowrap"
               style={{ fontWeight: 800, lineHeight: 1.05, letterSpacing: "-0.04em" }}
               initialDelay={150}
             />
