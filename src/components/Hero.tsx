@@ -134,50 +134,51 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Thumbnail strip */}
-      <div
-        className="absolute z-20 bottom-20 right-4 md:bottom-6 md:right-6 liquid-glass rounded-sh p-2 flex gap-2"
-        role="tablist"
-        aria-label="Hero slideshow thumbnails"
-      >
-        {SLIDES.map((slide, i) => {
-          const isActive = i === active;
-          return (
-            <button
-              key={slide.src}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              aria-label={`Show slide ${i + 1}`}
-              onClick={() => handleSelect(i)}
-              className="rounded-sh overflow-hidden transition-all"
-              style={{
-                width: 64,
-                height: 44,
-                opacity: isActive ? 1 : 0.6,
-                outline: isActive ? "2px solid hsl(var(--primary))" : "1px solid rgba(255,255,255,0.2)",
-                outlineOffset: 0,
-              }}
-            >
-              <img
-                src={slide.src}
-                alt=""
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </button>
-          );
-        })}
-      </div>
+      {/* Bottom-right stack: thumbnails above, scroll indicator below (8px gap) */}
+      <div className="absolute z-20 bottom-6 right-4 md:right-6 flex flex-col items-end gap-2">
+        <div
+          className="liquid-glass rounded-sh p-2 flex gap-2"
+          role="tablist"
+          aria-label="Hero slideshow thumbnails"
+        >
+          {SLIDES.map((slide, i) => {
+            const isActive = i === active;
+            return (
+              <button
+                key={slide.src}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={`Show slide ${i + 1}`}
+                onClick={() => handleSelect(i)}
+                className="rounded-sh overflow-hidden transition-all"
+                style={{
+                  width: 64,
+                  height: 44,
+                  opacity: isActive ? 1 : 0.6,
+                  outline: isActive ? "2px solid hsl(var(--primary))" : "1px solid rgba(255,255,255,0.2)",
+                  outlineOffset: 0,
+                }}
+              >
+                <img
+                  src={slide.src}
+                  alt=""
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </button>
+            );
+          })}
+        </div>
 
-      <a
-        href="#gallery"
-        aria-label="Scroll down"
-        className="absolute left-1/2 -translate-x-1/2 z-10 reno-bounce text-primary"
-        style={{ bottom: 28 }}
-      >
-        <ChevronDown size={28} />
-      </a>
+        <a
+          href="#gallery"
+          aria-label="Scroll down"
+          className="reno-bounce text-primary inline-flex items-center justify-center"
+        >
+          <ChevronDown size={28} />
+        </a>
+      </div>
     </section>
   );
 }
