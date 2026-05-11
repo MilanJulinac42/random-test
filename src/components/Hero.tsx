@@ -107,7 +107,7 @@ export function Hero() {
                   className="reno-btn-purple reno-cta inline-flex items-center justify-center rounded-sh px-7 font-semibold text-sm"
                   style={{ height: 52 }}
                 >
-                  Check Project Availability →
+                  Start your project →
                 </a>
               </div>
             </FadeIn>
