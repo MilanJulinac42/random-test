@@ -83,7 +83,7 @@ export function Hero() {
                 className="text-primary uppercase text-xs md:text-sm font-medium"
                 style={{ letterSpacing: "0.2em" }}
               >
-                Dubai's Home Renovation Platform
+                End-to-end renovation in Dubai
               </p>
             </FadeIn>
 
