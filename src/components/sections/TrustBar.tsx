@@ -5,7 +5,7 @@ const items = [
   { Icon: BadgeCheck, label: "Licensed by Dubai Economy" },
   { Icon: Star, label: "Written on-time guarantee" },
   { Icon: Home, label: "200+ Homes Delivered" },
-  { Icon: Smartphone, label: "App on iOS & Android" },
+  { Icon: Smartphone, label: "4.9 / 5 on Google" },
 ];
 
 export function TrustBar() {
