@@ -10,7 +10,7 @@ type Testimonial = {
 
 const testimonials: Testimonial[] = [
   {
-    name: "Fatima A.",
+    name: "Walter",
     meta: "Villa · Arabian Ranches",
     tint: "#8B4513",
     image:
