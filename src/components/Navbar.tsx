@@ -4,7 +4,7 @@ import { WHATSAPP_GENERAL, LINKEDIN_URL, INSTAGRAM_URL } from "@/lib/constants";
 import { LinkedInIcon, InstagramIcon } from "@/components/SocialIcons";
 import { useNavbarTheme } from "@/hooks/useNavbarTheme";
 import { useActiveSection } from "@/hooks/useActiveSection";
-import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import logoLight from "@/assets/logo.png";
 import logoDark from "@/assets/logo-dark.png";
 
@@ -133,6 +133,7 @@ export function Navbar() {
               style={{ backgroundColor: "#0D0D0D", borderColor: "#1E1E1E", color: "#FFFFFF" }}
             >
               <SheetTitle className="sr-only">Navigation menu</SheetTitle>
+              <SheetDescription className="sr-only">Site navigation links and social profiles.</SheetDescription>
               <div className="flex flex-col h-full pt-20 pb-8 px-6">
                 <nav className="flex flex-col gap-1">
                   {NAV_LINKS.map((link) => {
