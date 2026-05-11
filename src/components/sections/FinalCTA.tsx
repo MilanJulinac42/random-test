@@ -30,7 +30,7 @@ export function FinalCTA() {
             className="reno-btn-purple inline-flex items-center justify-center rounded-sh px-8 font-semibold text-sm"
             style={{ height: 52 }}
           >
-            Book My Assessment →
+            Book my free assessment →
           </a>
           <p className="text-xs mt-4" style={{ color: "rgba(255,255,255,0.5)" }}>
             We take a limited number of new projects each month.
