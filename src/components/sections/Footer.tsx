@@ -104,7 +104,7 @@ export function Footer() {
               Dubai's home renovation partner.
             </p>
             <p style={{ fontSize: 13, color: "#555", marginTop: 8, lineHeight: 1.6 }}>
-              End-to-end renovation, fully managed — from first brief to final handover.
+              Full renovation management — from first brief to final handover.
             </p>
             <div style={{ display: "flex", gap: 14, marginTop: 20 }}>
               <SocialLink href={INSTAGRAM_URL} label="Instagram">
