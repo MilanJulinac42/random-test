@@ -34,7 +34,7 @@ const testimonials: Testimonial[] = [
     image:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1100&fit=crop&crop=face&q=80",
     quote:
-      "They finished two weeks early. I've never had a contractor deliver on time, let alone early. Reno is genuinely different.",
+      "“Reno completely transformed my Dubai Hills apartment in just a few weeks. Sleek finishes, on-time delivery, and I barely had to lift a finger. Itʼs rare to find a team this reliable in Dubaiˮ",
   },
 ];
 
