@@ -55,38 +55,6 @@ export function Navbar() {
           />
         </a>
 
-        {/* Center section nav — desktop only */}
-        <div className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-          {NAV_LINKS.map((link) => {
-            const isActive = active === link.id;
-            return (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                aria-current={isActive ? "location" : undefined}
-                className="relative inline-flex items-center px-3 py-2 rounded-sh"
-                style={{
-                  fontSize: 13,
-                  fontWeight: isActive ? 600 : 500,
-                  color: isActive ? textColor : mutedColor,
-                  transition: `${colorTransition}, font-weight 200ms ease`,
-                }}
-              >
-                {link.label}
-                <span
-                  aria-hidden
-                  className="absolute left-3 right-3 -bottom-0.5 h-px origin-left"
-                  style={{
-                    backgroundColor: activeUnderline,
-                    transform: isActive ? "scaleX(1)" : "scaleX(0)",
-                    transition: "transform 300ms ease, background-color 300ms ease",
-                  }}
-                />
-              </a>
-            );
-          })}
-        </div>
-
         <div className="flex items-center gap-2 md:gap-3">
           <a
             href={LINKEDIN_URL}
