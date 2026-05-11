@@ -53,7 +53,7 @@ export function InstagramFeed() {
                 Follow the build.
               </h2>
               <p style={{ fontSize: 15, color: "#999", marginTop: 6 }}>
-                Behind the scenes of every Reno project.
+                Real progress from real projects — updated regularly.
               </p>
             </div>
             <div className="flex flex-col md:items-end" style={{ gap: 8 }}>
