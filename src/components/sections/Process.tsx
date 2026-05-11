@@ -118,9 +118,7 @@ export function Process() {
               letterSpacing: "-0.02em",
             }}
           >
-            From first call to
-            <br />
-            keys in hand.
+            From first call to keys in hand.
           </h2>
         </Reveal>
 
