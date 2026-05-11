@@ -172,7 +172,7 @@ export function Footer() {
           }}
         >
           <p style={{ fontSize: 12, color: "#444", margin: 0 }}>
-            2026 Reno Home Technologies LLC. All rights reserved.
+            © 2026 Reno Home Technologies LLC. All rights reserved.
           </p>
           <div style={{ display: "flex", alignItems: "center" }}>
             {["iOS App", "Android App"].map((label) => (
