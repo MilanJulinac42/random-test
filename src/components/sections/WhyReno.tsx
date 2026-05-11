@@ -132,53 +132,31 @@ export function WhyReno() {
         {/* Guarantee block */}
         <Reveal>
           <div
-            className="flex flex-col md:flex-row md:items-center md:justify-between"
             style={{
               background: "#0D0D0D",
               borderRadius: 16,
               padding: "clamp(32px, 5vw, 48px) clamp(28px, 5vw, 56px)",
               marginTop: 20,
-              gap: 24,
             }}
           >
-            <div>
-              <p
-                className="uppercase"
-                style={{ color: "#A78BFA", fontSize: 11, letterSpacing: "0.1em", fontWeight: 500 }}
-              >
-                OUR GUARANTEE
-              </p>
-              <h3
-                style={{
-                  fontSize: "clamp(28px, 3.6vw, 40px)",
-                  color: "#FFFFFF",
-                  fontWeight: 700,
-                  maxWidth: 620,
-                  marginTop: 14,
-                  lineHeight: 1.2,
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                If we run late, you're compensated. In writing, before we start.
-              </h3>
-            </div>
-            <a
-              href="#how-it-works"
-              className="reno-guarantee-btn inline-flex items-center justify-center shrink-0"
+            <p
+              className="uppercase"
+              style={{ color: "#A78BFA", fontSize: 11, letterSpacing: "0.1em", fontWeight: 500 }}
+            >
+              OUR GUARANTEE
+            </p>
+            <h3
               style={{
-                border: "1.5px solid #555",
-                color: "#DDD",
-                background: "transparent",
-                borderRadius: 8,
-                padding: "14px 28px",
-                fontSize: 14,
-                fontWeight: 500,
-                transition: "border-color 200ms ease, color 200ms ease",
-                whiteSpace: "nowrap",
+                fontSize: "clamp(28px, 3.6vw, 40px)",
+                color: "#FFFFFF",
+                fontWeight: 700,
+                marginTop: 14,
+                lineHeight: 1.2,
+                letterSpacing: "-0.02em",
               }}
             >
-              See how it works
-            </a>
+              If we run late, you're compensated. In writing, before we start.
+            </h3>
           </div>
         </Reveal>
       </div>
