@@ -189,7 +189,7 @@ function BeforeAfterSlider({ project }: { project: Project }) {
 }
 
 function ProjectCard({ project }: { project: Project }) {
-  const [expanded, setExpanded] = useState(false);
+  
 
   return (
     <article
@@ -235,7 +235,6 @@ function ProjectCard({ project }: { project: Project }) {
 
         {/* Row 3 — description */}
         <p
-          className={expanded ? "" : "reno-clamp-2"}
           style={{
             fontSize: 13,
             lineHeight: 1.65,
@@ -245,39 +244,6 @@ function ProjectCard({ project }: { project: Project }) {
         >
           {project.quote}
         </p>
-
-        {/* Divider */}
-        <div style={{ height: 1, background: "rgba(0,0,0,0.07)", marginTop: 16 }} />
-
-        {/* Row 4 */}
-        <div className="flex items-center justify-between" style={{ paddingTop: 12 }}>
-          <button
-            type="button"
-            onClick={() => setExpanded((v) => !v)}
-            style={{
-              background: "transparent",
-              border: "none",
-              padding: 0,
-              cursor: "pointer",
-              fontSize: 13,
-              fontWeight: 500,
-              color: "#0D0D0D",
-            }}
-          >
-            {expanded ? "Show less ↑" : "View project →"}
-          </button>
-          <span
-            style={{
-              fontSize: 11,
-              background: "#F5F4F1",
-              color: "#5F5E5A",
-              padding: "4px 12px",
-              borderRadius: 20,
-            }}
-          >
-            {project.scope}
-          </span>
-        </div>
       </div>
     </article>
   );
