@@ -84,7 +84,7 @@ export function Hero() {
                 style={{ maxWidth: 280 }}
               >
                 <p className="text-primary uppercase text-[11px] font-medium" style={{ letterSpacing: "0.2em" }}>
-                  Our Promise
+                  Why Reno
                 </p>
                 <p className="text-foreground text-lg md:text-xl mt-2" style={{ fontWeight: 700, letterSpacing: "-0.02em" }}>
                   Design. Build. Deliver.
