@@ -29,7 +29,7 @@ const steps = [
   },
   {
     num: "02",
-    title: "Build & Milestone Tracking",
+    title: "Build, tracked at every step",
     body: "Vetted contractors execute. Photo updates and site inspections at every milestone — no money moves without your approval.",
     illustration: (
       <svg viewBox="0 0 200 180" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
