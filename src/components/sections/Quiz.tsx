@@ -142,7 +142,7 @@ export function Quiz() {
               letterSpacing: "-0.02em",
             }}
           >
-            What are you planning?
+            Tell us about your project.
           </h2>
           <p
             className="text-center mx-auto mt-4"
