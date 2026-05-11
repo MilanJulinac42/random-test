@@ -60,15 +60,6 @@ export function Hero() {
             }}
           />
         ))}
-        {/* Dark gradient overlay for text legibility */}
-        <div
-          className="absolute inset-0"
-          aria-hidden
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.65) 100%)",
-          }}
-        />
       </div>
       <div className="glow-aura-bottom" aria-hidden />
 
