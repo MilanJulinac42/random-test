@@ -1,5 +1,7 @@
 import { useRef, useState, type PointerEvent as RPointerEvent } from "react";
 import { Reveal } from "@/components/Reveal";
+import livingBefore from "@/assets/gallery/living-before.jpg";
+import livingAfter from "@/assets/gallery/living-after.jpg";
 
 interface Project {
   before: string;
