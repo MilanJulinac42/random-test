@@ -67,7 +67,7 @@ const steps = [
   {
     num: "03",
     title: "Handover & Warranty",
-    body: "Full walkthrough before keys are handed over. Issues resolved on the spot, with a written post-completion warranty.",
+    body: "You walk through the completed space with the Reno team before anything is signed off. Any snagging items are logged and resolved — all covered by a written warranty.",
     illustration: (
       <svg viewBox="0 0 200 180" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
         {/* Radiating arcs */}
