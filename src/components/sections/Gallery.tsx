@@ -25,7 +25,7 @@ const projects: Project[] = [
     title: "Kitchen",
     neighbourhood: "Arabian Ranches",
     specs: "AED 180k · 8 weeks · 1 kitchen",
-    quote: "Fixed price held to the day — and the finish exceeded what we'd seen on Pinterest.",
+    quote: "This family villa centers around a generous kitchen with a built-in coffee bar, flowing into spacious dining and lounge areas designed for long, relaxed gatherings. A soft blue children’s room adds a playful note to the natural wood and stone palette, shaping a home that feels easy, social, and made for everyday family life.",
   },
   {
     before: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1600&q=80",
