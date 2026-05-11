@@ -100,7 +100,7 @@ function TestimonialCard({ t }: { t: Testimonial }) {
           lineHeight: 1.55,
         }}
       >
-        "{t.quote}"
+        {t.quote}
       </div>
     </div>
   );
