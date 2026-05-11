@@ -131,18 +131,18 @@ function BeforeAfterSlider({ project }: { project: Project }) {
       >
         <div className="h-full" style={{ width: 2, background: "white" }} />
         <div
-          className="absolute top-1/2 left-1/2 flex items-center justify-center rounded-full bg-white"
+          className="reno-ba-handle absolute top-1/2 left-1/2 flex items-center justify-center rounded-full"
           style={{
             transform: "translate(-50%, -50%)",
-            width: 28,
-            height: 28,
+            background: "#FFFFFF",
+            border: "1px solid rgba(0,0,0,0.2)",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
             cursor: "grab",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
           }}
         >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-            <path d="M5 3 L2 7 L5 11" stroke="#0D0D0D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M9 3 L12 7 L9 11" stroke="#0D0D0D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+            <path d="M6 4 L2 8 L6 12" stroke="#444" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M10 4 L14 8 L10 12" stroke="#444" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </div>
@@ -280,6 +280,10 @@ export function Gallery() {
         .reno-outline-cta:hover {
           background-color: #0D0D0D !important;
           color: #FFFFFF !important;
+        }
+        .reno-ba-handle { width: 44px; height: 44px; }
+        @media (min-width: 768px) {
+          .reno-ba-handle { width: 36px; height: 36px; }
         }
       `}</style>
     </section>
