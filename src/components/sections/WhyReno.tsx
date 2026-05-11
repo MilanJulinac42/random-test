@@ -64,8 +64,9 @@ export function WhyReno() {
               lineHeight: 1.6,
             }}
           >
-            The Dubai renovation market is broken. Reno fixes that with a platform that keeps
-            everyone accountable — your designer, your contractor, and us.
+            The Dubai renovation market is broken. Reno fixes
+            that with a system that keeps everyone accountable
+            — your designer, your contractor, and us.
           </p>
         </Reveal>
 
