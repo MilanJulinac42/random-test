@@ -78,6 +78,23 @@ export function Hero() {
         <div className="grid lg:grid-cols-2 gap-8 items-end">
           {/* Left column */}
           <div className="max-w-3xl lg:max-w-none">
+            <FadeIn delay={100}>
+              <div
+                className="liquid-glass rounded-sh-lg px-6 py-5 mb-6 inline-block"
+                style={{ maxWidth: 280 }}
+              >
+                <p className="text-primary uppercase text-[11px] font-medium" style={{ letterSpacing: "0.2em" }}>
+                  Our Promise
+                </p>
+                <p className="text-foreground text-lg md:text-xl mt-2" style={{ fontWeight: 700, letterSpacing: "-0.02em" }}>
+                  Design. Build. Deliver.
+                </p>
+                <p className="text-muted-foreground text-xs mt-2 leading-relaxed">
+                  End-to-end renovation, fully managed.
+                </p>
+              </div>
+            </FadeIn>
+
             <FadeIn delay={150}>
               <p
                 className="text-primary uppercase text-xs md:text-sm font-medium"
@@ -113,24 +130,6 @@ export function Hero() {
             </FadeIn>
 
           </div>
-
-          {/* Right column — glass tag */}
-          <FadeIn delay={750} className="hidden lg:flex justify-end">
-            <div
-              className="liquid-glass rounded-sh-lg px-6 py-5"
-              style={{ maxWidth: 280 }}
-            >
-              <p className="text-primary uppercase text-[11px] font-medium" style={{ letterSpacing: "0.2em" }}>
-                Our Promise
-              </p>
-              <p className="text-foreground text-lg md:text-xl mt-2" style={{ fontWeight: 700, letterSpacing: "-0.02em" }}>
-                Design. Build. Deliver.
-              </p>
-              <p className="text-muted-foreground text-xs mt-2 leading-relaxed">
-                End-to-end renovation, fully managed.
-              </p>
-            </div>
-          </FadeIn>
         </div>
       </div>
 
