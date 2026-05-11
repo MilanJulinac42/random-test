@@ -90,7 +90,7 @@ export function Hero() {
                   Design. Build. Deliver.
                 </p>
                 <p className="text-muted-foreground text-xs mt-2 leading-relaxed">
-                  End-to-end renovation, fully managed.
+                  One team. One contract. Full accountability.
                 </p>
               </div>
             </FadeIn>
