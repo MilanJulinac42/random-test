@@ -6,7 +6,7 @@ const stats = [
     Icon: Clock,
     number: "98%",
     label: "ON-TIME DELIVERY",
-    story: "Of all completed Reno projects, delivered on or before the agreed date.",
+    story: "Delivered on or before the agreed date, across\n             all completed Reno projects.",
   },
   {
     Icon: ShieldCheck,
