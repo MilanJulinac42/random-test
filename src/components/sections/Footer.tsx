@@ -131,10 +131,10 @@ export function Footer() {
           {/* Column 3: Company */}
           <div>
             <p style={columnLabelStyle}>COMPANY</p>
-            <NavLink href="#">About Reno</NavLink>
-            <NavLink href="#">For Contractors</NavLink>
-            <NavLink href="#">Privacy Policy</NavLink>
-            <NavLink href="#">Terms of Service</NavLink>
+            <span style={navLinkStyle}>About Reno</span>
+            <span style={navLinkStyle}>For Contractors</span>
+            <span style={navLinkStyle}>Privacy Policy</span>
+            <span style={navLinkStyle}>Terms of Service</span>
           </div>
 
           {/* Column 4: Contact */}
