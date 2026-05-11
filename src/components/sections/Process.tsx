@@ -158,7 +158,7 @@ export function Process() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-white mt-6" style={{ fontSize: "clamp(24px, 2.4vw, 28px)", fontWeight: 700, letterSpacing: "-0.01em" }}>
+                <h3 className="text-white mt-6 whitespace-nowrap" style={{ fontSize: "clamp(20px, 1.9vw, 24px)", fontWeight: 700, letterSpacing: "-0.01em" }}>
                   {s.title}
                 </h3>
 
