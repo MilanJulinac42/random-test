@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 
 const stats = [
   { target: 200, suffix: "+", label: "Projects Delivered" },
-  { target: 98, suffix: "%", label: "On-Time Guarantee" },
+  { target: 98, suffix: "%", label: "on-time delivery" },
   { target: 80, suffix: "+", label: "Vetted Contractors" },
 ];
 
