@@ -141,8 +141,8 @@ export function Footer() {
           <div>
             <p style={columnLabelStyle}>CONTACT</p>
             <NavLink href={WHATSAPP_GENERAL}>Chat on WhatsApp</NavLink>
-            <NavLink href={INSTAGRAM_URL}>@reno_app</NavLink>
-            <NavLink href={LINKEDIN_URL}>Reno on LinkedIn</NavLink>
+            <NavLink href="https://instagram.com/reno_app">@reno_app</NavLink>
+            <NavLink href="https://www.linkedin.com/company/renohomeae/">Reno on LinkedIn</NavLink>
             <p
               style={{
                 marginTop: 20,
