@@ -281,6 +281,10 @@ export function Gallery() {
           background-color: #0D0D0D !important;
           color: #FFFFFF !important;
         }
+        .reno-ba-handle { width: 44px; height: 44px; }
+        @media (min-width: 768px) {
+          .reno-ba-handle { width: 36px; height: 36px; }
+        }
       `}</style>
     </section>
   );
