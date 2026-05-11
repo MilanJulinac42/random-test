@@ -148,7 +148,7 @@ export function Quiz() {
             className="text-center mx-auto mt-4"
             style={{ fontSize: 14, color: "#777", maxWidth: 480, lineHeight: 1.55 }}
           >
-            Tell us what you're thinking. We'll confirm availability and call you back within 24 hours.
+            Three quick questions — then we call you back within 24 hours to confirm if we can take your project.
           </p>
         </Reveal>
 
