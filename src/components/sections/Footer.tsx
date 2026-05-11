@@ -174,32 +174,9 @@ export function Footer() {
           <p style={{ fontSize: 12, color: "#444", margin: 0 }}>
             © 2026 Reno Home Technologies LLC. All rights reserved.
           </p>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "none" }}>
             {["iOS App", "Android App"].map((label) => (
-              <a
-                key={label}
-                href="#"
-                style={{
-                  border: "0.5px solid #2A2A2A",
-                  color: "#555",
-                  borderRadius: 4,
-                  padding: "5px 12px",
-                  fontSize: 11,
-                  marginLeft: 8,
-                  textDecoration: "none",
-                  transition: "color 0.2s, border-color 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#fff";
-                  e.currentTarget.style.borderColor = "#3A3A3A";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "#555";
-                  e.currentTarget.style.borderColor = "#2A2A2A";
-                }}
-              >
-                {label}
-              </a>
+              <a key={label} href="#">{label}</a>
             ))}
           </div>
         </div>
