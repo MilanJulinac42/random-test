@@ -1,58 +1,69 @@
-## Redesign "Our Work" section
+## Replace Quiz with multi-step conversion form
 
-Rewrite `src/components/sections/Gallery.tsx` only. Keep slider mechanics, image assets, section padding, header label/heading. Remove the bottom "Is your home next?" CTA.
+Rewrite `src/components/sections/Quiz.tsx` only. Keep section id `quiz`, background, padding, and the existing Supabase `lead_submissions` insert. No other section changes.
 
-### Data updates (in the existing `projects` array)
+### Section header (above the card)
+- Eyebrow: `GET STARTED` — 10px, `letter-spacing: 0.1em`, uppercase, `#888`. (New — section currently has no eyebrow.)
+- Heading: `What are you planning?` — keep existing size/weight (single line, drop the `<br>`).
+- Subtext: existing copy, restyled to 14px, `#777`.
 
-Update each project object to include the new fields while keeping `before`, `after`, `quote` (description) unchanged:
+### Card shell
+- Centered, `maxWidth: 560px`, white, `borderRadius: 20`, `border: 1px solid rgba(0,0,0,0.08)`, `padding: 40px 40px 36px`, no shadow.
+- Top: 3-dot step indicator (8px circles, gap 8px, centered, `marginBottom: 28`). Active = filled `#1a1a1a`. Inactive = 1.5px `#D3D1C7` border, no fill.
 
-- Card 1: `location: "Downtown Dubai"`, `name: "Living space renovation"`, `price: "AED 420k"`, `duration: "14 weeks"`, `rooms: "6 rooms"`, `scope: "Full renovation"`
-- Card 2: `location: "Green Community"`, `name: "Kitchen & dining"`, `price: "AED 180k"`, `duration: "8 weeks"`, `rooms: "1 kitchen"`, `scope: "Kitchen"`
-- Card 3: `location: "Downtown Dubai"`, `name: "Kid's bedroom"`, `price: "AED 95k"`, `duration: "5 weeks"`, `rooms: "1 bedroom"`, `scope: "Bedroom"`
+### Local state
+- `step: 1 | 2 | 3`
+- `rooms: string[]`, `budget: string`, `name: string`, `phone: string`
+- `errors: { rooms?, budget?, name?, phone? }`
+- `shake: boolean` (Step 1 grid shake on invalid Next)
+- `submitted: boolean` (controls confirmation popup)
 
-Drop `title`, `neighbourhood`, `specs` (replaced by the above).
+### Step 1 — Room type
+- Heading `What are you renovating?` (17/500), subtext `Select all that apply.` (13, secondary, `mb: 20`).
+- 2×2 grid, `gap: 12`. Tile: `#F9F8F6` bg, 1.5px transparent border, `borderRadius: 14`, `padding: 20px 16px`, `height: 110`, flex column center, `gap: 10`.
+- Selected: 1.5px `#1a1a1a` border, white bg.
+- Tiles use lucide icons (closest to spec): `ChefHat` (Kitchen), `Bath` (Bathroom), `BedDouble` (Bedroom), `Building2` (Full home / Villa), 28px, `#444`.
+- Label 13/500, primary, centered.
+- Validation: ≥1 selected. Invalid Next → set `shake=true` for ~500ms (CSS keyframes class `reno-shake`) and inline error `Please select at least one space.` (12px, `#A32D2D`) below grid.
+- CTA: full-width `Next →` button. Filled style `#1a1a1a`/white, `borderRadius: 10`, height 48, 15/500, hover `#333`, disabled opacity 0.4. `marginTop: 24`.
 
-### Card component (replaces `ProjectRow`)
+### Step 2 — Budget
+- Heading `What's your rough budget?`, subtext `This helps us match you to the right scope and team.`
+- Three stacked tiles, `gap: 10`. Same base style as Step 1 tile but `padding: 18px 20px`, flex row, space-between.
+- Left: range label 15/500 primary. Right: descriptor 12/`#888`/400. Selected: 1.5px `#1a1a1a` border, white bg, descriptor → 500/primary.
+- Radio behavior (single).
+- Tiles: `AED 100k – 200k` / `Single room`; `AED 200k – 500k` / `Multi-room`; `AED 500k+` / `Full home / Villa`.
+- Buttons row, `gap: 12`, `marginTop: 24`: `← Back` (40%, transparent, 1.5px `#D3D1C7`, primary) + `Next →` (60%, filled). Same 48px height / 10px radius.
+- Validation: must select to proceed.
 
-A new `ProjectCard` renders one stacked, full-width card:
+### Step 3 — Contact
+- Heading `Where should we reach you?`, subtext `We'll call or WhatsApp you to confirm availability.`
+- Inputs stacked, `gap: 12`. Style: 48px height, 10px radius, 1.5px `#D3D1C7`, `padding: 0 16px`, 15px, white. Focus → border `#1a1a1a`, no outline (CSS class).
+  - Name: text, `autocomplete="given-name"`, placeholder `Your name`.
+  - Phone: tel, `autocomplete="tel"`, placeholder `+971 — WhatsApp preferred`. Inline note below: `We'll send a confirmation message on WhatsApp.` (11px, `#888`, mt 4).
+- Validation (Zod): `name` trim min 2; `phone` trim, regex `/^[+0][\d+\-()\s]{7,}$/` (starts with `+` or `0`, ≥8 chars total). Inline 12px `#A32D2D` errors below failing field.
+- Fine print (centered, mt 16, 12px secondary): `We assess 15–20 new projects each month.`
+- Buttons row mt 20: `← Back` (40%, secondary) + `Get my assessment →` (60%, filled).
+- On valid submit: insert into Supabase `lead_submissions` (same shape as today: name, phone, area `"—"`, rooms, budget, timeline null), then hide the card and show the confirmation popup. Do NOT navigate or reload. Errors logged to console only (don't block UX, matches existing behavior).
 
-- Wrapper: `borderRadius: 16`, `overflow: hidden`, `border: 1px solid rgba(0,0,0,0.08)`, `background: #fff`, no shadow.
-- Cards stack in a vertical flex with `gap: 16px` (replaces the divider-separated map). The two-column metadata + image layout is removed.
-
-**Image area** (top of card)
-- Height `380px` desktop, `260px` mobile (via `.reno-card-img { height: 260px } @media(min-width:768px){height:380px}`).
-- Reuses `BeforeAfterSlider` exactly as-is for slider mechanics, but:
-  - Replace the slider's fixed `aspectRatio: "16/10"` with `height: 100%` so it fills the new image area.
-  - Remove the slider's existing top-left "Before" / top-right "After" labels (they move to bottom corners per spec).
-  - Update the handle to: 40px desktop / 44px mobile, `border: 1px solid rgba(0,0,0,0.12)`, 14px arrow icon at `#444`, ensure `z-index` above images.
-- Overlays added inside the image container (absolute):
-  - Location badge: top-left, 12px from edges. `background: rgba(0,0,0,0.42)`, white 11px / weight 500 / `letter-spacing: 0.03em`, padding `4px 12px`, pill (`borderRadius: 999`).
-  - Before label: bottom-left, 10px bottom / 12px left.
-  - After label: bottom-right, 10px bottom / 12px right.
-  - Both: 10px / weight 500 / white, `background rgba(0,0,0,0.42)`, padding `3px 10px`, `borderRadius: 20`.
-
-**Info strip** (below image, inside same card)
-- Padding `20px 24px 24px`, white.
-- Row 1 — flex, `justifyContent: space-between`, `alignItems: flex-start`:
-  - Left: name, 17px / weight 500, `#0D0D0D`.
-  - Right: price, 15px / weight 500, `#0D0D0D`, `whiteSpace: nowrap`.
-- Row 2 — flex, `gap: 16px`, `marginTop: 6px`, `alignItems: center`, secondary color `#777`, 12px:
-  - Clock icon (16px lucide `Clock`) + duration.
-  - 3px dot, `background: rgba(0,0,0,0.08)` (border color).
-  - Door/grid icon (16px lucide `LayoutGrid`) + rooms.
-- Row 3 — `marginTop: 12px`. Description (existing `quote` text). 13px, `lineHeight: 1.65`, `#555`. When collapsed: CSS line-clamp to 2 (`display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden`). When expanded: clamp removed.
-- Divider: `marginTop: 16`, `height: 1px`, `background: rgba(0,0,0,0.07)`.
-- Row 4 — flex, `justifyContent: space-between`, `alignItems: center`, `paddingTop: 12px`:
-  - Left: button "View project →" / "Show less ↑" — 13px / weight 500, `#0D0D0D`, transparent background, no border. Toggles `expanded` local state in the card.
-  - Right: scope tag pill — 11px, `background: #F5F4F1`, `color: #5F5E5A`, padding `4px 12px`, `borderRadius: 20`.
-
-### Section-level changes
-
-- Keep section wrapper, "OUR WORK" eyebrow, and "Results that speak for themselves." `<h2>`.
-- Replace the `projects.map` block: render cards into a `<div>` with `display: flex; flex-direction: column; gap: 16px;` instead of the divider-separated rows.
-- Delete the `<div className="text-center mt-12 md:mt-16">` block containing the "Is your home next?" anchor.
-- Keep the existing `<style>` block for `reno-outline-cta` (still safe even if the CTA is removed, but the rule will be unused — drop it). Add new rules for `.reno-card-img` height breakpoints, `.reno-ba-handle` size breakpoints (40/44), and the line-clamp helper class.
+### Confirmation popup
+- Conditional render at section root when `submitted === true`. `position: fixed`, full-viewport overlay, `background: rgba(0,0,0,0.5)`, `zIndex: 100`, flex center.
+- Card: `maxWidth: 480`, `width: 90vw`, white, `borderRadius: 20`, `padding: 40px 36px 36px`. `role="dialog"`, `aria-modal="true"`.
+- Focus trap: on mount, focus the close link; on Escape or overlay click → close. Implemented with a `useEffect` adding a `keydown` listener and a focusable ref. Restore focus on close.
+- Section 1 (Success):
+  - Lucide `CircleCheck`, 40px, color `#3B6D11`, `mb: 16`.
+  - `You're on the list.` — 20/500.
+  - Para 1 (14, lh 1.7, secondary): `We've received your request and will confirm project availability within 24 hours. Expect a call or WhatsApp from the Reno team.`
+  - Para 2: `We take on 15–20 new projects each month — if your project is a fit, we'll walk you through next steps on the call.`
+- Divider: 1px `rgba(0,0,0,0.07)`, margin `24px 0`.
+- Section 2 (App download):
+  - Eyebrow `MANAGE YOUR PROJECT IN THE APP` — 10px, uppercase, `letter-spacing: 0.08em`, `#888`, `mb: 12`.
+  - One-liner: `Track progress, approve milestones, and message your designer — all in one place.` (13, secondary, `mb: 20`).
+  - Two pill buttons side-by-side, gap 10, each 50% width, `href="#"`. Style: `#F9F8F6` bg, 1.5px `#D3D1C7`, 10px radius, 44 height, 13/500, primary, flex center, gap 8.
+    - Lucide `Apple` icon (18px) + `App Store`.
+    - Lucide `Smartphone` icon (18px, no clean Play icon in lucide) + `Google Play`. (Note: spec says `ti-brand-google-play`; lucide doesn't ship a Google Play glyph — use `Smartphone` as the closest available primitive. Flag if user wants a custom inline SVG.)
+  - Below: `No thanks, I'll check my WhatsApp` — 13, `#888`, centered, `mt: 16`, `cursor: pointer`. On click → close popup. Closing leaves form state intact (does not reset).
 
 ### Out of scope / preserved
-
-- No edits to images, `BeforeAfterSlider` slider math (`pos`, pointer handlers), section paddings, or any other section/component.
+- No changes to other sections, the section background `#F7F5F2`, or Supabase schema.
+- Keep `WHATSAPP_POSTLEAD` import removed if unused after rewrite.
