@@ -155,7 +155,7 @@ export function WhyReno() {
                 letterSpacing: "-0.02em",
               }}
             >
-              If we run late, you're compensated. In writing, before we start.
+              If we run late, you're compensated. {"\n"}In writing, before we start.
             </h3>
           </div>
         </Reveal>
