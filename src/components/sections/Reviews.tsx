@@ -41,66 +41,47 @@ const testimonials: Testimonial[] = [
 function TestimonialCard({ t }: { t: Testimonial }) {
   return (
     <div
-      className="relative overflow-hidden shrink-0 w-full"
+      className="relative shrink-0 w-full flex flex-col"
       style={{
         borderRadius: 20,
         aspectRatio: "3 / 4",
-        backgroundColor: t.tint,
+        backgroundColor: "#F5F2EE",
+        padding: "2rem",
+        overflow: "hidden",
       }}
     >
-      {/* Layer 2: duotone image */}
-      <img
-        src={t.image}
-        alt={t.name}
-        loading="lazy"
+      {/* Decorative open-quote watermark */}
+      <span
+        aria-hidden
         style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          display: "block",
-          filter: "grayscale(100%) contrast(1.15) brightness(0.95)",
-          mixBlendMode: "multiply",
-        }}
-      />
-
-      {/* Layer 3: gradient scrim */}
-      <div
-        className="absolute left-0 right-0 bottom-0 pointer-events-none"
-        style={{
-          height: "55%",
-          background:
-            "linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)",
-        }}
-      />
-
-      {/* Layer 4: name tag */}
-      <div
-        className="absolute"
-        style={{
-          top: 16,
-          right: 16,
-          textAlign: "right",
-          fontSize: 12,
-          color: "rgba(255,255,255,0.9)",
-          lineHeight: 1.4,
+          fontSize: 56,
+          fontWeight: 300,
+          lineHeight: 1,
+          color: "rgba(120, 100, 80, 0.3)",
+          fontFamily: "Georgia, 'Times New Roman', serif",
         }}
       >
-        <div style={{ fontWeight: 600 }}>{t.name}</div>
-        <div>{t.meta}</div>
-      </div>
+        “
+      </span>
 
-      {/* Layer 5: quote */}
-      <div
-        className="absolute left-0 right-0 bottom-0"
+      {/* Quote */}
+      <p
         style={{
-          padding: "0 22px 24px",
+          marginTop: 8,
           fontSize: 15,
-          color: "#FFFFFF",
-          fontStyle: "italic",
-          lineHeight: 1.55,
+          lineHeight: 1.65,
+          color: "#1A1A1A",
+          fontStyle: "normal",
+          flex: 1,
         }}
       >
         {t.quote}
+      </p>
+
+      {/* Reviewer */}
+      <div style={{ marginTop: 16 }}>
+        <div style={{ fontSize: 13, fontWeight: 500, color: "#1A1A1A" }}>{t.name}</div>
+        <div style={{ fontSize: 12, color: "#777", marginTop: 2 }}>{t.meta}</div>
       </div>
     </div>
   );
