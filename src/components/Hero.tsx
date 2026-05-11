@@ -61,6 +61,15 @@ export function Hero() {
           />
         ))}
       </div>
+      {/* Legibility gradient — top-right transparent → bottom-left dark */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%)",
+        }}
+      />
       <div className="glow-aura-bottom" aria-hidden />
 
       <div
