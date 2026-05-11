@@ -87,15 +87,6 @@ export function Hero() {
               </p>
             </FadeIn>
 
-            <FadeIn delay={200}>
-              <p
-                className="text-foreground uppercase mt-5"
-                style={{ fontWeight: 700, letterSpacing: "0.18em", fontSize: "16px" }}
-              >
-                Design. Build. Deliver.
-              </p>
-            </FadeIn>
-
             <AnimatedHeading
               text={"Your renovation, \nfully handled."}
               className="text-foreground mt-3"
