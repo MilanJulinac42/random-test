@@ -17,7 +17,7 @@ const projects: Project[] = [
     title: "Full villa transformation",
     neighbourhood: "Emirates Hills",
     specs: "AED 420k · 14 weeks · 6 rooms",
-    quote: "We were in London for 2 months — tracked every update from the app.",
+    quote: "Perched high above the city, this family apartment is defined by soft oak, seamless micro cement floors, and light that moves gently across curved seating and custom timber cladding in the living room. In the kitchen, layered wood joinery and a sculpted island create a quiet focal point, while the children’s bedroom introduces playful forms and built-in details that feel warm and thoughtfully designed.",
   },
   {
     before: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1600&q=80",
