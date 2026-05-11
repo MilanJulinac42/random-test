@@ -1,47 +1,75 @@
 import { ChevronDown } from "lucide-react";
-import { useEffect, useRef } from "react";
-import Hls from "hls.js";
+import { useEffect, useState } from "react";
 import { AnimatedHeading } from "@/components/AnimatedHeading";
 import { FadeIn } from "@/components/FadeIn";
+import hero1 from "@/assets/hero/hero-1.jpg";
+import hero2 from "@/assets/hero/hero-2.jpg";
+import hero3 from "@/assets/hero/hero-3.jpg";
+import hero4 from "@/assets/hero/hero-4.jpeg";
 
-const HLS_SRC = "https://stream.mux.com/4IMYGcL01xjs7ek5ANO17JC4VQVUTsojZlnw4fXzwSxc.m3u8";
+const SLIDES = [
+  { src: hero1, alt: "Modern living room with curved sofa and panoramic city view" },
+  { src: hero2, alt: "Contemporary lounge with linear LED lighting and balcony" },
+  { src: hero3, alt: "Minimal Japanese-inspired kitchen with oak millwork" },
+  { src: hero4, alt: "Open-plan villa interior with marble accents and statement staircase" },
+];
+
+const SLIDE_INTERVAL = 5000;
 
 export function Hero() {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    if (paused) return;
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    const id = setInterval(() => {
+      setActive((i) => (i + 1) % SLIDES.length);
+    }, SLIDE_INTERVAL);
+    return () => clearInterval(id);
+  }, [paused]);
 
-    // Safari (and iOS) supports HLS natively
-    if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = HLS_SRC;
-      return;
-    }
-
-    if (Hls.isSupported()) {
-      const hls = new Hls({ enableWorker: true, lowLatencyMode: false });
-      hls.loadSource(HLS_SRC);
-      hls.attachMedia(video);
-      return () => {
-        hls.destroy();
-      };
-    }
-  }, []);
+  const handleSelect = (i: number) => {
+    setActive(i);
+    setPaused(true);
+    // Resume auto-advance after a short pause
+    window.setTimeout(() => setPaused(false), 8000);
+  };
 
   return (
     <section
       id="top"
       className="relative min-h-screen w-full overflow-hidden flex flex-col bg-background text-foreground"
     >
-      <video
-        ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover"
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
+      {/* Slideshow */}
+      <div className="absolute inset-0">
+        {SLIDES.map((slide, i) => (
+          <img
+            key={slide.src}
+            src={slide.src}
+            alt={i === active ? slide.alt : ""}
+            aria-hidden={i !== active}
+            loading={i === 0 ? "eager" : "lazy"}
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{
+              opacity: i === active ? 1 : 0,
+              transition: "opacity 800ms ease-in-out",
+            }}
+          />
+        ))}
+        {/* Dark gradient overlay for text legibility */}
+        <div
+          className="absolute inset-0"
+          aria-hidden
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.65) 100%)",
+          }}
+        />
+      </div>
       <div className="glow-aura-bottom" aria-hidden />
 
       <div
@@ -105,6 +133,42 @@ export function Hero() {
             </div>
           </FadeIn>
         </div>
+      </div>
+
+      {/* Thumbnail strip */}
+      <div
+        className="absolute z-20 bottom-20 right-4 md:bottom-6 md:right-6 liquid-glass rounded-sh p-2 flex gap-2"
+        role="tablist"
+        aria-label="Hero slideshow thumbnails"
+      >
+        {SLIDES.map((slide, i) => {
+          const isActive = i === active;
+          return (
+            <button
+              key={slide.src}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-label={`Show slide ${i + 1}`}
+              onClick={() => handleSelect(i)}
+              className="rounded-sh overflow-hidden transition-all"
+              style={{
+                width: 64,
+                height: 44,
+                opacity: isActive ? 1 : 0.6,
+                outline: isActive ? "2px solid hsl(var(--primary))" : "1px solid rgba(255,255,255,0.2)",
+                outlineOffset: 0,
+              }}
+            >
+              <img
+                src={slide.src}
+                alt=""
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </button>
+          );
+        })}
       </div>
 
       <a
