@@ -189,7 +189,7 @@ function BeforeAfterSlider({ project }: { project: Project }) {
 }
 
 function ProjectCard({ project }: { project: Project }) {
-  const [expanded, setExpanded] = useState(false);
+  
 
   return (
     <article
