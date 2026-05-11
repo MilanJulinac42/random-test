@@ -302,12 +302,12 @@ export function Gallery() {
           <h2
             className="mt-4"
             style={{
-              fontSize: "clamp(36px, 5vw, 56px)",
+              fontSize: "clamp(28px, 5vw, 56px)",
               fontWeight: 700,
               color: "#0D0D0D",
               letterSpacing: "-0.02em",
               lineHeight: 1.05,
-              maxWidth: 720,
+              whiteSpace: "nowrap",
             }}
           >
             Delivered projects, not renders.
