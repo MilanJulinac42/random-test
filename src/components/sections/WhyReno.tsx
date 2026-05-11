@@ -18,7 +18,7 @@ const stats = [
     Icon: Star,
     number: "4.9★",
     label: "HOMEOWNER RATING",
-    story: "Verified post-handover survey average across 200+ delivered projects.",
+    story: "Verified average from post-handover survey across 200+ completed projects.",
   },
 ];
 
