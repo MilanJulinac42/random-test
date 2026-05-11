@@ -68,7 +68,7 @@ function TestimonialCard({ t }: { t: Testimonial }) {
       <p
         style={{
           marginTop: 8,
-          fontSize: 21,
+          fontSize: "clamp(16px, 2.4vw, 21px)",
           lineHeight: 1.55,
           color: "#1A1A1A",
           flex: 1,
