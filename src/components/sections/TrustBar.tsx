@@ -3,7 +3,7 @@ import { Shield, BadgeCheck, Star, Home, Smartphone } from "lucide-react";
 const items = [
   { Icon: Shield, label: "Fully insured projects" },
   { Icon: BadgeCheck, label: "Licensed by Dubai Economy" },
-  { Icon: Star, label: "4.9 / 5 on Google" },
+  { Icon: Star, label: "Written on-time guarantee" },
   { Icon: Home, label: "200+ Homes Delivered" },
   { Icon: Smartphone, label: "App on iOS & Android" },
 ];
