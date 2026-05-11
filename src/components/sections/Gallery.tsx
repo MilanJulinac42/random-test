@@ -2,6 +2,8 @@ import { useRef, useState, type PointerEvent as RPointerEvent } from "react";
 import { Reveal } from "@/components/Reveal";
 import livingBefore from "@/assets/gallery/living-before.jpg";
 import livingAfter from "@/assets/gallery/living-after.jpg";
+import kitchenBefore from "@/assets/gallery/kitchen-before.jpg";
+import kitchenAfter from "@/assets/gallery/kitchen-after.jpg";
 
 interface Project {
   before: string;
@@ -22,8 +24,8 @@ const projects: Project[] = [
     quote: "Perched high above the city, this family apartment is defined by soft oak, seamless micro cement floors, and light that moves gently across curved seating and custom timber cladding in the living room. In the kitchen, layered wood joinery and a sculpted island create a quiet focal point, while the children’s bedroom introduces playful forms and built-in details that feel warm and thoughtfully designed.",
   },
   {
-    before: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1600&q=80",
-    after: "https://images.unsplash.com/photo-1556909211-d5b0e2bedd5e?auto=format&fit=crop&w=1600&q=80",
+    before: kitchenBefore,
+    after: kitchenAfter,
     title: "Kitchen",
     neighbourhood: "Green Community",
     specs: "AED 180k · 8 weeks · 1 kitchen",
