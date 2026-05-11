@@ -30,7 +30,7 @@ const steps = [
   {
     num: "02",
     title: "Build, tracked at every step",
-    body: "Vetted contractors execute. Photo updates and site inspections at every milestone — no money moves without your approval.",
+    body: "Work begins with vetted contractors. At every milestone you get photo updates and a site inspection — and your payment only releases when you're satisfied.",
     illustration: (
       <svg viewBox="0 0 200 180" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
         {/* Constellation lines */}
