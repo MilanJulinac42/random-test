@@ -16,7 +16,7 @@ const testimonials: Testimonial[] = [
     image:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=1100&fit=crop&crop=face&q=80",
     quote:
-      "Every payment was tied to a milestone we approved ourselves. No surprises, no chasing — exactly what we were promised.",
+      "“Brilliant team – took them a week to renovate the entire apartment. You have never seen this before in the UAE market.ˮ ",
   },
   {
     name: "Khalid & Sara M.",
