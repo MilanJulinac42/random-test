@@ -4,7 +4,7 @@ const steps = [
   {
     num: "01",
     title: "Design and planning",
-    body: "Your dedicated designer maps your vision, scope, and budget into a full project plan you approve before any work begins.",
+    body: "A dedicated Reno designer turns your vision into a full plan — scope, budget, and timeline. You review and sign off before a single contractor is engaged.",
     illustration: (
       <svg viewBox="0 0 200 180" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
         {/* Floor plan outline */}
