@@ -138,7 +138,7 @@ export function InstagramFeed() {
                 </span>
               </div>
               <p style={{ fontSize: 13, color: "#999", marginTop: 4 }}>
-                Project updates, team news, and industry insights.
+                Project stories, renovation insights, and what the Reno team is building.
               </p>
             </div>
             <a
