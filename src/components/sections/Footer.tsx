@@ -131,18 +131,18 @@ export function Footer() {
           {/* Column 3: Company */}
           <div>
             <p style={columnLabelStyle}>COMPANY</p>
-            <NavLink href="#">About Reno</NavLink>
-            <NavLink href="#">For Contractors</NavLink>
-            <NavLink href="#">Privacy Policy</NavLink>
-            <NavLink href="#">Terms of Service</NavLink>
+            <span style={navLinkStyle}>About Reno</span>
+            <span style={navLinkStyle}>For Contractors</span>
+            <span style={navLinkStyle}>Privacy Policy</span>
+            <span style={navLinkStyle}>Terms of Service</span>
           </div>
 
           {/* Column 4: Contact */}
           <div>
             <p style={columnLabelStyle}>CONTACT</p>
             <NavLink href={WHATSAPP_GENERAL}>Chat on WhatsApp</NavLink>
-            <NavLink href={INSTAGRAM_URL}>@reno_app</NavLink>
-            <NavLink href={LINKEDIN_URL}>Reno on LinkedIn</NavLink>
+            <NavLink href="https://instagram.com/reno_app">@reno_app</NavLink>
+            <NavLink href="https://www.linkedin.com/company/renohomeae/">Reno on LinkedIn</NavLink>
             <p
               style={{
                 marginTop: 20,
@@ -174,32 +174,9 @@ export function Footer() {
           <p style={{ fontSize: 12, color: "#444", margin: 0 }}>
             © 2026 Reno Home Technologies LLC. All rights reserved.
           </p>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "none" }}>
             {["iOS App", "Android App"].map((label) => (
-              <a
-                key={label}
-                href="#"
-                style={{
-                  border: "0.5px solid #2A2A2A",
-                  color: "#555",
-                  borderRadius: 4,
-                  padding: "5px 12px",
-                  fontSize: 11,
-                  marginLeft: 8,
-                  textDecoration: "none",
-                  transition: "color 0.2s, border-color 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#fff";
-                  e.currentTarget.style.borderColor = "#3A3A3A";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "#555";
-                  e.currentTarget.style.borderColor = "#2A2A2A";
-                }}
-              >
-                {label}
-              </a>
+              <a key={label} href="#">{label}</a>
             ))}
           </div>
         </div>

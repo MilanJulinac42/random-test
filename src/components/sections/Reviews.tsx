@@ -16,7 +16,7 @@ const testimonials: Testimonial[] = [
     image:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=1100&fit=crop&crop=face&q=80",
     quote:
-      "“Brilliant team – took them a week to renovate the entire apartment. You have never seen this before in the UAE market.ˮ ",
+      "\u201CBrilliant team – took them a week to renovate the entire apartment. You have never seen this before in the UAE market.\u201D",
   },
   {
     name: "Camillo",
@@ -25,7 +25,7 @@ const testimonials: Testimonial[] = [
     image:
       "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=800&h=1100&fit=crop&crop=face&q=80",
     quote:
-      "“Credit card payments are a huge plus, I earned cashback and used it to purchase garden furniture for my house.ˮ",
+      "\u201CCredit card payments are a huge plus, I earned cashback and used it to purchase garden furniture for my house.\u201D",
   },
   {
     name: "Amir",
@@ -34,7 +34,7 @@ const testimonials: Testimonial[] = [
     image:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1100&fit=crop&crop=face&q=80",
     quote:
-      "“Reno completely transformed my Dubai Hills apartment in just a few weeks. Sleek finishes, on-time delivery, and I barely had to lift a finger. Itʼs rare to find a team this reliable in Dubaiˮ",
+      "\u201CReno completely transformed my Dubai Hills apartment in just a few weeks. Sleek finishes, on-time delivery, and I barely had to lift a finger. It\u2019s rare to find a team this reliable in Dubai.\u201D",
   },
 ];
 
@@ -100,7 +100,7 @@ function TestimonialCard({ t }: { t: Testimonial }) {
           lineHeight: 1.55,
         }}
       >
-        "{t.quote}"
+        {t.quote}
       </div>
     </div>
   );
