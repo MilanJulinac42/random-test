@@ -28,7 +28,7 @@ const testimonials: Testimonial[] = [
       "“Credit card payments are a huge plus, I earned cashback and used it to purchase garden furniture for my house.ˮ",
   },
   {
-    name: "James R.",
+    name: "Amir",
     meta: "Townhouse · JVC",
     tint: "#1F3560",
     image:
