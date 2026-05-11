@@ -23,7 +23,7 @@ const projects: Project[] = [
     before: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1600&q=80",
     after: "https://images.unsplash.com/photo-1556909211-d5b0e2bedd5e?auto=format&fit=crop&w=1600&q=80",
     title: "Kitchen",
-    neighbourhood: "Arabian Ranches",
+    neighbourhood: "Green Community",
     specs: "AED 180k · 8 weeks · 1 kitchen",
     quote: "This family villa centers around a generous kitchen with a built-in coffee bar, flowing into spacious dining and lounge areas designed for long, relaxed gatherings. A soft blue children’s room adds a playful note to the natural wood and stone palette, shaping a home that feels easy, social, and made for everyday family life.",
   },
