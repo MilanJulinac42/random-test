@@ -117,7 +117,7 @@ export function Hero() {
       </div>
 
       {/* Bottom-right stack: thumbnails above, scroll indicator below (8px gap) */}
-      <div className="absolute z-20 bottom-6 right-4 md:right-6 flex flex-col items-end gap-2">
+      <div className="absolute z-20 bottom-6 right-4 md:right-6 hidden md:flex flex-col items-end gap-2">
         <div
           className="liquid-glass rounded-sh p-2 flex gap-2"
           role="tablist"
