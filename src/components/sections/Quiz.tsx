@@ -30,9 +30,9 @@ const FILLED_BTN: React.CSSProperties = {
   color: "white",
   border: "none",
   borderRadius: 10,
-  height: 48,
-  fontSize: 15,
-  fontWeight: 500,
+  height: 56,
+  fontSize: 18,
+  fontWeight: 600,
   cursor: "pointer",
 };
 
@@ -135,7 +135,7 @@ export function Quiz() {
           <h2
             className="text-center mt-3"
             style={{
-              fontSize: "clamp(36px, 5.5vw, 52px)",
+              fontSize: "clamp(36px, 5.5vw, 48px)",
               fontWeight: 700,
               color: "#0D0D0D",
               lineHeight: 1.05,
@@ -145,8 +145,8 @@ export function Quiz() {
             Tell us about your project.
           </h2>
           <p
-            className="text-center mx-auto mt-4"
-            style={{ fontSize: 14, color: "#777", maxWidth: 480, lineHeight: 1.55 }}
+            className="text-center mx-auto mt-5"
+            style={{ fontSize: 18, color: "#555", maxWidth: 540, lineHeight: 1.55 }}
           >
             Three quick questions — then we call you back within 24 hours to confirm if we can take your project.
           </p>
@@ -210,22 +210,22 @@ export function Quiz() {
                           onClick={() => toggleRoom(t.key)}
                           aria-pressed={active}
                           style={{
-                            background: active ? "#FFFFFF" : "#F9F8F6",
-                            border: `1.5px solid ${active ? "#1a1a1a" : "transparent"}`,
+                            background: active ? "#1a1a1a" : "#FFFFFF",
+                            border: `1.5px solid ${active ? "#1a1a1a" : "#D3D1C7"}`,
                             borderRadius: 14,
                             padding: "20px 16px",
-                            height: 110,
+                            minHeight: 120,
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
                             justifyContent: "center",
-                            gap: 10,
+                            gap: 12,
                             cursor: "pointer",
                             transition: "background 150ms, border-color 150ms",
                           }}
                         >
-                          <Icon size={28} strokeWidth={1.5} color="#444" />
-                          <span style={{ fontSize: 13, fontWeight: 500, color: "#0D0D0D", textAlign: "center" }}>
+                          <Icon size={32} strokeWidth={1.5} color={active ? "#FFFFFF" : "#444"} />
+                          <span style={{ fontSize: 17, fontWeight: 500, color: active ? "#FFFFFF" : "#0D0D0D", textAlign: "center" }}>
                             {t.label}
                           </span>
                         </button>

@@ -45,10 +45,10 @@ export function WhyReno() {
           <h2
             className="text-center mx-auto mt-4"
             style={{
-              fontSize: "clamp(32px, 4.5vw, 44px)",
+              fontSize: "clamp(32px, 4vw, 40px)",
               fontWeight: 700,
               color: "#0D0D0D",
-              maxWidth: 560,
+              maxWidth: 600,
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
             }}
@@ -90,26 +90,29 @@ export function WhyReno() {
                 <s.Icon size={36} color="#4A24FF" strokeWidth={1.5} />
                 <div
                   style={{
-                    fontSize: 11,
-                    letterSpacing: "0.1em",
-                    color: "#AAA",
-                    marginTop: 8,
-                    fontWeight: 500,
-                  }}
-                >
-                  {s.label}
-                </div>
-                <div
-                  style={{
-                    fontSize: 64,
+                    fontSize: "clamp(80px, 9vw, 96px)",
                     fontWeight: 800,
                     color: "#0D0D0D",
                     lineHeight: 1,
-                    marginTop: 8,
-                    letterSpacing: "-0.03em",
+                    marginTop: 16,
+                    letterSpacing: "-0.04em",
+                    order: 2,
                   }}
                 >
                   {s.number}
+                </div>
+                <div
+                  style={{
+                    fontSize: 14,
+                    letterSpacing: "0.14em",
+                    color: "#888",
+                    marginTop: 14,
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    order: 3,
+                  }}
+                >
+                  {s.label}
                 </div>
                 <p
                   style={{
@@ -147,13 +150,13 @@ export function WhyReno() {
               </p>
               <h3
                 style={{
-                  fontSize: "clamp(22px, 2.6vw, 28px)",
+                  fontSize: "clamp(28px, 3.6vw, 40px)",
                   color: "#FFFFFF",
                   fontWeight: 700,
-                  maxWidth: 380,
-                  marginTop: 10,
-                  lineHeight: 1.25,
-                  letterSpacing: "-0.01em",
+                  maxWidth: 620,
+                  marginTop: 14,
+                  lineHeight: 1.2,
+                  letterSpacing: "-0.02em",
                 }}
               >
                 If we run late, you're compensated. In writing, before we start.

@@ -68,10 +68,10 @@ function TestimonialCard({ t }: { t: Testimonial }) {
       <p
         style={{
           marginTop: 8,
-          fontSize: 15,
-          lineHeight: 1.65,
+          fontSize: 21,
+          lineHeight: 1.55,
           color: "#1A1A1A",
-          fontStyle: "normal",
+          fontStyle: "italic",
           flex: 1,
         }}
       >
@@ -79,9 +79,9 @@ function TestimonialCard({ t }: { t: Testimonial }) {
       </p>
 
       {/* Reviewer */}
-      <div style={{ marginTop: 16 }}>
-        <div style={{ fontSize: 13, fontWeight: 500, color: "#1A1A1A" }}>{t.name}</div>
-        <div style={{ fontSize: 12, color: "#777", marginTop: 2 }}>{t.meta}</div>
+      <div style={{ marginTop: 18 }}>
+        <div style={{ fontSize: 16, fontWeight: 700, color: "#1A1A1A" }}>{t.name}</div>
+        <div style={{ fontSize: 14, color: "#777", marginTop: 4 }}>{t.meta}</div>
       </div>
     </div>
   );
@@ -114,12 +114,12 @@ export function Reviews() {
           <h2
             className="text-center mt-4"
             style={{
-              fontSize: "clamp(32px, 4.5vw, 44px)",
+              fontSize: "clamp(36px, 5vw, 48px)",
               fontWeight: 700,
               color: "#FFFFFF",
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
-              marginBottom: 16,
+              marginBottom: 18,
             }}
           >
             Trusted across Dubai.
@@ -127,7 +127,7 @@ export function Reviews() {
           <p
             className="text-center"
             style={{
-              fontSize: 16,
+              fontSize: 18,
               color: "#A78BFA",
               fontWeight: 500,
             }}
