@@ -1,7 +1,7 @@
 import { Shield, BadgeCheck, Star, Home, Smartphone } from "lucide-react";
 
 const items = [
-  { Icon: Shield, label: "Fully Insured Projects" },
+  { Icon: Shield, label: "Fully insured projects" },
   { Icon: BadgeCheck, label: "Dubai Economy Licensed" },
   { Icon: Star, label: "4.9 / 5 on Google" },
   { Icon: Home, label: "200+ Homes Delivered" },
