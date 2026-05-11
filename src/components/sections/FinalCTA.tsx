@@ -22,8 +22,7 @@ export function FinalCTA() {
               margin: "16px auto 36px",
             }}
           >
-            Book a free 15-minute project assessment. No commitment, no hard sell —
-            just clarity on what your renovation could look like and what it will cost.
+            Book a free 15-minute call with the Reno team. We'll tell you honestly whether your project is a fit, and what it would take to make it happen.
           </p>
           <a
             href="#quiz"
