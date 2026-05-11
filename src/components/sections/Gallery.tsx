@@ -310,7 +310,7 @@ export function Gallery() {
               maxWidth: 720,
             }}
           >
-            Results that speak for themselves.
+            Delivered projects, not renders.
           </h2>
         </Reveal>
 
