@@ -4,6 +4,8 @@ import livingBefore from "@/assets/gallery/living-before.jpg";
 import livingAfter from "@/assets/gallery/living-after.jpg";
 import kitchenBefore from "@/assets/gallery/kitchen-before.jpg";
 import kitchenAfter from "@/assets/gallery/kitchen-after.jpg";
+import kidsBefore from "@/assets/gallery/kids-before.jpg";
+import kidsAfter from "@/assets/gallery/kids-after.jpg";
 
 interface Project {
   before: string;
@@ -32,8 +34,8 @@ const projects: Project[] = [
     quote: "This family villa centers around a generous kitchen with a built-in coffee bar, flowing into spacious dining and lounge areas designed for long, relaxed gatherings. A soft blue children’s room adds a playful note to the natural wood and stone palette, shaping a home that feels easy, social, and made for everyday family life.",
   },
   {
-    before: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1600&q=80",
-    after: "https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1600&q=80",
+    before: kidsBefore,
+    after: kidsAfter,
     title: "Kid’s Bedroom",
     neighbourhood: "Downtown Dubai",
     specs: "AED 95k · 5 weeks · 1 bathroom",
