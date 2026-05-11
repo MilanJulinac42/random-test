@@ -1,5 +1,7 @@
 import { useRef, useState, type PointerEvent as RPointerEvent } from "react";
 import { Reveal } from "@/components/Reveal";
+import livingBefore from "@/assets/gallery/living-before.jpg";
+import livingAfter from "@/assets/gallery/living-after.jpg";
 
 interface Project {
   before: string;
@@ -12,8 +14,8 @@ interface Project {
 
 const projects: Project[] = [
   {
-    before: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1600&q=80",
-    after: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80",
+    before: livingBefore,
+    after: livingAfter,
     title: "Living space",
     neighbourhood: "Downtown Dubai",
     specs: "AED 420k · 14 weeks · 6 rooms",
