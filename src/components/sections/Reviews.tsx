@@ -25,7 +25,7 @@ const testimonials: Testimonial[] = [
     image:
       "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=800&h=1100&fit=crop&crop=face&q=80",
     quote:
-      "We were travelling for six weeks. The app meant we could see photos, approve decisions, and track costs from our phones. Completely in control.",
+      "“Credit card payments are a huge plus, I earned cashback and used it to purchase garden furniture for my house.ˮ",
   },
   {
     name: "James R.",
