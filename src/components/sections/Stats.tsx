@@ -4,19 +4,19 @@ import { Reveal } from "@/components/Reveal";
 
 const stats = [
   { target: 200, suffix: "+", label: "Projects Delivered" },
-  { target: 100, suffix: "%", label: "On-Time Guarantee" },
-  { target: 50, suffix: "+", label: "Vetted Contractors" },
+  { target: 98, suffix: "%", label: "On-Time Guarantee" },
+  { target: 80, suffix: "+", label: "Vetted Contractors" },
 ];
 
 function StatItem({ target, suffix, label, start }: { target: number; suffix: string; label: string; start: boolean }) {
-  const value = useCountUp(target, 1800, start);
+  const value = useCountUp(target, 1200, start);
   return (
     <div className="flex flex-col items-center text-center px-4 py-6">
       <span
         style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1, color: "#A78BFA" }}
       >
-        {value}
-        {suffix}
+        <span>{value}</span>
+        <span>{suffix}</span>
       </span>
       <span
         className="uppercase mt-3 text-xs md:text-sm"
