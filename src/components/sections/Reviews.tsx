@@ -19,7 +19,7 @@ const testimonials: Testimonial[] = [
       "“Brilliant team – took them a week to renovate the entire apartment. You have never seen this before in the UAE market.ˮ ",
   },
   {
-    name: "Khalid & Sara M.",
+    name: "Camillo",
     meta: "Apartment · Downtown Dubai",
     tint: "#1D6B5A",
     image:
