@@ -94,7 +94,7 @@ export function Reviews() {
       style={{
         backgroundColor: "#0D0D0D",
         paddingTop: "clamp(80px, 10vw, 140px)",
-        paddingBottom: "clamp(160px, 18vw, 260px)",
+        paddingBottom: "clamp(80px, 10vw, 140px)",
       }}
     >
 
