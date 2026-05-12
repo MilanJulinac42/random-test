@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+
 import { Reveal } from "@/components/Reveal";
 
 type Testimonial = {
