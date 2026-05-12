@@ -269,30 +269,29 @@ export function Gallery() {
         id="gallery"
         data-nav-theme="dark"
         className="relative w-full"
-        style={{ backgroundColor: "#0a0a0a", paddingTop: 64, paddingBottom: 64 }}
+        style={{ backgroundColor: "#0D0D0D", paddingTop: 96, paddingBottom: 96 }}
       >
         <div className="px-6">
           <p
             className="uppercase"
-            style={{ fontSize: 11, letterSpacing: "0.2em", color: "#555", fontWeight: 500 }}
+            style={{ fontSize: 14, letterSpacing: "0.12em", color: "#482FFF", fontWeight: 500 }}
           >
             OUR WORK
           </p>
           <h2
+            className="text-white mt-5"
             style={{
-              marginTop: 12,
-              fontSize: 32,
-              fontWeight: 600,
-              color: "#fff",
+              fontSize: "clamp(40px, 5vw, 64px)",
+              fontWeight: 700,
+              lineHeight: 1.05,
               letterSpacing: "-0.02em",
-              lineHeight: 1.1,
             }}
           >
             Delivered projects, not renders.
           </h2>
         </div>
 
-        <div className="flex flex-col" style={{ gap: 56, marginTop: 40 }}>
+        <div className="flex flex-col" style={{ gap: 56, marginTop: 48 }}>
           {projects.map((p) => (
             <div key={p.name}>
               <BeforeAfterSlider project={p} />
