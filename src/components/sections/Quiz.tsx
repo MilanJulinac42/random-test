@@ -375,6 +375,10 @@ export function Quiz() {
         }
 
         /* Phone input overrides */
+        .react-tel-input,
+        .react-tel-input * {
+          font-family: 'ZT Talk', system-ui, sans-serif !important;
+        }
         .react-tel-input .form-control {
           width: 100% !important;
           height: 48px !important;
@@ -429,6 +433,28 @@ export function Quiz() {
           border: 1.5px solid #e0e0e0 !important;
           border-radius: 6px !important;
           margin: 0 !important;
+          color: #0D0D0D !important;
+          font-size: 13px !important;
+        }
+        .react-tel-input .country-list .country {
+          color: #0D0D0D !important;
+          font-size: 13px !important;
+          padding: 8px 10px !important;
+        }
+        .react-tel-input .country-list .country .country-name {
+          color: #0D0D0D !important;
+          margin-right: 6px !important;
+        }
+        .react-tel-input .country-list .country .dial-code {
+          color: #666 !important;
+        }
+        .react-tel-input .country-list .country:hover,
+        .react-tel-input .country-list .country.highlight {
+          background: #f5f5f5 !important;
+        }
+        .react-tel-input .country-list .country:hover .dial-code,
+        .react-tel-input .country-list .country.highlight .dial-code {
+          color: #0D0D0D !important;
         }
       `}</style>
     </section>
