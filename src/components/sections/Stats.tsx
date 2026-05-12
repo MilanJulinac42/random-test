@@ -99,7 +99,7 @@ export function Stats() {
   return (
     <section
       data-nav-theme="dark"
-      className="relative overflow-hidden px-6 md:px-12 lg:px-16 py-20 md:py-28"
+      className="relative overflow-hidden px-6 md:px-12 lg:px-16 py-12 md:py-28"
       style={{
         backgroundColor: "#0D0D0D",
         borderTop: "1px solid #1E1E1E",
@@ -110,24 +110,26 @@ export function Stats() {
       <div className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
           <p
-            className="uppercase font-medium mb-12 md:mb-16"
-            style={{ fontSize: 14, letterSpacing: "0.25em", color: "#482FFF" }}
+            className="uppercase font-medium mb-8 md:mb-16 text-center md:text-left"
+            style={{ fontSize: 12, letterSpacing: "0.18em", color: "#482FFF", whiteSpace: "nowrap" }}
           >
             Trusted by Dubai Homeowners
           </p>
         </Reveal>
 
-        <div
-          ref={ref}
-          className="grid grid-cols-1 md:grid-cols-[0.9fr_1.1fr] gap-10 md:gap-16 items-center"
-        >
-          {/* Left: two stacked stats */}
+        {/* Mobile: 3 compact stats in a row */}
+        <div ref={ref} className="md:hidden grid grid-cols-3 gap-3 items-start text-center">
+          <MobileStat value={useCountUp(98, 1200, inView)} suffix="%" label="On-time delivery" />
+          <MobileStat value={useCountUp(100, 1300, inView)} suffix="+" label="Vetted contractors" />
+          <MobileStat value={useCountUp(200, 1400, inView)} suffix="+" label="Projects delivered" />
+        </div>
+
+        {/* Desktop layout */}
+        <div className="hidden md:grid md:grid-cols-[0.9fr_1.1fr] gap-16 items-center">
           <div className="flex flex-col divide-y divide-white/10">
             <LeftStat target={98} suffix="%" label="On-time delivery" start={inView} />
             <LeftStat target={100} suffix="+" label="Vetted contractors" start={inView} />
           </div>
-
-          {/* Right: gradient card */}
           <CardStat start={inView} />
         </div>
       </div>
