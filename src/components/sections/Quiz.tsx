@@ -112,9 +112,9 @@ export function Quiz() {
           </h2>
           <p
             className="text-center mx-auto mt-4 reno-quiz-sub"
-            style={{ color: "#555", maxWidth: 520, lineHeight: 1.55 }}
+            style={{ color: "#555", maxWidth: "100%", lineHeight: 1.55, whiteSpace: "nowrap" }}
           >
-            One short form. We call back within 24 hours to confirm if we can take your project.
+            We call back within 24 hours.
           </p>
         </Reveal>
 
