@@ -51,21 +51,6 @@ export function Hero() {
           its top-left and bottom-right corners bleed off-screen, leaving
           only the top-right and bottom-left rounded corners visible. */}
       <div
-        className="absolute overflow-hidden"
-        style={{
-          top: "var(--hero-bleed)",
-          left: "var(--hero-bleed)",
-          width: "calc(100% - 2 * var(--hero-bleed))",
-          height: "calc(100% - 2 * var(--hero-bleed))",
-          // Tailwind isn't aware of the custom prop; default + md override below.
-        }}
-      />
-      {/*
-        We render the card as a real positioned div (not the empty one above —
-        that was a sketch). Below: the actual card with negative offsets so
-        opposite corners clip off the viewport.
-      */}
-      <div
         className="hero-card absolute overflow-hidden rounded-[24px]"
         style={{
           top: "calc(-1 * var(--hero-bleed))",
