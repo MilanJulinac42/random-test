@@ -375,6 +375,10 @@ export function Quiz() {
         }
 
         /* Phone input overrides */
+        .react-tel-input,
+        .react-tel-input * {
+          font-family: 'ZT Talk', system-ui, sans-serif !important;
+        }
         .react-tel-input .form-control {
           width: 100% !important;
           height: 48px !important;
