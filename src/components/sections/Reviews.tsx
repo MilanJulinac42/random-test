@@ -93,18 +93,18 @@ export function Reviews() {
       className="relative overflow-hidden w-full"
       style={{
         backgroundColor: "#0D0D0D",
-        paddingTop: "clamp(80px, 10vw, 140px)",
-        paddingBottom: "clamp(80px, 10vw, 140px)",
+        paddingTop: "clamp(64px, 10vw, 140px)",
+        paddingBottom: "clamp(64px, 10vw, 140px)",
       }}
     >
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         {/* Header row */}
         <Reveal>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8 items-center md:items-stretch text-center md:text-left">
             <h2
               style={{
-                fontSize: "clamp(40px, 5vw, 64px)",
+                fontSize: "clamp(28px, 8vw, 64px)",
                 fontWeight: 700,
                 color: "#FFFFFF",
                 lineHeight: 1.05,
@@ -118,20 +118,18 @@ export function Reviews() {
 
             {/* Stat pill */}
             <div
-              className="inline-flex items-center self-start md:self-auto"
+              className="inline-flex items-center self-center md:self-auto reno-stat-pill"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.08)",
                 borderRadius: 999,
-                padding: "20px 36px",
-                gap: 20,
                 boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
                 backdropFilter: "blur(10px)",
               }}
             >
               <span
+                className="reno-stat-num"
                 style={{
-                  fontSize: "clamp(56px, 6vw, 80px)",
                   fontWeight: 700,
                   color: "#FFFFFF",
                   letterSpacing: "-0.04em",
