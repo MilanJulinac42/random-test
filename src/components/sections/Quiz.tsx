@@ -95,7 +95,7 @@ export function Quiz() {
         <Reveal>
           <p
             className="text-center uppercase"
-            style={{ fontSize: 10, letterSpacing: "0.1em", color: "#888", fontWeight: 500 }}
+            style={{ fontSize: 14, letterSpacing: "0.1em", color: "#888", fontWeight: 500 }}
           >
             GET STARTED
           </p>

@@ -70,7 +70,7 @@ export function Guarantee() {
           className="uppercase"
           style={{
             color: "#888",
-            fontSize: 11,
+            fontSize: 14,
             letterSpacing: "0.18em",
             fontWeight: 600,
           }}
