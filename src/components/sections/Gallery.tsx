@@ -45,6 +45,7 @@ const projects: Project[] = [
 function BeforeAfterSlider({ project, fullHeight }: { project: Project; fullHeight?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState(50);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const dragging = useRef(false);
 
   const updateFromClientX = (clientX: number) => {
@@ -57,6 +58,7 @@ function BeforeAfterSlider({ project, fullHeight }: { project: Project; fullHeig
 
   const onPointerDown = (e: RPointerEvent<HTMLDivElement>) => {
     dragging.current = true;
+    if (!hasInteracted) setHasInteracted(true);
     (e.target as Element).setPointerCapture?.(e.pointerId);
     updateFromClientX(e.clientX);
   };
@@ -73,7 +75,7 @@ function BeforeAfterSlider({ project, fullHeight }: { project: Project; fullHeig
     <div
       ref={containerRef}
       className={fullHeight ? "relative overflow-hidden select-none w-full h-full" : "reno-card-img relative overflow-hidden select-none w-full"}
-      style={{ touchAction: "none" }}
+      style={{ touchAction: "none", borderRadius: 16 }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -130,19 +132,52 @@ function BeforeAfterSlider({ project, fullHeight }: { project: Project; fullHeig
         className="absolute top-0 bottom-0 pointer-events-none"
         style={{ left: `${pos}%`, transform: "translateX(-50%)", zIndex: 3 }}
       >
-        <div className="h-full" style={{ width: 2, background: "white" }} />
         <div
-          className="reno-ba-handle absolute top-1/2 left-1/2 flex items-center justify-center rounded-full"
+          className="h-full"
+          style={{
+            width: 3,
+            background:
+              "linear-gradient(to bottom, rgba(255,255,255,0.4), #FFFFFF 50%, rgba(255,255,255,0.4))",
+            boxShadow: "0 0 16px rgba(255,255,255,0.55)",
+          }}
+        />
+
+        {/* Drag hint label */}
+        <div
+          className={`reno-ba-hint ${hasInteracted ? "is-hidden" : ""}`}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, calc(-50% - 56px))",
+            background: "rgba(0,0,0,0.7)",
+            color: "#fff",
+            fontSize: 11,
+            fontWeight: 600,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            padding: "5px 10px",
+            borderRadius: 999,
+            whiteSpace: "nowrap",
+          }}
+        >
+          Drag
+        </div>
+
+        <div
+          className={`reno-ba-handle absolute top-1/2 left-1/2 flex items-center justify-center rounded-full ${hasInteracted ? "is-static" : ""}`}
           style={{
             transform: "translate(-50%, -50%)",
             background: "#FFFFFF",
-            border: "1px solid rgba(0,0,0,0.12)",
+            border: "2px solid #482FFF",
             cursor: "grab",
+            width: 56,
+            height: 56,
           }}
         >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
-            <path d="M6 4 L2 8 L6 12" stroke="#444" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M10 4 L14 8 L10 12" stroke="#444" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden>
+            <path d="M6 4 L2 8 L6 12" stroke="#482FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M10 4 L14 8 L10 12" stroke="#482FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </div>
@@ -153,18 +188,27 @@ function BeforeAfterSlider({ project, fullHeight }: { project: Project; fullHeig
 function ProjectInfo({ project }: { project: Project }) {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <p
+      <span
         className="uppercase"
-        style={{ fontSize: 12, letterSpacing: "0.12em", color: "#777", margin: 0 }}
+        style={{
+          alignSelf: "flex-start",
+          background: "#F1EEFF",
+          color: "#482FFF",
+          padding: "6px 12px",
+          borderRadius: 999,
+          fontSize: 12,
+          letterSpacing: "0.08em",
+          fontWeight: 600,
+        }}
       >
         {project.location}
-      </p>
+      </span>
       <h3
         style={{
-          marginTop: 12,
-          fontSize: "clamp(28px, 3vw, 40px)",
+          marginTop: 16,
+          fontSize: "clamp(26px, 2.4vw, 34px)",
           fontWeight: 600,
-          color: "#fff",
+          color: "#0D0D0D",
           lineHeight: 1.15,
           letterSpacing: "-0.01em",
         }}
@@ -173,31 +217,14 @@ function ProjectInfo({ project }: { project: Project }) {
       </h3>
       <p
         style={{
-          marginTop: 20,
-          fontSize: 16,
-          lineHeight: 1.75,
-          color: "#aaa",
-          display: "-webkit-box",
-          WebkitLineClamp: 4,
-          WebkitBoxOrient: "vertical",
-          overflow: "hidden",
+          marginTop: 18,
+          fontSize: 18,
+          lineHeight: 1.65,
+          color: "#3a3a3a",
         }}
       >
         {project.quote}
       </p>
-      <a
-        href="#"
-        className="reno-view-link"
-        style={{
-          marginTop: 32,
-          fontSize: 14,
-          color: "#fff",
-          textDecoration: "none",
-          alignSelf: "flex-start",
-        }}
-      >
-        View project →
-      </a>
     </div>
   );
 }
@@ -222,13 +249,13 @@ function PinnedHeader() {
         OUR WORK
       </p>
       <h2
-        className="text-white"
         style={{
           marginTop: 16,
           fontSize: "clamp(40px, 5vw, 64px)",
           fontWeight: 700,
           lineHeight: 1.05,
           letterSpacing: "-0.02em",
+          color: "#0D0D0D",
         }}
       >
         Delivered projects, not renders.
@@ -236,6 +263,32 @@ function PinnedHeader() {
     </div>
   );
 }
+
+const SHARED_STYLES = `
+  @keyframes reno-ba-nudge {
+    0%   { transform: translate(-50%, -50%) translateX(0); }
+    25%  { transform: translate(-50%, -50%) translateX(16px); }
+    55%  { transform: translate(-50%, -50%) translateX(-16px); }
+    100% { transform: translate(-50%, -50%) translateX(0); }
+  }
+  @keyframes reno-ba-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(72,47,255,0.35), 0 8px 24px rgba(0,0,0,0.18); }
+    50%      { box-shadow: 0 0 0 12px rgba(72,47,255,0), 0 8px 24px rgba(0,0,0,0.18); }
+  }
+  .reno-ba-handle {
+    box-shadow: 0 0 0 6px rgba(72,47,255,0.18), 0 8px 24px rgba(0,0,0,0.18);
+    animation: reno-ba-pulse 2.4s ease-in-out infinite, reno-ba-nudge 1.8s ease-in-out 0.4s 2;
+  }
+  .reno-ba-handle.is-static {
+    animation: none;
+    box-shadow: 0 0 0 6px rgba(72,47,255,0.12), 0 8px 24px rgba(0,0,0,0.18);
+  }
+  .reno-ba-hint {
+    opacity: 1;
+    transition: opacity 250ms ease;
+  }
+  .reno-ba-hint.is-hidden { opacity: 0; }
+`;
 
 export function Gallery() {
   const isMobile = useIsMobile();
@@ -267,9 +320,9 @@ export function Gallery() {
     return (
       <section
         id="gallery"
-        data-nav-theme="dark"
+        data-nav-theme="light"
         className="relative w-full"
-        style={{ backgroundColor: "#0D0D0D", paddingTop: 96, paddingBottom: 96 }}
+        style={{ backgroundColor: "#FFFFFF", paddingTop: 96, paddingBottom: 96 }}
       >
         <div className="px-6">
           <p
@@ -279,12 +332,13 @@ export function Gallery() {
             OUR WORK
           </p>
           <h2
-            className="text-white mt-5"
+            className="mt-5"
             style={{
               fontSize: "clamp(40px, 5vw, 64px)",
               fontWeight: 700,
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
+              color: "#0D0D0D",
             }}
           >
             Delivered projects, not renders.
@@ -294,7 +348,9 @@ export function Gallery() {
         <div className="flex flex-col" style={{ gap: 56, marginTop: 48 }}>
           {projects.map((p) => (
             <div key={p.name}>
-              <BeforeAfterSlider project={p} />
+              <div style={{ padding: "0 24px" }}>
+                <BeforeAfterSlider project={p} />
+              </div>
               <div style={{ padding: "24px 24px 0" }}>
                 <ProjectInfo project={p} />
               </div>
@@ -304,8 +360,7 @@ export function Gallery() {
 
         <style>{`
           .reno-card-img { height: 280px; }
-          .reno-ba-handle { width: 44px; height: 44px; }
-          .reno-view-link:hover { text-decoration: underline; }
+          ${SHARED_STYLES}
         `}</style>
       </section>
     );
@@ -314,10 +369,10 @@ export function Gallery() {
   return (
     <section
       id="gallery"
-      data-nav-theme="dark"
+      data-nav-theme="light"
       ref={wrapperRef}
       className="relative w-full"
-      style={{ backgroundColor: "#0D0D0D", height: "300vh" }}
+      style={{ backgroundColor: "#FFFFFF", height: "300vh" }}
     >
       <div
         style={{
@@ -325,7 +380,7 @@ export function Gallery() {
           top: 0,
           height: "100vh",
           overflow: "hidden",
-          backgroundColor: "#0D0D0D",
+          backgroundColor: "#FFFFFF",
         }}
       >
         <PinnedHeader />
@@ -342,18 +397,18 @@ export function Gallery() {
               transition: "opacity 0.5s ease",
             }}
           >
-            {/* Left 55% — slider */}
-            <div style={{ width: "55%", height: "100%", paddingTop: 220, paddingBottom: 64, paddingLeft: 64 }}>
+            {/* Left 70% — slider */}
+            <div style={{ width: "70%", height: "100%", paddingTop: 220, paddingBottom: 64, paddingLeft: 64, paddingRight: 24 }}>
               <BeforeAfterSlider project={p} fullHeight />
             </div>
-            {/* Right 45% — info */}
+            {/* Right 30% — info */}
             <div
               style={{
-                width: "45%",
+                width: "30%",
                 height: "100%",
                 display: "flex",
                 alignItems: "center",
-                padding: "220px 64px 64px",
+                padding: "220px 48px 64px 24px",
               }}
             >
               <ProjectInfo project={p} />
@@ -369,8 +424,8 @@ export function Gallery() {
             right: 40,
             fontSize: 13,
             letterSpacing: "0.1em",
-            color: "rgba(255,255,255,0.45)",
-            fontWeight: 400,
+            color: "rgba(0,0,0,0.45)",
+            fontWeight: 500,
             zIndex: 6,
           }}
         >
@@ -378,10 +433,7 @@ export function Gallery() {
         </div>
       </div>
 
-      <style>{`
-        .reno-ba-handle { width: 40px; height: 40px; }
-        .reno-view-link:hover { text-decoration: underline; }
-      `}</style>
+      <style>{`${SHARED_STYLES}`}</style>
     </section>
   );
 }

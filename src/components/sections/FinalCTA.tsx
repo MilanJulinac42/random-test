@@ -28,7 +28,7 @@ export function FinalCTA() {
           <a
             href="#quiz"
             className="reno-btn-purple inline-flex items-center justify-center rounded-sh font-semibold"
-            style={{ height: 68, padding: "0 48px", fontSize: 20 }}
+            style={{ height: 56, padding: "0 28px", fontSize: 16 }}
           >
             Book my free assessment →
           </a>
