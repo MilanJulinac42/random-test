@@ -129,44 +129,7 @@ export function WhyReno() {
           </div>
         </Reveal>
 
-        {/* Guarantee block */}
-        <Reveal>
-          <div
-            style={{
-              background: "#0D0D0D",
-              borderRadius: 16,
-              padding: "clamp(32px, 5vw, 48px) clamp(28px, 5vw, 56px)",
-              marginTop: 20,
-            }}
-          >
-            <p
-              className="uppercase"
-              style={{ color: "#A78BFA", fontSize: 11, letterSpacing: "0.1em", fontWeight: 500 }}
-            >
-              OUR GUARANTEE
-            </p>
-            <h3
-              style={{
-                fontSize: "clamp(28px, 3.6vw, 40px)",
-                color: "#FFFFFF",
-                fontWeight: 700,
-                marginTop: 14,
-                lineHeight: 1.2,
-                letterSpacing: "-0.02em",
-              }}
-            >
-              If we run late, you're compensated. {"\n"}In writing, before we start.
-            </h3>
-          </div>
-        </Reveal>
       </div>
-
-      <style>{`
-        .reno-guarantee-btn:hover {
-          border-color: #FFFFFF !important;
-          color: #FFFFFF !important;
-        }
-      `}</style>
     </section>
   );
 }
