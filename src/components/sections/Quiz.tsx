@@ -1,35 +1,44 @@
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
-import { Building2, Building, Trees, CircleCheck, Apple, Smartphone } from "lucide-react";
+import { Check } from "lucide-react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import { Reveal } from "@/components/Reveal";
 import { supabase } from "@/integrations/supabase/client";
 
 const UNIT_TILES = [
-  { key: "Villa", label: "Villa", Icon: Building2 },
-  { key: "Apartment", label: "Apartment", Icon: Building },
-  { key: "Landscape", label: "Landscape", Icon: Trees },
+  {
+    key: "Villa",
+    label: "Villa",
+    image:
+      "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=600&h=320&fit=crop",
+  },
+  {
+    key: "Apartment",
+    label: "Apartment",
+    image:
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=320&fit=crop",
+  },
+  {
+    key: "Landscape",
+    label: "Landscape",
+    image:
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=320&fit=crop",
+  },
 ] as const;
 
-const BUDGETS = [
-  { key: "AED 100K – 500K" },
-  { key: "AED 500K – 1.5M" },
-  { key: "AED 1.5M+" },
-] as const;
+const BUDGETS = ["AED 100K – 500K", "AED 500K – 1.5M", "AED 1.5M+"] as const;
 
 const formSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name").max(100),
-  phone: z
-    .string()
-    .trim()
-    .regex(/^[+0][\d+\-()\s]{7,}$/, "Please enter a valid phone number")
-    .max(30),
+  phone: z.string().trim().min(8, "Please enter a valid phone number").max(20),
   unit: z.string().min(1, "Please pick what you're renovating"),
   budget: z.string().min(1, "Please select a budget range"),
 });
 
 export function Quiz() {
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("971");
   const [unit, setUnit] = useState("");
   const [budget, setBudget] = useState("");
   const [errors, setErrors] = useState<{ name?: string; phone?: string; unit?: string; budget?: string }>({});
@@ -53,7 +62,7 @@ export function Quiz() {
     try {
       const { error: dbError } = await supabase.from("lead_submissions").insert({
         name: parsed.data.name,
-        phone: parsed.data.phone,
+        phone: `+${parsed.data.phone}`,
         area: "—",
         rooms: [parsed.data.unit],
         budget: parsed.data.budget,
@@ -68,16 +77,16 @@ export function Quiz() {
     }
   };
 
-  const inputStyle: React.CSSProperties = {
-    width: "100%",
-    height: 56,
-    borderRadius: 12,
-    border: "1px solid #D3D1C7",
-    padding: "0 16px",
-    fontSize: 15,
-    background: "white",
+  const sectionLabel: React.CSSProperties = {
+    fontSize: 13,
+    fontWeight: 600,
     color: "#0D0D0D",
-    outline: "none",
+    marginBottom: 12,
+  };
+  const errorText: React.CSSProperties = {
+    fontSize: 12,
+    color: "#e53935",
+    marginTop: 6,
   };
 
   return (
@@ -112,215 +121,329 @@ export function Quiz() {
           </h2>
           <p
             className="text-center mx-auto mt-4 reno-quiz-sub"
-            style={{ color: "#555", maxWidth: "100%", lineHeight: 1.55, whiteSpace: "nowrap" }}
+            style={{ color: "#555", maxWidth: "100%", lineHeight: 1.55 }}
           >
             We call back within 24 hours.
           </p>
         </Reveal>
 
-        {!submitted && (
-          <Reveal>
-            <form
-              onSubmit={handleSubmit}
-              noValidate
-              className="mx-auto mt-10 reno-quiz-form"
-            >
-              <div className="reno-quiz-grid">
-                {/* LEFT COLUMN */}
-                <div>
-                  {/* Name + Phone */}
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                      gap: 12,
-                    }}
-                  >
-                    <div>
-                      <input
-                        type="text"
-                        autoComplete="given-name"
-                        placeholder="Your name"
-                        value={name}
-                        maxLength={100}
-                        onChange={(e) => setName(e.target.value)}
-                        className="reno-step-input"
-                        style={inputStyle}
-                      />
-                      {errors.name && (
-                        <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 6, textAlign: "center" }}>{errors.name}</p>
-                      )}
-                    </div>
-                    <div>
-                      <input
-                        type="tel"
-                        autoComplete="tel"
-                        placeholder="+971 — phone number"
-                        value={phone}
-                        maxLength={30}
-                        onChange={(e) => setPhone(e.target.value)}
-                        className="reno-step-input"
-                        style={inputStyle}
-                      />
-                      {errors.phone && (
-                        <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 6, textAlign: "center" }}>{errors.phone}</p>
-                      )}
-                    </div>
-                  </div>
+        <Reveal>
+          <form
+            onSubmit={handleSubmit}
+            noValidate
+            className="reno-quiz-form mx-auto mt-10"
+            style={{
+              maxWidth: 720,
+              background: "white",
+              border: "1px solid #ececec",
+              borderRadius: 12,
+              padding: 32,
+              boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 24,
+            }}
+          >
+            {/* Row 1: Name + Phone */}
+            <div className="reno-row-name-phone">
+              <div>
+                <input
+                  type="text"
+                  autoComplete="given-name"
+                  placeholder="Your name"
+                  value={name}
+                  maxLength={100}
+                  onChange={(e) => setName(e.target.value)}
+                  style={{
+                    width: "100%",
+                    height: 48,
+                    border: "1.5px solid #e0e0e0",
+                    borderRadius: 8,
+                    padding: "0 14px",
+                    fontSize: 14,
+                    background: "white",
+                    color: "#0D0D0D",
+                    outline: "none",
+                  }}
+                />
+                {errors.name && <p style={errorText}>{errors.name}</p>}
+              </div>
+              <div>
+                <PhoneInput
+                  country="ae"
+                  value={phone}
+                  onChange={(v) => setPhone(v)}
+                  enableSearch
+                  disableSearchIcon
+                  searchPlaceholder="Search country"
+                  countryCodeEditable={false}
+                  placeholder="50 123 4567"
+                  inputProps={{ name: "phone", autoComplete: "tel" }}
+                />
+                {errors.phone && <p style={errorText}>{errors.phone}</p>}
+              </div>
+            </div>
 
-                  {/* Renovation type */}
-                  <div style={{ marginTop: 28 }}>
-                    <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0D0D0D", marginBottom: 14 }}>
-                      What are you renovating?
-                    </h3>
-                    <div
+            {/* Row 2: Renovation type */}
+            <div>
+              <h3 style={sectionLabel}>What are you renovating?</h3>
+              <div className="reno-row-cards">
+                {UNIT_TILES.map((t) => {
+                  const active = unit === t.key;
+                  return (
+                    <button
+                      type="button"
+                      key={t.key}
+                      onClick={() => setUnit(t.key)}
+                      aria-pressed={active}
                       style={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: 10,
+                        position: "relative",
+                        padding: 0,
+                        background: "white",
+                        border: `2px solid ${active ? "#111" : "#e0e0e0"}`,
+                        borderRadius: 10,
+                        overflow: "hidden",
+                        cursor: "pointer",
+                        textAlign: "left",
+                        transition: "border-color 150ms",
                       }}
                     >
-                      {UNIT_TILES.map((t) => {
-                        const active = unit === t.key;
-                        const Icon = t.Icon;
-                        return (
-                          <button
-                            type="button"
-                            key={t.key}
-                            onClick={() => setUnit(t.key)}
-                            aria-pressed={active}
-                            style={{
-                              background: active ? "#0D0D0D" : "#FFFFFF",
-                              border: `1.5px solid ${active ? "#0D0D0D" : "#D3D1C7"}`,
-                              borderRadius: 999,
-                              padding: "12px 22px",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              gap: 8,
-                              cursor: "pointer",
-                              transition: "background 150ms, border-color 150ms, color 150ms",
-                              color: active ? "#FFFFFF" : "#0D0D0D",
-                              fontSize: 14,
-                              fontWeight: 500,
-                            }}
-                          >
-                            <Icon size={18} strokeWidth={1.75} />
-                            {t.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    {errors.unit && (
-                      <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 10 }}>{errors.unit}</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* RIGHT COLUMN */}
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  {/* Budget */}
-                  <div>
-                    <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0D0D0D", marginBottom: 14 }}>
-                      Rough budget
-                    </h3>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                      {BUDGETS.map((b) => {
-                        const active = budget === b.key;
-                        return (
-                          <button
-                            type="button"
-                            key={b.key}
-                            onClick={() => setBudget(b.key)}
-                            aria-pressed={active}
-                            style={{
-                              background: active ? "#FFFFFF" : "#F9F8F6",
-                              border: `1.5px solid ${active ? "#0D0D0D" : "transparent"}`,
-                              borderRadius: 14,
-                              padding: "16px 20px",
-                              textAlign: "center",
-                              cursor: "pointer",
-                              transition: "background 150ms, border-color 150ms",
-                              fontSize: 15,
-                              fontWeight: 500,
-                              color: "#0D0D0D",
-                            }}
-                          >
-                            {b.key}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    {errors.budget && (
-                      <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 10 }}>{errors.budget}</p>
-                    )}
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="reno-filled-btn"
-                    disabled={submitting}
-                    style={{
-                      width: "100%",
-                      marginTop: 24,
-                      height: 56,
-                      background: "#0D0D0D",
-                      color: "white",
-                      border: "none",
-                      borderRadius: 12,
-                      fontSize: 16,
-                      fontWeight: 600,
-                      cursor: submitting ? "wait" : "pointer",
-                      opacity: submitting ? 0.4 : 1,
-                      transition: "background 150ms",
-                    }}
-                  >
-                    {submitting ? "Sending..." : "Get my assessment →"}
-                  </button>
-
-                </div>
+                      <div style={{ position: "relative", width: "100%", height: 140 }}>
+                        <img
+                          src={t.image}
+                          alt={t.label}
+                          loading="lazy"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            display: "block",
+                          }}
+                        />
+                        {active && (
+                          <>
+                            <div
+                              style={{
+                                position: "absolute",
+                                inset: 0,
+                                background: "rgba(0,0,0,0.2)",
+                              }}
+                            />
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: 10,
+                                right: 10,
+                                width: 28,
+                                height: 28,
+                                borderRadius: 999,
+                                background: "#111",
+                                color: "white",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <Check size={16} strokeWidth={3} />
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <div
+                        style={{
+                          padding: "10px 14px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          fontSize: 14,
+                          fontWeight: 600,
+                          color: "#0D0D0D",
+                        }}
+                      >
+                        <span>{t.label}</span>
+                        {active && <Check size={16} strokeWidth={2.5} color="#111" />}
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
-            </form>
-          </Reveal>
-        )}
+              {errors.unit && <p style={errorText}>{errors.unit}</p>}
+            </div>
+
+            {/* Row 3: Budget */}
+            <div>
+              <h3 style={sectionLabel}>Your rough budget</h3>
+              <div className="reno-row-pills">
+                {BUDGETS.map((b) => {
+                  const active = budget === b;
+                  return (
+                    <button
+                      type="button"
+                      key={b}
+                      onClick={() => setBudget(b)}
+                      aria-pressed={active}
+                      style={{
+                        flex: 1,
+                        height: 52,
+                        borderRadius: 8,
+                        fontSize: 13,
+                        fontWeight: 600,
+                        background: active ? "#111" : "#fafafa",
+                        border: `1.5px solid ${active ? "#111" : "#d8d8d8"}`,
+                        color: active ? "white" : "#444",
+                        cursor: "pointer",
+                        transition: "background 150ms, border-color 150ms, color 150ms",
+                      }}
+                    >
+                      {b}
+                    </button>
+                  );
+                })}
+              </div>
+              {errors.budget && <p style={errorText}>{errors.budget}</p>}
+            </div>
+
+            {/* Row 4: Submit */}
+            <div>
+              <button
+                type="submit"
+                disabled={submitting}
+                style={{
+                  width: "100%",
+                  height: 56,
+                  background: "#111",
+                  color: "white",
+                  border: "none",
+                  borderRadius: 10,
+                  fontSize: 16,
+                  fontWeight: 600,
+                  cursor: submitting ? "wait" : "pointer",
+                  opacity: submitting ? 0.5 : 1,
+                }}
+              >
+                {submitting ? "Sending..." : "Get my assessment →"}
+              </button>
+              <p
+                style={{
+                  fontSize: 12,
+                  color: "#999",
+                  textAlign: "center",
+                  marginTop: 12,
+                }}
+              >
+                We assess 15–20 new projects each month.
+              </p>
+            </div>
+          </form>
+        </Reveal>
       </div>
 
-      {submitted && <ConfirmationPopup onClose={() => setSubmitted(false)} />}
+      {submitted && (
+        <SuccessModal
+          unit={unit}
+          budget={budget}
+          onClose={() => setSubmitted(false)}
+        />
+      )}
 
       <style>{`
         .reno-quiz-h2 { font-size: clamp(28px, 8vw, 52px); }
         .reno-quiz-sub { font-size: 15px; }
-        .reno-quiz-form {
-          max-width: 100%;
-          background: transparent;
-          border: none;
-          border-radius: 0;
-          padding: 0;
-          box-shadow: none;
-        }
         @media (min-width: 768px) {
           .reno-quiz-h2 { font-size: clamp(36px, 5.5vw, 52px); }
           .reno-quiz-sub { font-size: 17px; }
-          .reno-quiz-form {
-            max-width: 980px;
-            background: #FFFFFF;
-            border: 1px solid #E6E4DD;
-            border-radius: 20px;
-            padding: clamp(28px, 5vw, 48px);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-          }
         }
-        .reno-filled-btn:hover:not(:disabled) { background: #333 !important; }
-        .reno-step-input:focus { border-color: #0D0D0D !important; }
-        .reno-quiz-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
-        @media (min-width: 768px) {
-          .reno-quiz-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+
+        .reno-row-name-phone {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+        .reno-row-cards {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 12px;
+        }
+        .reno-row-pills {
+          display: flex;
+          gap: 10px;
+        }
+        @media (max-width: 767px) {
+          .reno-row-name-phone { grid-template-columns: 1fr; }
+          .reno-row-cards { grid-template-columns: 1fr; }
+          .reno-row-pills { flex-direction: column; }
+        }
+
+        /* Phone input overrides */
+        .react-tel-input .form-control {
+          width: 100% !important;
+          height: 48px !important;
+          font-size: 14px !important;
+          border: 1.5px solid #e0e0e0 !important;
+          border-radius: 8px !important;
+          padding-left: 100px !important;
+          background: white !important;
+          color: #0D0D0D !important;
+        }
+        .react-tel-input .form-control:focus {
+          border-color: #111 !important;
+          box-shadow: none !important;
+        }
+        .react-tel-input .flag-dropdown {
+          background: #f0f0f0 !important;
+          border: 1.5px solid #e0e0e0 !important;
+          border-right: 1px solid #e0e0e0 !important;
+          border-radius: 8px 0 0 8px !important;
+          width: 90px !important;
+        }
+        .react-tel-input .flag-dropdown.open,
+        .react-tel-input .flag-dropdown.open .selected-flag {
+          background: #f0f0f0 !important;
+          border-radius: 8px 0 0 8px !important;
+        }
+        .react-tel-input .selected-flag {
+          width: 90px !important;
+          padding-left: 14px !important;
+          border-radius: 8px 0 0 8px !important;
+        }
+        .react-tel-input .selected-flag .flag {
+          margin-top: -6px;
+        }
+        .react-tel-input .selected-flag .arrow {
+          left: 28px !important;
+          border-top-color: #555 !important;
+        }
+        .react-tel-input .country-list {
+          background: white !important;
+          border-radius: 8px !important;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+          max-height: 280px !important;
+        }
+        .react-tel-input .country-list .search {
+          padding: 10px !important;
+          background: white !important;
+        }
+        .react-tel-input .country-list .search-box {
+          width: 100% !important;
+          padding: 8px 12px !important;
+          border: 1.5px solid #e0e0e0 !important;
+          border-radius: 6px !important;
+          margin: 0 !important;
         }
       `}</style>
     </section>
   );
 }
 
-function ConfirmationPopup({ onClose }: { onClose: () => void }) {
+function SuccessModal({
+  unit,
+  budget,
+  onClose,
+}: {
+  unit: string;
+  budget: string;
+  onClose: () => void;
+}) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
 
@@ -359,97 +482,70 @@ function ConfirmationPopup({ onClose }: { onClose: () => void }) {
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          maxWidth: 480,
+          maxWidth: 400,
           width: "90vw",
           background: "white",
-          borderRadius: 20,
-          padding: "40px 36px 36px",
+          borderRadius: 12,
+          padding: "40px 32px",
+          textAlign: "center",
         }}
       >
-        <CircleCheck size={40} color="#3B6D11" strokeWidth={1.75} style={{ marginBottom: 16 }} />
-        <h3 style={{ fontSize: 20, fontWeight: 500, color: "#0D0D0D" }}>
-          You're on the list.
-        </h3>
-        <p style={{ fontSize: 14, lineHeight: 1.7, color: "#555", marginTop: 12 }}>
-          We've received your request and will confirm project availability within 24 hours. Expect a call or WhatsApp from the Reno team.
-        </p>
-        <p style={{ fontSize: 14, lineHeight: 1.7, color: "#555", marginTop: 12 }}>
-          We take on 15–20 new projects each month — if your project is a fit, we'll walk you through next steps on the call.
-        </p>
-
-        <div style={{ height: 1, background: "rgba(0,0,0,0.07)", margin: "24px 0" }} />
-
-        <p
-          className="uppercase"
-          style={{ fontSize: 10, letterSpacing: "0.08em", color: "#888", marginBottom: 12, fontWeight: 500 }}
-        >
-          MANAGE YOUR PROJECT IN THE APP
-        </p>
-        <p style={{ fontSize: 13, color: "#555", marginBottom: 20, lineHeight: 1.55 }}>
-          Track progress, approve milestones, and message your designer — all in one place.
-        </p>
-
-        <div style={{ display: "flex", gap: 10 }}>
-          <a
-            href="#"
-            style={{
-              width: "50%",
-              height: 44,
-              background: "#F9F8F6",
-              border: "1.5px solid #D3D1C7",
-              borderRadius: 10,
-              fontSize: 13,
-              fontWeight: 500,
-              color: "#0D0D0D",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 8,
-              textDecoration: "none",
-            }}
-          >
-            <Apple size={18} strokeWidth={1.75} />
-            App Store
-          </a>
-          <a
-            href="#"
-            style={{
-              width: "50%",
-              height: 44,
-              background: "#F9F8F6",
-              border: "1.5px solid #D3D1C7",
-              borderRadius: 10,
-              fontSize: 13,
-              fontWeight: 500,
-              color: "#0D0D0D",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 8,
-              textDecoration: "none",
-            }}
-          >
-            <Smartphone size={18} strokeWidth={1.75} />
-            Google Play
-          </a>
-        </div>
-
-        <button
-          ref={closeRef}
-          type="button"
-          onClick={onClose}
+        <div
           style={{
-            display: "block",
-            margin: "16px auto 0",
-            background: "transparent",
-            border: "none",
-            fontSize: 13,
-            color: "#888",
-            cursor: "pointer",
+            width: 56,
+            height: 56,
+            borderRadius: 999,
+            background: "#111",
+            color: "white",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 20,
           }}
         >
-          No thanks, I'll check my WhatsApp
-        </button>
+          <Check size={28} strokeWidth={3} />
+        </div>
+        <h3 style={{ fontSize: 22, fontWeight: 700, color: "#0D0D0D" }}>
+          We've got your details.
+        </h3>
+        <p style={{ fontSize: 14, color: "#666", marginTop: 10, lineHeight: 1.55 }}>
+          Expect a call within 24 hours from the Reno team.
+        </p>
+        {(unit || budget) && (
+          <div
+            style={{
+              display: "inline-block",
+              fontSize: 13,
+              background: "#f5f5f5",
+              padding: "10px 20px",
+              borderRadius: 6,
+              marginTop: 20,
+              color: "#0D0D0D",
+            }}
+          >
+            {[unit, budget].filter(Boolean).join(" · ")}
+          </div>
+        )}
+        <div style={{ marginTop: 24 }}>
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={onClose}
+            style={{
+              height: 44,
+              padding: "0 28px",
+              background: "#111",
+              color: "white",
+              border: "none",
+              borderRadius: 8,
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            Got it
+          </button>
+        </div>
       </div>
     </div>
   );
