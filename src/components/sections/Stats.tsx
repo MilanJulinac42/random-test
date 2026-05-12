@@ -132,7 +132,7 @@ export function Stats() {
       }}
     >
       <div className="glow-aura-center" aria-hidden style={{ opacity: 0.5 }} />
-      <div className="relative z-10 mx-auto max-w-7xl">
+      <div ref={ref} className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
           <p
             className="uppercase font-medium mb-8 md:mb-16 text-center md:text-left"
@@ -143,7 +143,7 @@ export function Stats() {
         </Reveal>
 
         {/* Mobile: 3 compact stats in a row */}
-        <div ref={ref} className="md:hidden grid grid-cols-3 gap-3 items-start text-center">
+        <div className="md:hidden grid grid-cols-3 gap-3 items-start text-center">
           <MobileStat value={useCountUp(98, 1200, inView)} suffix="%" label="On-time delivery" />
           <MobileStat value={useCountUp(100, 1300, inView)} suffix="+" label="Vetted contractors" />
           <MobileStat value={useCountUp(200, 1400, inView)} suffix="+" label="Projects delivered" />
