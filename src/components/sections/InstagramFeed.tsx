@@ -29,7 +29,7 @@ export function InstagramFeed() {
       className="relative overflow-hidden w-full px-6 md:px-12 lg:px-16"
       style={{
         backgroundColor: "#0D0D0D",
-        paddingTop: "clamp(120px, 14vw, 180px)",
+        paddingTop: "clamp(60px, 7vw, 100px)",
         paddingBottom: "clamp(80px, 8vw, 120px)",
       }}
     >
