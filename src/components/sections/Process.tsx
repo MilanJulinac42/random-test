@@ -118,11 +118,18 @@ function ProcessCard({
             letterSpacing: "-0.01em",
             transform: isHovered ? "translateY(-8px)" : "translateY(0)",
             transition: `transform 400ms ${EASE}`,
+            whiteSpace: isHovered ? "nowrap" : "normal",
           }}
         >
-          {step.titleLine1}
-          <br />
-          {step.titleLine2}
+          {isHovered ? (
+            `${step.titleLine1} ${step.titleLine2}`
+          ) : (
+            <>
+              {step.titleLine1}
+              <br />
+              {step.titleLine2}
+            </>
+          )}
         </h3>
 
         {/* Description (only visible when expanded) */}
