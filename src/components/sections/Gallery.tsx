@@ -210,33 +210,29 @@ function PinnedHeader() {
         top: 0,
         left: 0,
         right: 0,
-        height: 80,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "0 24px",
+        padding: "56px 64px 0",
         zIndex: 5,
         pointerEvents: "none",
       }}
     >
       <p
         className="uppercase"
-        style={{ fontSize: 11, letterSpacing: "0.2em", color: "#555", fontWeight: 500, margin: 0 }}
+        style={{ fontSize: 14, letterSpacing: "0.12em", color: "#482FFF", fontWeight: 500, margin: 0 }}
       >
         OUR WORK
       </p>
-      <p
+      <h2
+        className="text-white"
         style={{
-          marginTop: 6,
-          fontSize: 18,
-          fontWeight: 500,
-          color: "#fff",
-          letterSpacing: "-0.01em",
+          marginTop: 16,
+          fontSize: "clamp(40px, 5vw, 64px)",
+          fontWeight: 700,
+          lineHeight: 1.05,
+          letterSpacing: "-0.02em",
         }}
       >
         Delivered projects, not renders.
-      </p>
+      </h2>
     </div>
   );
 }
@@ -273,30 +269,29 @@ export function Gallery() {
         id="gallery"
         data-nav-theme="dark"
         className="relative w-full"
-        style={{ backgroundColor: "#0a0a0a", paddingTop: 64, paddingBottom: 64 }}
+        style={{ backgroundColor: "#0D0D0D", paddingTop: 96, paddingBottom: 96 }}
       >
         <div className="px-6">
           <p
             className="uppercase"
-            style={{ fontSize: 11, letterSpacing: "0.2em", color: "#555", fontWeight: 500 }}
+            style={{ fontSize: 14, letterSpacing: "0.12em", color: "#482FFF", fontWeight: 500 }}
           >
             OUR WORK
           </p>
           <h2
+            className="text-white mt-5"
             style={{
-              marginTop: 12,
-              fontSize: 32,
-              fontWeight: 600,
-              color: "#fff",
+              fontSize: "clamp(40px, 5vw, 64px)",
+              fontWeight: 700,
+              lineHeight: 1.05,
               letterSpacing: "-0.02em",
-              lineHeight: 1.1,
             }}
           >
             Delivered projects, not renders.
           </h2>
         </div>
 
-        <div className="flex flex-col" style={{ gap: 56, marginTop: 40 }}>
+        <div className="flex flex-col" style={{ gap: 56, marginTop: 48 }}>
           {projects.map((p) => (
             <div key={p.name}>
               <BeforeAfterSlider project={p} />
@@ -322,7 +317,7 @@ export function Gallery() {
       data-nav-theme="dark"
       ref={wrapperRef}
       className="relative w-full"
-      style={{ backgroundColor: "#0a0a0a", height: "300vh" }}
+      style={{ backgroundColor: "#0D0D0D", height: "300vh" }}
     >
       <div
         style={{
@@ -330,7 +325,7 @@ export function Gallery() {
           top: 0,
           height: "100vh",
           overflow: "hidden",
-          backgroundColor: "#0a0a0a",
+          backgroundColor: "#0D0D0D",
         }}
       >
         <PinnedHeader />
@@ -348,7 +343,7 @@ export function Gallery() {
             }}
           >
             {/* Left 55% — slider */}
-            <div style={{ width: "55%", height: "100%", paddingTop: 80 }}>
+            <div style={{ width: "55%", height: "100%", paddingTop: 220, paddingBottom: 64, paddingLeft: 64 }}>
               <BeforeAfterSlider project={p} fullHeight />
             </div>
             {/* Right 45% — info */}
@@ -358,7 +353,7 @@ export function Gallery() {
                 height: "100%",
                 display: "flex",
                 alignItems: "center",
-                padding: "0 64px",
+                padding: "220px 64px 64px",
               }}
             >
               <ProjectInfo project={p} />

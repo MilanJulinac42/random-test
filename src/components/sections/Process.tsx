@@ -170,7 +170,7 @@ export function Process() {
         backgroundColor: "#0D0D0D",
       }}
     >
-      <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16 py-0 pl-[80px] pr-[80px] pt-[40px] pb-[40px]">
+      <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16 pl-[80px] pr-[80px] pt-[96px] pb-[40px]">
         <Reveal>
           <p
             className="uppercase"
