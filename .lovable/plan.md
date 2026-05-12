@@ -1,67 +1,87 @@
 ## Goal
 
-Pull the "Our Guarantee" block out of `WhyReno` and make it a standalone, full-width white section with a large centered headline whose **opacity fills from low to 100% as the user scrolls it into view** (the screenshot's effect). Generous vertical padding keeps it visually isolated from neighbouring sections.
+Restructure the hero so the page sits on a dark `#0D0D0D` canvas with the slideshow living inside a **single rounded card** that's offset diagonally — like a physical card slid up-and-left on a dark table. Only the **top-right** and **bottom-left** rounded corners are visible inside the viewport; the **top-left** and **bottom-right** corners bleed off-screen.
+
+All current hero elements stay in place inside the card — no Navbar above, no notches, no floating outside elements.
 
 ## Visual target
 
 ```text
-                                                  
-              GUARANTEE                              ← small eyebrow
-                                                     
-        If we run late, you're                       ← line 1
-           compensated.                              ← line 2
-        In writing, before                           ← line 3
-            we start.                                ← line 4
-                                                  
+┌───────────────────────────────────────────────────────────┐  ← #0D0D0D page bg
+│  ─────────────────────────────────────────────────────╮   │  ← top bar inside card
+│  [IG][LI]              [ Reno logo ]   [ Chat with us ]   │
+│                                                       │   │
+│   End-to-end renovation in Dubai                      │   │
+│   One-stop                                            │   │
+│   Renovation Platform                                 │   │
+│   subheader…                                          │   │
+│                                                       │   │
+│   [thumb][thumb][thumb][thumb]                        │   │
+│                                  Get a written quote… │   │
+│                                  [Check availability] │   │
+│                                  [Download app]       │   │
+│   ╰───────────────────────────────────────────────────│   │  ← bottom-right off-screen
+│                                                           │
+└───────────────────────────────────────────────────────────┘
 ```
 
-- Background: pure white (`#FFFFFF`).
-- Eyebrow: small uppercase "GUARANTEE", muted grey.
-- Headline: 4 lines, hard-broken, centered, large display weight, dark text.
-- Headline opacity is driven by scroll position: ~15% when the section first enters the viewport from the bottom, ramps to 100% when it's centered, stays 100% past that. Light-DOM text (selectable, accessible).
-- Vertical padding: `clamp(120px, 14vw, 180px)` top and bottom — meaningfully more than the existing sections so it reads as its own beat.
+- Page area around the hero is `#0D0D0D`. A thin gutter is visible on the right edge (top half) and bottom edge (left half), exposing the dark canvas where the card has slid away.
+- Card has `border-radius: 24px` on all four corners, but only top-right + bottom-left sit inside the viewport, so those are the only visible curves. Top-left and bottom-right are clipped by the section's `overflow: hidden`.
+- All interior elements stay exactly the ones currently in the hero — no removals, no additions.
 
-## Approach
+## Approach (single file: `src/components/Hero.tsx`)
 
-### 1. New component `src/components/sections/Guarantee.tsx`
-- Wrapper `<section id="guarantee" data-nav-theme="light">` with white background and the large vertical padding above.
-- Inside: small eyebrow `GUARANTEE`, then a centered `<h2>` containing 4 `<span className="block">` lines for the hard breaks.
-- Scroll-driven opacity:
-  - `useRef` on the headline + `useEffect` that attaches a passive `scroll` listener (and a `resize` one).
-  - On each tick, compute `progress = clamp(0..1)` from the section's bounding rect: `0` when its top is at the bottom of the viewport, `1` when its center crosses the viewport center.
-  - Apply `opacity = 0.15 + 0.85 * progress` to the headline via inline `style` or a CSS variable. Optional small `translateY(8px → 0)` for polish.
-  - Respect `prefers-reduced-motion`: skip the scroll listener and render at full opacity.
-- No new dependencies. No IntersectionObserver-only approach (we need continuous progress, not a one-shot).
-- Type sizing: `fontSize: clamp(40px, 6vw, 80px)`, `fontWeight: 700`, `lineHeight: 1.1`, `letterSpacing: -0.02em`, `color: #0D0D0D`. Centered.
+1. **Outer section** `<section id="top">`:
+   - `background: #0D0D0D`
+   - `position: relative`
+   - `overflow: hidden`
+   - `min-height: 100vh`
+   - No `Navbar` re-added — Hero keeps its in-card top bar.
 
-### 2. Remove the old guarantee block from `WhyReno`
-- Delete the `{/* Guarantee block */}` JSX (lines 132–161 in `src/components/sections/WhyReno.tsx`) and the now-unused `<style>` block at the bottom (`.reno-guarantee-btn:hover` rules — no other usage in the file).
-- Leave the rest of `WhyReno` (eyebrow, headline, 3 stat cards) intact.
+2. **Card** (absolutely positioned inside the section, sized larger than the viewport so it can be translated diagonally):
+   - `position: absolute`
+   - `top: -56px; left: -56px`
+   - `width: calc(100% + 112px); height: calc(100% + 112px)`
+   - `border-radius: 24px`
+   - `overflow: hidden`
+   - The 56px / 112px values create a balanced diagonal bleed so the visible top-right and bottom-left curves feel symmetric. Tunable.
 
-### 3. Mount the new section in `src/routes/index.tsx`
-- Import `Guarantee` and place it **after `WhyReno`** and **before `Process`** so the flow becomes: WhyReno (numbers) → Guarantee (the promise) → Process. This keeps the narrative: proof → promise → how.
+3. **Inside the card** (z-stacked top to bottom):
+   - **Slideshow images** + legibility gradient — current code, untouched.
+   - **Top bar** (current layout, kept as-is):
+     - Left: Instagram + LinkedIn icon buttons (`hidden md:inline-flex`).
+     - Center: Reno logo (absolute, `left-1/2 -translate-x-1/2`).
+     - Right: "Chat With Us" pill (desktop) / `MessageCircle` icon (mobile).
+   - **Headline area** (bottom-left, current copy + animations):
+     - Eyebrow "End-to-end renovation in Dubai".
+     - `AnimatedHeading` "One-stop / Renovation Platform".
+     - Subheader "We manage the designers, contractors, and payments…".
+   - **Bottom row** (flex, justify-between, items-end):
+     - **Left:** the 4-thumbnail slideshow selector (current behavior, hidden on mobile).
+     - **Right:** CTA cluster — small "Get a written quote in 60 seconds." subheading above two buttons: "Check availability →" (`reno-btn-purple`) and "Download app" (glass/outline). Same components as today.
+   - **Scroll-down chevron** kept (bottom-center, `hidden md:flex`).
 
-## Copy
+4. **Padding inside the card** so visible content isn't cut by the off-screen bleed. The card is shifted -56px up and -56px left, so its inner content needs `padding-top` and `padding-left` of *at least* 56px more than the previous values to stay anchored to the viewport's visible edges. We compensate by:
+   - Top bar: `padding: 56px+16px on top, 56px+16px on left` (i.e. add 56 to existing values), and matching on right/bottom for the CTAs/thumbs row.
+   - Easier in practice: keep current `px-4 md:px-8 pt-4 md:pt-6` on the children, but add `padding: 56px` on the *card* itself so the card's inner area starts where the viewport edge is. (Cleaner — single offset to maintain.)
 
-- Eyebrow: `GUARANTEE`
-- Headline (4 lines, exactly as currently written, just split across 4 lines):
-  1. `If we run late,`
-  2. `you're compensated.`
-  3. `In writing,`
-  4. `before we start.`
+5. **Mobile (<md)**:
+   - Reduce bleed: `top: -16px; left: -16px; width: calc(100% + 32px); height: calc(100% + 32px)` so the offset is subtle on small screens.
+   - Inner padding shrinks to match (16px instead of 56px).
+   - Thumbnails stay hidden (current behavior); CTAs stack full-width below the headline area, as today.
 
-If you'd like different line breaks, say the word and I'll adjust — happy to keep "If we run late, you're compensated." as one line and split the second sentence too.
+6. **Cleanup**: drop the previous notch/mask code, the floating outside-card socials block, and the floating outside-card CTA block from the prior design. Drop the `cardMaskStyle` constant entirely.
 
-## Responsive
+## Files to change
 
-- Mobile: same centered layout, headline drops to ~`40px`, vertical padding clamps to `120px`. No horizontal scroll, max-width on the headline (~`min(880px, 92vw)`) so lines stay tidy.
+1. `src/components/Hero.tsx` — rewrite per above. No other files touched.
 
 ## Out of scope
 
-- No changes to other sections' styling.
-- No new fonts, no new dependencies, no GSAP/Framer Motion.
-- No background imagery (the screenshot's orb/gradient was reference for the *fill effect*, not literal art — confirm later if you want me to add the soft purple radial accents).
+- No changes to `Navbar`, `routes/index.tsx`, or any other section.
+- No copy changes, no new buttons, no slideshow logic changes.
+- `--radius-card` / `--notch-radius` tokens in `styles.css` can stay (harmless, unused here).
 
 ## Open question (non-blocking)
 
-Add the soft decorative purple gradient blobs in the corners (like the screenshot reference) as a polish pass, or keep the white background completely clean? Default: clean white.
+Bleed amount — starting at **56px** off the top + left for desktop. If you want a more dramatic diagonal (say 96–120px) or a subtler one (24–32px), I'll tune after the first pass.
