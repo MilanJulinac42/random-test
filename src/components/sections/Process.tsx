@@ -63,10 +63,9 @@ function ProcessCard({
 }) {
   return (
     <div
-      className="relative overflow-hidden"
+      className="relative overflow-hidden h-full w-full"
       style={{
         borderRadius: 24,
-        aspectRatio: "4 / 5",
         backgroundImage: `url(${step.image})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -206,6 +205,7 @@ export function Process() {
             marginTop: 56,
             gridTemplateColumns: gridCols,
             gap: 16,
+            height: "clamp(420px, 48vw, 560px)",
             transition: `grid-template-columns 600ms ${EASE}`,
           }}
         >
@@ -214,7 +214,7 @@ export function Process() {
               key={s.num}
               onMouseEnter={() => setHoveredIndex(i)}
               onMouseLeave={() => setHoveredIndex(null)}
-              style={{ minWidth: 0 }}
+              style={{ minWidth: 0, height: "100%" }}
             >
               <ProcessCard
                 step={s}
