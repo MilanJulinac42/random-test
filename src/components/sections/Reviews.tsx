@@ -190,6 +190,15 @@ export function Reviews() {
         ))}
         <div style={{ width: 12, flexShrink: 0 }} />
       </div>
+
+      <style>{`
+        .reno-stat-pill { padding: 14px 24px; gap: 14px; }
+        .reno-stat-num { font-size: 48px; }
+        @media (min-width: 768px) {
+          .reno-stat-pill { padding: 20px 36px; gap: 20px; }
+          .reno-stat-num { font-size: clamp(56px, 6vw, 80px); }
+        }
+      `}</style>
     </section>
   );
 }
