@@ -277,12 +277,6 @@ export function Quiz() {
                     {submitting ? "Sending..." : "Get my assessment →"}
                   </button>
 
-                  <p
-                    className="text-center"
-                    style={{ fontSize: 12, color: "#888", marginTop: 14 }}
-                  >
-                    We assess 15–20 new projects each month.
-                  </p>
                 </div>
               </div>
             </form>
