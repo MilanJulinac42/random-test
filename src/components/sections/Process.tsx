@@ -1,111 +1,188 @@
+import { useState } from "react";
 import { Reveal } from "@/components/Reveal";
+import process01 from "@/assets/process-01.jpg";
+import process02 from "@/assets/process-02.jpg";
+import process03 from "@/assets/process-03.jpg";
 
-const steps = [
+type Step = {
+  num: string;
+  titleLine1: string;
+  titleLine2: string;
+  body: string;
+  image: string;
+};
+
+const steps: Step[] = [
   {
     num: "01",
-    title: "Design and planning",
+    titleLine1: "Design and",
+    titleLine2: "planning",
     body: "A dedicated Reno designer turns your vision into a full plan — scope, budget, and timeline. You review and sign off before a single contractor is engaged.",
-    illustration: (
-      <svg viewBox="0 0 200 180" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-        {/* Floor plan outline */}
-        <rect x="20" y="30" width="160" height="120" stroke="white" strokeWidth="1" />
-        {/* Internal walls */}
-        <line x1="90" y1="30" x2="90" y2="90" stroke="white" strokeWidth="1" />
-        <line x1="90" y1="90" x2="180" y2="90" stroke="white" strokeWidth="1" />
-        <line x1="20" y1="110" x2="90" y2="110" stroke="white" strokeWidth="1" />
-        {/* Highlighted room */}
-        <rect x="90" y="30" width="90" height="60" fill="#482FFF" fillOpacity="0.2" />
-        {/* Door arcs */}
-        <path d="M 50 30 A 15 15 0 0 1 65 45" stroke="white" strokeWidth="1" fill="none" />
-        <path d="M 130 90 A 12 12 0 0 1 142 102" stroke="white" strokeWidth="1" fill="none" />
-        {/* Door gaps */}
-        <line x1="50" y1="30" x2="65" y2="30" stroke="#0D0D0D" strokeWidth="2" />
-        <line x1="130" y1="90" x2="142" y2="90" stroke="#0D0D0D" strokeWidth="2" />
-        {/* Furniture hint */}
-        <rect x="30" y="120" width="20" height="20" stroke="white" strokeWidth="1" />
-        <circle cx="155" cy="125" r="10" stroke="white" strokeWidth="1" />
-      </svg>
-    ),
+    image: process01,
   },
   {
     num: "02",
-    title: "Build, tracked at every step",
+    titleLine1: "Build, tracked",
+    titleLine2: "at every step",
     body: "Work begins with vetted contractors. At every milestone you get photo updates and a site inspection — and your payment only releases when you're satisfied.",
-    illustration: (
-      <svg viewBox="0 0 200 180" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-        {/* Constellation lines */}
-        <line x1="40" y1="50" x2="100" y2="35" stroke="white" strokeWidth="0.5" strokeOpacity="0.4" />
-        <line x1="100" y1="35" x2="160" y2="60" stroke="white" strokeWidth="0.5" strokeOpacity="0.4" />
-        <line x1="40" y1="50" x2="60" y2="110" stroke="white" strokeWidth="0.5" strokeOpacity="0.4" />
-        <line x1="60" y1="110" x2="120" y2="135" stroke="white" strokeWidth="0.5" strokeOpacity="0.4" />
-        <line x1="120" y1="135" x2="160" y2="60" stroke="white" strokeWidth="0.5" strokeOpacity="0.4" />
-        <line x1="100" y1="35" x2="120" y2="135" stroke="white" strokeWidth="0.5" strokeOpacity="0.4" />
-        <line x1="60" y1="110" x2="160" y2="60" stroke="white" strokeWidth="0.5" strokeOpacity="0.4" />
-
-        {/* Photo frames */}
-        <rect x="28" y="38" width="24" height="24" stroke="white" strokeWidth="1" />
-        <line x1="28" y1="55" x2="52" y2="55" stroke="white" strokeWidth="1" />
-        <circle cx="36" cy="46" r="2" stroke="white" strokeWidth="1" />
-
-        <rect x="148" y="48" width="24" height="24" stroke="white" strokeWidth="1" />
-        <line x1="148" y1="65" x2="172" y2="65" stroke="white" strokeWidth="1" />
-        <circle cx="156" cy="56" r="2" stroke="white" strokeWidth="1" />
-
-        <rect x="108" y="123" width="24" height="24" stroke="white" strokeWidth="1" />
-        <line x1="108" y1="140" x2="132" y2="140" stroke="white" strokeWidth="1" />
-        <circle cx="116" cy="131" r="2" stroke="white" strokeWidth="1" />
-
-        {/* Checkmarks in circles */}
-        <circle cx="100" cy="35" r="10" stroke="#482FFF" strokeWidth="1" />
-        <path d="M 95 35 L 99 39 L 106 31" stroke="#482FFF" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-
-        <circle cx="60" cy="110" r="8" stroke="white" strokeWidth="1" />
-        <path d="M 56 110 L 59 113 L 64 107" stroke="white" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    image: process02,
   },
   {
     num: "03",
-    title: "Handover & Warranty",
+    titleLine1: "Handover &",
+    titleLine2: "Warranty",
     body: "You walk through the completed space with the Reno team before anything is signed off. Any snagging items are logged and resolved — all covered by a written warranty.",
-    illustration: (
-      <svg viewBox="0 0 200 180" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-        {/* Radiating arcs */}
-        <circle cx="80" cy="90" r="50" stroke="white" strokeWidth="0.5" strokeOpacity="0.25" />
-        <circle cx="80" cy="90" r="65" stroke="white" strokeWidth="0.5" strokeOpacity="0.18" />
-        <circle cx="80" cy="90" r="80" stroke="white" strokeWidth="0.5" strokeOpacity="0.12" />
-
-        {/* Key bow (circular head) */}
-        <circle cx="80" cy="90" r="22" stroke="white" strokeWidth="1.2" />
-        <circle cx="80" cy="90" r="8" stroke="white" strokeWidth="1" />
-
-        {/* Key shaft */}
-        <line x1="102" y1="90" x2="170" y2="90" stroke="white" strokeWidth="1.2" />
-
-        {/* Key teeth */}
-        <line x1="150" y1="90" x2="150" y2="100" stroke="white" strokeWidth="1.2" />
-        <line x1="158" y1="90" x2="158" y2="98" stroke="white" strokeWidth="1.2" />
-        <line x1="166" y1="90" x2="166" y2="96" stroke="white" strokeWidth="1.2" />
-
-        {/* Accent dot */}
-        <circle cx="80" cy="90" r="3" fill="#482FFF" />
-      </svg>
-    ),
+    image: process03,
   },
 ];
 
+const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+function ArrowIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M5 12h14M13 5l7 7-7 7"
+        stroke="#0D0D0D"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ProcessCard({
+  step,
+  isHovered,
+  isCompact,
+}: {
+  step: Step;
+  isHovered: boolean;
+  isCompact: boolean;
+}) {
+  return (
+    <div
+      className="relative overflow-hidden"
+      style={{
+        borderRadius: 24,
+        aspectRatio: "4 / 5",
+        backgroundImage: `url(${step.image})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        transition: `filter 500ms ${EASE}`,
+        filter: isCompact ? "brightness(0.7)" : "brightness(1)",
+      }}
+    >
+      {/* Bottom gradient overlay */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 pointer-events-none"
+        style={{
+          height: "70%",
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%)",
+        }}
+      />
+
+      {/* Content */}
+      <div
+        className="absolute inset-0 flex flex-col justify-end"
+        style={{ padding: 28 }}
+      >
+        {/* Arrow button */}
+        <div
+          style={{
+            width: 44,
+            height: 44,
+            borderRadius: 999,
+            background: "#FFFFFF",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 16,
+            opacity: isHovered ? 0 : 1,
+            transform: isHovered ? "translateX(-8px)" : "translateX(0)",
+            transition: `opacity 250ms ${EASE}, transform 300ms ${EASE}`,
+          }}
+        >
+          <ArrowIcon />
+        </div>
+
+        {/* Title */}
+        <h3
+          style={{
+            color: "#FFFFFF",
+            fontSize: "clamp(22px, 2vw, 28px)",
+            fontWeight: 600,
+            lineHeight: 1.15,
+            letterSpacing: "-0.01em",
+            transform: isHovered ? "translateY(-8px)" : "translateY(0)",
+            transition: `transform 400ms ${EASE}`,
+          }}
+        >
+          {step.titleLine1}
+          <br />
+          {step.titleLine2}
+        </h3>
+
+        {/* Description (only visible when expanded) */}
+        <div
+          style={{
+            maxHeight: isHovered ? 200 : 0,
+            opacity: isHovered ? 1 : 0,
+            transform: isHovered ? "translateY(0)" : "translateY(16px)",
+            transition: `opacity 350ms ${EASE} ${isHovered ? "120ms" : "0ms"}, transform 400ms ${EASE} ${isHovered ? "120ms" : "0ms"}, max-height 500ms ${EASE}`,
+            overflow: "hidden",
+          }}
+        >
+          <p
+            style={{
+              marginTop: 14,
+              color: "rgba(255,255,255,0.85)",
+              fontSize: 15,
+              lineHeight: 1.55,
+              maxWidth: 520,
+            }}
+          >
+            {step.body}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Process() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const gridCols =
+    hoveredIndex === null
+      ? "1fr 1fr 1fr"
+      : [0, 1, 2]
+          .map((i) => (i === hoveredIndex ? "2.4fr" : "0.8fr"))
+          .join(" ");
+
   return (
     <section
       id="how-it-works"
       className="relative overflow-hidden w-full"
-      style={{ backgroundColor: "#0D0D0D", paddingTop: "clamp(80px, 10vw, 120px)", paddingBottom: "clamp(80px, 10vw, 120px)" }}
+      style={{
+        backgroundColor: "#0D0D0D",
+        paddingTop: "clamp(80px, 10vw, 120px)",
+        paddingBottom: "clamp(80px, 10vw, 120px)",
+      }}
     >
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         <Reveal>
           <p
             className="uppercase"
-            style={{ color: "#482FFF", fontSize: 14, letterSpacing: "0.12em", fontWeight: 500 }}
+            style={{
+              color: "#482FFF",
+              fontSize: 14,
+              letterSpacing: "0.12em",
+              fontWeight: 500,
+            }}
           >
             HOW IT WORKS
           </p>
@@ -122,51 +199,83 @@ export function Process() {
           </h2>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 mt-12 md:gap-0">
+        {/* Desktop: animated grid with hover-expand */}
+        <div
+          className="hidden md:grid"
+          style={{
+            marginTop: 56,
+            gridTemplateColumns: gridCols,
+            gap: 16,
+            transition: `grid-template-columns 600ms ${EASE}`,
+          }}
+        >
           {steps.map((s, i) => (
             <div
               key={s.num}
-              className={[
-                "relative px-0 md:px-8 py-10 md:py-4",
-                // Vertical dividers on desktop
-                i > 0 ? "md:border-l" : "",
-                // Horizontal dividers on mobile
-                i > 0 ? "border-t md:border-t-0" : "",
-              ].join(" ")}
-              style={{ borderColor: "#2A2A2A" }}
+              onMouseEnter={() => setHoveredIndex(i)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              style={{ minWidth: 0 }}
             >
-              <Reveal>
-                {/* Pill badge */}
-                <span
-                  className="inline-block"
+              <ProcessCard
+                step={s}
+                isHovered={hoveredIndex === i}
+                isCompact={hoveredIndex !== null && hoveredIndex !== i}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile: stacked cards, description always visible */}
+        <div className="md:hidden flex flex-col" style={{ marginTop: 40, gap: 16 }}>
+          {steps.map((s) => (
+            <div
+              key={s.num}
+              className="relative overflow-hidden"
+              style={{
+                borderRadius: 24,
+                aspectRatio: "4 / 5",
+                backgroundImage: `url(${s.image})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <div
+                aria-hidden
+                className="absolute inset-x-0 bottom-0 pointer-events-none"
+                style={{
+                  height: "75%",
+                  background:
+                    "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0) 100%)",
+                }}
+              />
+              <div
+                className="absolute inset-0 flex flex-col justify-end"
+                style={{ padding: 24 }}
+              >
+                <h3
                   style={{
-                    fontFamily:
-                      "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-                    fontSize: 11,
-                    color: "#888",
-                    border: "1px solid #333",
-                    borderRadius: 20,
-                    padding: "4px 12px",
+                    color: "#FFFFFF",
+                    fontSize: 24,
+                    fontWeight: 600,
+                    lineHeight: 1.15,
+                    letterSpacing: "-0.01em",
                   }}
                 >
-                  {s.num}
-                </span>
-
-                {/* Illustration zone */}
-                <div className="mt-6 mx-auto flex items-center justify-center" style={{ height: 180 }}>
-                  {s.illustration}
-                </div>
-
-                {/* Title */}
-                <h3 className="text-white mt-6 whitespace-nowrap" style={{ fontSize: "clamp(20px, 1.9vw, 24px)", fontWeight: 700, letterSpacing: "-0.01em" }}>
-                  {s.title}
+                  {s.titleLine1}
+                  <br />
+                  {s.titleLine2}
                 </h3>
-
-                {/* Body */}
-                <p className="mt-4" style={{ fontSize: 17, color: "#bbb", lineHeight: 1.6 }}>
+                <p
+                  style={{
+                    marginTop: 12,
+                    color: "rgba(255,255,255,0.85)",
+                    fontSize: 15,
+                    lineHeight: 1.55,
+                  }}
+                >
                   {s.body}
                 </p>
-              </Reveal>
+              </div>
             </div>
           ))}
         </div>
