@@ -93,6 +93,31 @@ function CardStat({ start }: { start: boolean }) {
   );
 }
 
+function MobileStat({ value, suffix, label }: { value: number; suffix: string; label: string }) {
+  return (
+    <div className="flex flex-col items-center">
+      <div
+        style={{
+          fontSize: "clamp(28px, 9vw, 40px)",
+          fontWeight: 700,
+          letterSpacing: "-0.03em",
+          lineHeight: 1,
+          color: "#FFFFFF",
+        }}
+      >
+        <span>{value}</span>
+        <span>{suffix}</span>
+      </div>
+      <div
+        className="mt-2"
+        style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", lineHeight: 1.3 }}
+      >
+        {label}
+      </div>
+    </div>
+  );
+}
+
 export function Stats() {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.3 });
 
