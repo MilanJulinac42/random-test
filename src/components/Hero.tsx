@@ -21,27 +21,18 @@ const SLIDE_INTERVAL = 5000;
 
 // Carve concave quarter-circle notches at top-left and bottom-right of the
 // hero card so the floating socials/CTA clusters appear to tuck into the card.
+// Two full-element radial gradients (each transparent in one corner-circle,
+// opaque everywhere else) intersected = opaque everywhere except both corners.
 const NOTCH = 56; // px, matches --notch-radius
-const NOTCH_BOX = NOTCH * 2;
+const maskLayers = [
+  `radial-gradient(circle ${NOTCH}px at 0 0, transparent 99%, #000 100%)`,
+  `radial-gradient(circle ${NOTCH}px at 100% 100%, transparent 99%, #000 100%)`,
+].join(", ");
 const cardMaskStyle: CSSProperties = {
-  WebkitMaskImage: [
-    `radial-gradient(circle ${NOTCH}px at 0 0, transparent 99%, #000 100%)`,
-    `radial-gradient(circle ${NOTCH}px at 100% 100%, transparent 99%, #000 100%)`,
-    `linear-gradient(#000, #000)`,
-  ].join(", "),
-  WebkitMaskSize: `${NOTCH_BOX}px ${NOTCH_BOX}px, ${NOTCH_BOX}px ${NOTCH_BOX}px, 100% 100%`,
-  WebkitMaskPosition: "top left, bottom right, 0 0",
-  WebkitMaskRepeat: "no-repeat",
-  WebkitMaskComposite: "source-out",
-  maskImage: [
-    `radial-gradient(circle ${NOTCH}px at 0 0, transparent 99%, #000 100%)`,
-    `radial-gradient(circle ${NOTCH}px at 100% 100%, transparent 99%, #000 100%)`,
-    `linear-gradient(#000, #000)`,
-  ].join(", "),
-  maskSize: `${NOTCH_BOX}px ${NOTCH_BOX}px, ${NOTCH_BOX}px ${NOTCH_BOX}px, 100% 100%`,
-  maskPosition: "top left, bottom right, 0 0",
-  maskRepeat: "no-repeat",
-  maskComposite: "exclude",
+  WebkitMaskImage: maskLayers,
+  WebkitMaskComposite: "source-in",
+  maskImage: maskLayers,
+  maskComposite: "intersect",
 };
 
 export function Hero() {
