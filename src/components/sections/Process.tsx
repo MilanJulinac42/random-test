@@ -165,11 +165,9 @@ export function Process() {
   return (
     <section
       id="how-it-works"
-      className="relative overflow-hidden w-full"
+      className="relative overflow-hidden w-full pt-0 pb-0"
       style={{
         backgroundColor: "#0D0D0D",
-        paddingTop: "clamp(80px, 10vw, 120px)",
-        paddingBottom: "clamp(80px, 10vw, 120px)",
       }}
     >
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16 py-0 pl-[80px] pr-[80px] pt-[40px] pb-[40px]">
