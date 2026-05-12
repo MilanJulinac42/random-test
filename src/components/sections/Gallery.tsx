@@ -268,7 +268,7 @@ export function Gallery() {
           <h2
             className="mt-4"
             style={{
-              fontSize: "clamp(36px, 5vw, 48px)",
+              fontSize: "clamp(40px, 5vw, 64px)",
               fontWeight: 700,
               color: "#0D0D0D",
               letterSpacing: "-0.02em",
