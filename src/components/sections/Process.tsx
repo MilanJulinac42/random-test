@@ -226,14 +226,14 @@ export function Process() {
         </div>
 
         {/* Mobile: stacked cards, description always visible */}
-        <div className="md:hidden flex flex-col" style={{ marginTop: 40, gap: 16 }}>
+        <div className="md:hidden flex flex-col" style={{ marginTop: 32, gap: 20 }}>
           {steps.map((s) => (
             <div
               key={s.num}
               className="relative overflow-hidden"
               style={{
                 borderRadius: 24,
-                aspectRatio: "4 / 5",
+                aspectRatio: "3 / 4",
                 backgroundImage: `url(${s.image})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
