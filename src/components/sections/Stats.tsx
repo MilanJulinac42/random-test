@@ -132,7 +132,7 @@ export function Stats() {
           {/* Left: two stacked stats */}
           <div className="flex flex-col divide-y divide-white/10">
             <LeftStat target={98} suffix="%" label="On-time delivery" start={inView} />
-            <LeftStat target={80} suffix="+" label="Vetted contractors" start={inView} />
+            <LeftStat target={100} suffix="+" label="Vetted contractors" start={inView} />
           </div>
 
           {/* Right: gradient card */}
