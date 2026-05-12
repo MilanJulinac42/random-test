@@ -236,12 +236,6 @@ export function Hero() {
 
             {/* CTA cluster */}
             <FadeIn delay={550} className="md:text-right w-full md:w-auto">
-              <p
-                className="text-white/80 mb-3"
-                style={{ fontSize: 14, letterSpacing: "0.02em" }}
-              >
-                Get a written quote in 60 seconds.
-              </p>
               <div className="flex flex-col sm:flex-row gap-3 md:justify-end">
                 <a
                   href="#quiz"
