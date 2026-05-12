@@ -29,20 +29,10 @@ export function InstagramFeed() {
       className="relative overflow-hidden w-full px-6 md:px-12 lg:px-16"
       style={{
         backgroundColor: "#0D0D0D",
-        paddingTop: "clamp(140px, 16vw, 220px)",
-        paddingBottom: "clamp(56px, 6vw, 80px)",
+        paddingTop: "clamp(120px, 14vw, 180px)",
+        paddingBottom: "clamp(80px, 8vw, 120px)",
       }}
     >
-      {/* Top purple/blue glow — mirrors Reviews bottom glow */}
-      <div
-        aria-hidden
-        className="absolute inset-x-0 top-0 pointer-events-none"
-        style={{
-          height: "70%",
-          background:
-            "radial-gradient(60% 60% at 50% 0%, rgba(72,47,255,0.55) 0%, rgba(72,47,255,0.18) 40%, transparent 75%)",
-        }}
-      />
 
       <div className="relative z-10 mx-auto max-w-7xl">
         {/* Header row */}

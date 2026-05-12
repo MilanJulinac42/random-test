@@ -97,16 +97,6 @@ export function Reviews() {
         paddingBottom: "clamp(160px, 18vw, 260px)",
       }}
     >
-      {/* Bottom purple/blue glow */}
-      <div
-        aria-hidden
-        className="absolute inset-x-0 bottom-0 pointer-events-none"
-        style={{
-          height: "70%",
-          background:
-            "radial-gradient(60% 60% at 50% 100%, rgba(72,47,255,0.55) 0%, rgba(72,47,255,0.18) 40%, transparent 75%)",
-        }}
-      />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         {/* Header row */}
