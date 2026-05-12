@@ -1,6 +1,5 @@
-import { useRef, useState, type PointerEvent as RPointerEvent } from "react";
-import { Clock, LayoutGrid } from "lucide-react";
-import { Reveal } from "@/components/Reveal";
+import { useEffect, useRef, useState, type PointerEvent as RPointerEvent } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import livingBefore from "@/assets/gallery/living-before.jpg";
 import livingAfter from "@/assets/gallery/living-after.jpg";
 import kitchenBefore from "@/assets/gallery/kitchen-before.jpg";
@@ -13,10 +12,6 @@ interface Project {
   after: string;
   location: string;
   name: string;
-  price: string;
-  duration: string;
-  rooms: string;
-  scope: string;
   quote: string;
 }
 
@@ -26,40 +21,28 @@ const projects: Project[] = [
     after: livingAfter,
     location: "Downtown Dubai",
     name: "Living space renovation",
-    price: "AED 420k",
-    duration: "14 weeks",
-    rooms: "6 rooms",
-    scope: "Full renovation",
     quote:
-      "Perched high above the city, this family apartment is defined by soft oak, seamless micro cement floors, and light that moves gently across curved seating and custom timber cladding in the living room. In the kitchen, layered wood joinery and a sculpted island create a quiet focal point, while the children’s bedroom introduces playful forms and built-in details that feel warm and thoughtfully designed.",
+      "Perched high above the city, this family apartment is defined by soft oak, seamless micro cement floors, and light that moves gently across curved seating and custom timber cladding in the living room. In the kitchen, layered wood joinery and a sculpted island create a quiet focal point, while the children's bedroom introduces playful forms and built-in details that feel warm and thoughtfully designed.",
   },
   {
     before: kitchenBefore,
     after: kitchenAfter,
     location: "Green Community",
     name: "Kitchen & dining",
-    price: "AED 180k",
-    duration: "8 weeks",
-    rooms: "1 kitchen",
-    scope: "Kitchen",
     quote:
-      "This family villa centers around a generous kitchen with a built-in coffee bar, flowing into spacious dining and lounge areas designed for long, relaxed gatherings. A soft blue children’s room adds a playful note to the natural wood and stone palette, shaping a home that feels easy, social, and made for everyday family life.",
+      "This family villa centers around a generous kitchen with a built-in coffee bar, flowing into spacious dining and lounge areas designed for long, relaxed gatherings. A soft blue children's room adds a playful note to the natural wood and stone palette, shaping a home that feels easy, social, and made for everyday family life.",
   },
   {
     before: kidsBefore,
     after: kidsAfter,
     location: "Downtown Dubai",
     name: "Kid's bedroom",
-    price: "AED 95k",
-    duration: "5 weeks",
-    rooms: "1 bedroom",
-    scope: "Bedroom",
     quote:
-      "This three-bedroom family apartment was reconfigured to include a dedicated home office, with custom walnut joinery and integrated lighting bringing warmth and structure to the workspace. In the children’s room, a bespoke bunk bed and dual built-in desks create individual corners for study and rest, balancing privacy with a sense of shared comfort.",
+      "This three-bedroom family apartment was reconfigured to include a dedicated home office, with custom walnut joinery and integrated lighting bringing warmth and structure to the workspace. In the children's room, a bespoke bunk bed and dual built-in desks create individual corners for study and rest, balancing privacy with a sense of shared comfort.",
   },
 ];
 
-function BeforeAfterSlider({ project }: { project: Project }) {
+function BeforeAfterSlider({ project, fullHeight }: { project: Project; fullHeight?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState(50);
   const dragging = useRef(false);
@@ -89,7 +72,7 @@ function BeforeAfterSlider({ project }: { project: Project }) {
   return (
     <div
       ref={containerRef}
-      className="reno-card-img relative overflow-hidden select-none w-full"
+      className={fullHeight ? "relative overflow-hidden select-none w-full h-full" : "reno-card-img relative overflow-hidden select-none w-full"}
       style={{ touchAction: "none" }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
@@ -110,31 +93,11 @@ function BeforeAfterSlider({ project }: { project: Project }) {
         style={{ clipPath: `inset(0 0 0 ${pos}%)` }}
       />
 
-      {/* Location badge */}
       <span
         className="absolute"
         style={{
-          top: 12,
-          left: 12,
-          fontSize: 11,
-          fontWeight: 500,
-          letterSpacing: "0.03em",
-          color: "white",
-          background: "rgba(0,0,0,0.42)",
-          padding: "4px 12px",
-          borderRadius: 999,
-          zIndex: 2,
-        }}
-      >
-        {project.location}
-      </span>
-
-      {/* Before / After labels */}
-      <span
-        className="absolute"
-        style={{
-          bottom: 10,
-          left: 12,
+          bottom: 12,
+          left: 16,
           fontSize: 10,
           fontWeight: 500,
           color: "white",
@@ -149,8 +112,8 @@ function BeforeAfterSlider({ project }: { project: Project }) {
       <span
         className="absolute"
         style={{
-          bottom: 10,
-          right: 12,
+          bottom: 12,
+          right: 16,
           fontSize: 10,
           fontWeight: 500,
           color: "white",
@@ -163,7 +126,6 @@ function BeforeAfterSlider({ project }: { project: Project }) {
         After
       </span>
 
-      {/* Divider + handle */}
       <div
         className="absolute top-0 bottom-0 pointer-events-none"
         style={{ left: `${pos}%`, transform: "translateX(-50%)", zIndex: 3 }}
@@ -188,121 +150,242 @@ function BeforeAfterSlider({ project }: { project: Project }) {
   );
 }
 
-function ProjectCard({ project }: { project: Project }) {
-  
-
+function ProjectInfo({ project }: { project: Project }) {
   return (
-    <article
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <p
+        className="uppercase"
+        style={{ fontSize: 12, letterSpacing: "0.12em", color: "#777", margin: 0 }}
+      >
+        {project.location}
+      </p>
+      <h3
+        style={{
+          marginTop: 12,
+          fontSize: "clamp(28px, 3vw, 40px)",
+          fontWeight: 600,
+          color: "#fff",
+          lineHeight: 1.15,
+          letterSpacing: "-0.01em",
+        }}
+      >
+        {project.name}
+      </h3>
+      <p
+        style={{
+          marginTop: 20,
+          fontSize: 16,
+          lineHeight: 1.75,
+          color: "#aaa",
+          display: "-webkit-box",
+          WebkitLineClamp: 4,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+        }}
+      >
+        {project.quote}
+      </p>
+      <a
+        href="#"
+        className="reno-view-link"
+        style={{
+          marginTop: 32,
+          fontSize: 14,
+          color: "#fff",
+          textDecoration: "none",
+          alignSelf: "flex-start",
+        }}
+      >
+        View project →
+      </a>
+    </div>
+  );
+}
+
+function PinnedHeader() {
+  return (
+    <div
       style={{
-        borderRadius: 16,
-        overflow: "hidden",
-        border: "1px solid rgba(0,0,0,0.08)",
-        background: "#FFFFFF",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        height: 80,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "0 24px",
+        zIndex: 5,
+        pointerEvents: "none",
       }}
     >
-      <BeforeAfterSlider project={project} />
-
-      <div style={{ padding: "20px 24px 24px" }}>
-        {/* Row 1 */}
-        <div className="flex items-start justify-between gap-4">
-          <h3 style={{ fontSize: "clamp(24px, 2.4vw, 28px)", fontWeight: 600, color: "#0D0D0D", lineHeight: 1.25 }}>
-            {project.name}
-          </h3>
-          <span
-            style={{
-              fontSize: 22,
-              fontWeight: 700,
-              color: "#0D0D0D",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {project.price}
-          </span>
-        </div>
-
-        {/* Row 2 */}
-        <div className="flex items-center" style={{ gap: 14, marginTop: 10 }}>
-          <span className="inline-flex items-center" style={{ gap: 8, fontSize: 20, fontWeight: 700, color: "#0D0D0D" }}>
-            <Clock size={20} strokeWidth={1.75} />
-            {project.duration}
-          </span>
-          <span style={{ fontSize: 20, fontWeight: 400, color: "rgba(0,0,0,0.3)" }}>·</span>
-          <span className="inline-flex items-center" style={{ gap: 8, fontSize: 20, fontWeight: 700, color: "#0D0D0D" }}>
-            <LayoutGrid size={20} strokeWidth={1.75} />
-            {project.rooms}
-          </span>
-        </div>
-
-        {/* Row 3 — description */}
-        <p
-          style={{
-            fontSize: 13,
-            lineHeight: 1.65,
-            color: "#555",
-            marginTop: 12,
-          }}
-        >
-          {project.quote}
-        </p>
-      </div>
-    </article>
+      <p
+        className="uppercase"
+        style={{ fontSize: 11, letterSpacing: "0.2em", color: "#555", fontWeight: 500, margin: 0 }}
+      >
+        OUR WORK
+      </p>
+      <p
+        style={{
+          marginTop: 6,
+          fontSize: 18,
+          fontWeight: 500,
+          color: "#fff",
+          letterSpacing: "-0.01em",
+        }}
+      >
+        Delivered projects, not renders.
+      </p>
+    </div>
   );
 }
 
 export function Gallery() {
-  return (
-    <section
-      id="gallery"
-      data-nav-theme="light"
-      className="relative overflow-hidden px-6 md:px-12 lg:px-16"
-      style={{ backgroundColor: "#FFFFFF", paddingTop: "clamp(64px, 8vw, 96px)", paddingBottom: "clamp(64px, 8vw, 96px)" }}
-    >
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <Reveal>
+  const isMobile = useIsMobile();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (isMobile) return;
+    const onScroll = () => {
+      const el = wrapperRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const total = el.offsetHeight - window.innerHeight;
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / total));
+      const idx = progress < 0.34 ? 0 : progress < 0.67 ? 1 : 2;
+      setActive(idx);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [isMobile]);
+
+  if (isMobile) {
+    return (
+      <section
+        id="gallery"
+        data-nav-theme="dark"
+        className="relative w-full"
+        style={{ backgroundColor: "#0a0a0a", paddingTop: 64, paddingBottom: 64 }}
+      >
+        <div className="px-6">
           <p
             className="uppercase"
-            style={{ color: "#482FFF", fontSize: 14, letterSpacing: "0.12em", fontWeight: 500 }}
+            style={{ fontSize: 11, letterSpacing: "0.2em", color: "#555", fontWeight: 500 }}
           >
             OUR WORK
           </p>
           <h2
-            className="mt-4"
             style={{
-              fontSize: "clamp(40px, 5vw, 64px)",
-              fontWeight: 700,
-              color: "#0D0D0D",
+              marginTop: 12,
+              fontSize: 32,
+              fontWeight: 600,
+              color: "#fff",
               letterSpacing: "-0.02em",
-              lineHeight: 1.05,
+              lineHeight: 1.1,
             }}
           >
             Delivered projects, not renders.
           </h2>
-        </Reveal>
+        </div>
 
-        <div className="flex flex-col mt-10 md:mt-12" style={{ gap: 16 }}>
+        <div className="flex flex-col" style={{ gap: 56, marginTop: 40 }}>
           {projects.map((p) => (
-            <Reveal key={p.name}>
-              <ProjectCard project={p} />
-            </Reveal>
+            <div key={p.name}>
+              <BeforeAfterSlider project={p} />
+              <div style={{ padding: "24px 24px 0" }}>
+                <ProjectInfo project={p} />
+              </div>
+            </div>
           ))}
+        </div>
+
+        <style>{`
+          .reno-card-img { height: 280px; }
+          .reno-ba-handle { width: 44px; height: 44px; }
+          .reno-view-link:hover { text-decoration: underline; }
+        `}</style>
+      </section>
+    );
+  }
+
+  return (
+    <section
+      id="gallery"
+      data-nav-theme="dark"
+      ref={wrapperRef}
+      className="relative w-full"
+      style={{ backgroundColor: "#0a0a0a", height: "300vh" }}
+    >
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          overflow: "hidden",
+          backgroundColor: "#0a0a0a",
+        }}
+      >
+        <PinnedHeader />
+
+        {projects.map((p, i) => (
+          <div
+            key={p.name}
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              opacity: active === i ? 1 : 0,
+              pointerEvents: active === i ? "auto" : "none",
+              transition: "opacity 0.5s ease",
+            }}
+          >
+            {/* Left 55% — slider */}
+            <div style={{ width: "55%", height: "100%", paddingTop: 80 }}>
+              <BeforeAfterSlider project={p} fullHeight />
+            </div>
+            {/* Right 45% — info */}
+            <div
+              style={{
+                width: "45%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                padding: "0 64px",
+              }}
+            >
+              <ProjectInfo project={p} />
+            </div>
+          </div>
+        ))}
+
+        {/* Progress indicator */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 32,
+            right: 40,
+            fontSize: 13,
+            letterSpacing: "0.1em",
+            color: "rgba(255,255,255,0.45)",
+            fontWeight: 400,
+            zIndex: 6,
+          }}
+        >
+          {String(active + 1).padStart(2, "0")} / 03
         </div>
       </div>
 
       <style>{`
-        .reno-card-img { height: 260px; }
-        @media (min-width: 768px) {
-          .reno-card-img { height: 380px; }
-        }
-        .reno-ba-handle { width: 44px; height: 44px; }
-        @media (min-width: 768px) {
-          .reno-ba-handle { width: 40px; height: 40px; }
-        }
-        .reno-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
+        .reno-ba-handle { width: 40px; height: 40px; }
+        .reno-view-link:hover { text-decoration: underline; }
       `}</style>
     </section>
   );
