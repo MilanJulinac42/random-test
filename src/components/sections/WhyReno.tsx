@@ -45,7 +45,7 @@ export function WhyReno() {
           <h2
             className="text-center mx-auto mt-4"
             style={{
-              fontSize: "clamp(32px, 4vw, 40px)",
+              fontSize: "clamp(40px, 5vw, 64px)",
               fontWeight: 700,
               color: "#0D0D0D",
               maxWidth: 600,
