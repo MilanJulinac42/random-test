@@ -74,8 +74,8 @@ export function Footer() {
       style={{
         backgroundColor: "#0a0a0a",
         borderTop: "1px solid #1a1a1a",
-        paddingTop: 72,
-        paddingBottom: 48,
+        paddingTop: 48,
+        paddingBottom: 32,
       }}
     >
       <style>{`
@@ -125,11 +125,11 @@ export function Footer() {
         <div className="reno-footer-row">
           {/* LEFT */}
           <div className="reno-footer-col-left">
-            <img src={logo} alt="Reno" style={{ height: 28, width: "auto" }} />
-            <p style={{ fontSize: 13, color: "#666", fontWeight: 400, marginTop: 16, marginBottom: 0 }}>
+            <img src={logo} alt="Reno" style={{ height: 44, width: "auto" }} />
+            <p style={{ fontSize: 13, color: "#666", fontWeight: 400, marginTop: 12, marginBottom: 0 }}>
               Dubai's home renovation partner.
             </p>
-            <div style={{ display: "flex", gap: 20, marginTop: 24 }}>
+            <div style={{ display: "flex", gap: 20, marginTop: 18 }}>
               <SocialLink href={INSTAGRAM_URL} label="Instagram">
                 <InstagramIcon size={18} />
               </SocialLink>
@@ -143,7 +143,10 @@ export function Footer() {
           </div>
 
           {/* CENTER */}
-          <nav className="reno-footer-col-center" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <nav
+            className="reno-footer-col-center"
+            style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center", gap: 28 }}
+          >
             <NavLink href="#how-it-works">How It Works</NavLink>
             <NavLink href="#gallery">Our Work</NavLink>
             <NavLink href="#quiz">Get Started</NavLink>
@@ -175,9 +178,9 @@ export function Footer() {
         <div
           className="reno-footer-legal"
           style={{
-            marginTop: 48,
+            marginTop: 28,
             borderTop: "1px solid #161616",
-            paddingTop: 24,
+            paddingTop: 20,
           }}
         >
           <p style={{ fontSize: 12, color: "#3a3a3a", margin: 0 }}>
