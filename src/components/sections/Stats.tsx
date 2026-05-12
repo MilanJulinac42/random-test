@@ -51,7 +51,7 @@ function CardStat({ start }: { start: boolean }) {
         borderRadius: 24,
         aspectRatio: "4 / 3",
         background:
-          "linear-gradient(115deg, #000000 0%, #000069 22%, #8138FF 62%, #6D60DD 100%)",
+          "linear-gradient(115deg, #000000 0%, #000069 40%, #8138FF 82%, #6D60DD 100%)",
         boxShadow: "0 30px 80px -30px rgba(0,0,105,0.55)",
       }}
     >
@@ -61,7 +61,7 @@ function CardStat({ start }: { start: boolean }) {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(80% 70% at 0% 100%, #8138FF 0%, rgba(129,56,255,0) 60%)",
+            "radial-gradient(70% 60% at 5% 95%, rgba(129,56,255,0.55) 0%, rgba(129,56,255,0) 65%)",
           mixBlendMode: "screen",
         }}
       />
