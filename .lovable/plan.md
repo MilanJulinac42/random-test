@@ -1,61 +1,63 @@
-## Reviews section redesign
+## Goal
 
-Rework `src/components/sections/Reviews.tsx` to a dark, cinematic layout matching the reference.
+Replace the 3-step wizard in `src/components/sections/Quiz.tsx` with a **single-screen, center-aligned, clean bordered form** on a pure white section background. No glass, no slider, no steps.
 
-### Layout
+## Layout (single screen, center-aligned)
 
 ```text
-┌──────────────────────────────────────────────────────────────────┐
-│  Hear it directly                       ╭──────────────────╮     │
-│  from them                              │  200+   HAPPY    │     │
-│                                         │         CLIENTS  │     │
-│                                         ╰──────────────────╯     │
-│                                                                  │
-│  ┌────────────────┐ ┌────────────────┐ ┌────────────────┐        │
-│  │ ◯  Walter      │ │ ◯  Camillo     │ │ ◯  Amir        │        │
-│  │                │ │                │ │                │        │
-│  │   "quote..."   │ │   "quote..."   │ │   "quote..."   │        │
-│  │                │ │                │ │                │        │
-│  │   ★ ★ ★ ★ ★    │ │   ★ ★ ★ ★ ★    │ │   ★ ★ ★ ★ ★    │        │
-│  └────────────────┘ └────────────────┘ └────────────────┘        │
-│                                                                  │
-│           ░░░ deep purple/blue glow at bottom ░░░                │
-└──────────────────────────────────────────────────────────────────┘
+                       GET STARTED
+                Tell us about your project.
+       One short form. We call back within 24 hours.
+
+      ┌────────────── bordered card ──────────────┐
+      │                                           │
+      │  ┌─ Name ──────┐  ┌─ Phone (+971) ─────┐  │
+      │  └─────────────┘  └────────────────────┘  │
+      │                                           │
+      │         What are you renovating?          │
+      │   [🏠 Villa] [🏢 Apartment] [🌿 Landscape]│
+      │                                           │
+      │              Rough budget                 │
+      │      ┌─────────────────────────────┐      │
+      │      │  AED 100K – 500K            │      │
+      │      ├─────────────────────────────┤      │
+      │      │  AED 500K – 1.5M            │      │
+      │      ├─────────────────────────────┤      │
+      │      │  AED 1.5M+                  │      │
+      │      └─────────────────────────────┘      │
+      │                                           │
+      │        [   Get my assessment →   ]        │
+      └───────────────────────────────────────────┘
 ```
 
-### Header row
+Everything from the eyebrow `GET STARTED` down through every label, chip group, and button is horizontally centered.
 
-- Two-column flex: heading left, stat pill right.
-- Heading: "Hear it directly from them" — white, weight 700, `clamp(40px, 5vw, 64px)`, tight tracking, two lines.
-- Stat pill (right): rounded-full dark glass surface (`rgba(255,255,255,0.04)`, subtle 1px white/5 border, soft inner glow). Inside: large white "200+" (clamp 56–80px, weight 700) on the left, two-line uppercase label "HAPPY / CLIENTS" on the right (12–13px, letter-spacing ~0.12em, white/60).
+## Design language
 
-### Testimonial cards (3, equal width)
+- **Section**: pure white background `#FFFFFF`, generous vertical padding (`clamp(80px, 10vw, 140px)`), no glow, no glass
+- **Card**: white fill, 1px solid `#E6E4DD` border, `border-radius: 20px`, `padding: clamp(32px, 5vw, 48px)`, `max-width: 640px`, centered with `mx-auto`. Subtle `0 1px 2px rgba(0,0,0,0.04)` shadow only — clean, not floating
+- **Headline**: `clamp(36–52px)`, weight 700, color `#0D0D0D`, tracking -0.02em, centered
+- **Subheadline**: 16–18px, color `#555`, centered, max-width ~520px
+- **Inputs (Name / Phone)**: 56px tall, white fill, 1px `#D3D1C7` border, `border-radius: 12px`, focus border `#0D0D0D`. Two columns on desktop, stacked on mobile. Phone has a `+971` prefix affordance
+- **Renovation chips (Villa / Apartment / Landscape)**: pill buttons with icon + label, single-select. Inactive = white with `#D3D1C7` border, dark text. Active = `#0D0D0D` fill, white text. Centered row, wraps on mobile
+  - Icons: `Building2` (Villa), `Building` (Apartment), `Trees` (Landscape) from lucide-react
+- **Budget options (3 stacked cards)**: full-width buttons inside the card, single-select radio behavior. Inactive = `#F9F8F6` fill, transparent border. Active = white fill with 1.5px `#0D0D0D` border. Each shows the AED range, centered text
+  - `AED 100K – 500K`
+  - `AED 500K – 1.5M`
+  - `AED 1.5M+`
+- **Submit**: full-width inside the card, 56px tall, `#0D0D0D` fill, white text, `border-radius: 12px`, hover lifts to `#333`
 
-- Each card: dark glassy panel, `border-radius: 24px`, `padding: 28px`, `aspect-ratio: 3/4` (or `min-height: 360px`).
-- Background: layered radial highlights — soft warm/cool tint per card (mirroring current `tint`) blended into a near-black base, plus a subtle white inner-top glow. 1px border `rgba(255,255,255,0.08)`. Soft outer shadow.
-- Top row: small circular avatar (40px, current `image`, rounded-full, white/10 ring) + name to its right (white, 15px, weight 500). No meta line in the body header.
-- Body: centered quote text, white/85, `clamp(15px, 1.3vw, 17px)`, line-height 1.55. Strip the curly quotes from current strings and rewrap inline.
-- Footer: 5 filled white stars (`Star` from lucide, `fill="white"`, `size={16}`), centered.
+## Behavior
 
-### Bottom glow
+- All questions visible at once; no Next/Back, no step dots
+- Validation runs on submit only — inline red helper text under each missing field
+- `unit` (Villa/Apartment/Landscape) replaces previous `rooms[]`, stored as a single-item array to keep the existing `lead_submissions.rooms` column unchanged
+- `budget` stores the selected range string (`"AED 100K – 500K"` etc.) — same column, just new option strings
+- Reuses the existing `ConfirmationPopup` and the existing `supabase.from("lead_submissions").insert(...)` call exactly as-is
+- Section keeps `id="quiz"` and `data-nav-theme="light"`
 
-- Deep blue/purple radial glow bleeding from below the cards into the section bottom — large soft gradient (`radial-gradient(60% 50% at 50% 100%, #2A1BA8 0%, transparent 70%)`), behind cards, above section background.
+## Files
 
-### Section chrome
+- `src/components/sections/Quiz.tsx` — rewrite the form portion only; keep `ConfirmationPopup`, the contact `zod` schema, and the Supabase submit logic intact
 
-- Background `#0D0D0D`, `data-nav-theme="dark"`, vertical padding `clamp(80px, 10vw, 140px)`.
-- Keep the section id `#reviews`.
-
-### Responsive
-
-- Mobile: heading + stat pill stack vertically (pill below, full width). Cards become a horizontal snap-scroll (keep current pattern, ~82vw width).
-- md+: 3-column grid with `gap: 20px`.
-
-### Data
-
-- Reuse existing `testimonials` array (Walter / Camillo / Amir, same images and quotes). Drop `meta` from card display but keep in the type for now.
-- Stat pill number hardcoded as `200+` with label `HAPPY CLIENTS` (matching the rest of the site's "200+ projects" stat).
-
-### Files
-
-- `src/components/sections/Reviews.tsx` — rewrite of layout/markup. No new files, no other components touched.
+No DB changes, no new dependencies, no other components touched.
