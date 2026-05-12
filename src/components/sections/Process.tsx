@@ -165,9 +165,10 @@ export function Process() {
   return (
     <section
       id="how-it-works"
+      data-nav-theme="light"
       className="relative overflow-hidden w-full pt-0 pb-0"
       style={{
-        backgroundColor: "#0D0D0D",
+        backgroundColor: "#FFFFFF",
       }}
     >
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16 pl-[80px] pr-[80px] pt-[96px] pb-[40px]">
@@ -184,12 +185,13 @@ export function Process() {
             HOW IT WORKS
           </p>
           <h2
-            className="text-white mt-5"
+            className="mt-5"
             style={{
               fontSize: "clamp(40px, 5vw, 64px)",
               fontWeight: 700,
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
+              color: "#0D0D0D",
             }}
           >
             From first call to keys in hand.
