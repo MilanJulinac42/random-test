@@ -54,20 +54,9 @@ function TestimonialCard({ t }: { t: Testimonial }) {
         backdropFilter: "blur(8px)",
       }}
     >
-      {/* Top: avatar + name */}
-      <div className="flex items-center justify-center gap-3">
-        <img
-          src={t.image}
-          alt={t.name}
-          loading="lazy"
-          className="rounded-full object-cover"
-          style={{
-            width: 36,
-            height: 36,
-            outline: "1px solid rgba(255,255,255,0.15)",
-          }}
-        />
-        <span style={{ color: "rgba(255,255,255,0.85)", fontSize: 15, fontWeight: 500 }}>
+      {/* Top: name */}
+      <div className="flex items-center justify-center">
+        <span style={{ color: "#FFFFFF", fontSize: 22, fontWeight: 600, letterSpacing: "-0.01em" }}>
           {t.name}
         </span>
       </div>
