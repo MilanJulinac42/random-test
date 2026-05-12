@@ -124,9 +124,9 @@ export function Quiz() {
             <form
               onSubmit={handleSubmit}
               noValidate
-              className="mx-auto mt-12"
+              className="mx-auto mt-12 reno-quiz-form"
               style={{
-                maxWidth: 640,
+                maxWidth: 980,
                 background: "#FFFFFF",
                 borderRadius: 20,
                 border: "1px solid #E6E4DD",
@@ -134,159 +134,166 @@ export function Quiz() {
                 boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
               }}
             >
-              {/* Name + Phone */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                  gap: 12,
-                }}
-              >
+              <div className="reno-quiz-grid">
+                {/* LEFT COLUMN */}
                 <div>
-                  <input
-                    type="text"
-                    autoComplete="given-name"
-                    placeholder="Your name"
-                    value={name}
-                    maxLength={100}
-                    onChange={(e) => setName(e.target.value)}
-                    className="reno-step-input"
-                    style={inputStyle}
-                  />
-                  {errors.name && (
-                    <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 6, textAlign: "center" }}>{errors.name}</p>
-                  )}
+                  {/* Name + Phone */}
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                      gap: 12,
+                    }}
+                  >
+                    <div>
+                      <input
+                        type="text"
+                        autoComplete="given-name"
+                        placeholder="Your name"
+                        value={name}
+                        maxLength={100}
+                        onChange={(e) => setName(e.target.value)}
+                        className="reno-step-input"
+                        style={inputStyle}
+                      />
+                      {errors.name && (
+                        <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 6, textAlign: "center" }}>{errors.name}</p>
+                      )}
+                    </div>
+                    <div>
+                      <input
+                        type="tel"
+                        autoComplete="tel"
+                        placeholder="+971 — phone number"
+                        value={phone}
+                        maxLength={30}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="reno-step-input"
+                        style={inputStyle}
+                      />
+                      {errors.phone && (
+                        <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 6, textAlign: "center" }}>{errors.phone}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Renovation type */}
+                  <div style={{ marginTop: 28 }}>
+                    <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0D0D0D", marginBottom: 14 }}>
+                      What are you renovating?
+                    </h3>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: 10,
+                      }}
+                    >
+                      {UNIT_TILES.map((t) => {
+                        const active = unit === t.key;
+                        const Icon = t.Icon;
+                        return (
+                          <button
+                            type="button"
+                            key={t.key}
+                            onClick={() => setUnit(t.key)}
+                            aria-pressed={active}
+                            style={{
+                              background: active ? "#0D0D0D" : "#FFFFFF",
+                              border: `1.5px solid ${active ? "#0D0D0D" : "#D3D1C7"}`,
+                              borderRadius: 999,
+                              padding: "12px 22px",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: 8,
+                              cursor: "pointer",
+                              transition: "background 150ms, border-color 150ms, color 150ms",
+                              color: active ? "#FFFFFF" : "#0D0D0D",
+                              fontSize: 14,
+                              fontWeight: 500,
+                            }}
+                          >
+                            <Icon size={18} strokeWidth={1.75} />
+                            {t.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {errors.unit && (
+                      <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 10 }}>{errors.unit}</p>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  <input
-                    type="tel"
-                    autoComplete="tel"
-                    placeholder="+971 — phone number"
-                    value={phone}
-                    maxLength={30}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="reno-step-input"
-                    style={inputStyle}
-                  />
-                  {errors.phone && (
-                    <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 6, textAlign: "center" }}>{errors.phone}</p>
-                  )}
+
+                {/* RIGHT COLUMN */}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {/* Budget */}
+                  <div>
+                    <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0D0D0D", marginBottom: 14 }}>
+                      Rough budget
+                    </h3>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                      {BUDGETS.map((b) => {
+                        const active = budget === b.key;
+                        return (
+                          <button
+                            type="button"
+                            key={b.key}
+                            onClick={() => setBudget(b.key)}
+                            aria-pressed={active}
+                            style={{
+                              background: active ? "#FFFFFF" : "#F9F8F6",
+                              border: `1.5px solid ${active ? "#0D0D0D" : "transparent"}`,
+                              borderRadius: 14,
+                              padding: "16px 20px",
+                              textAlign: "center",
+                              cursor: "pointer",
+                              transition: "background 150ms, border-color 150ms",
+                              fontSize: 15,
+                              fontWeight: 500,
+                              color: "#0D0D0D",
+                            }}
+                          >
+                            {b.key}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {errors.budget && (
+                      <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 10 }}>{errors.budget}</p>
+                    )}
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="reno-filled-btn"
+                    disabled={submitting}
+                    style={{
+                      width: "100%",
+                      marginTop: 24,
+                      height: 56,
+                      background: "#0D0D0D",
+                      color: "white",
+                      border: "none",
+                      borderRadius: 12,
+                      fontSize: 16,
+                      fontWeight: 600,
+                      cursor: submitting ? "wait" : "pointer",
+                      opacity: submitting ? 0.4 : 1,
+                      transition: "background 150ms",
+                    }}
+                  >
+                    {submitting ? "Sending..." : "Get my assessment →"}
+                  </button>
+
+                  <p
+                    className="text-center"
+                    style={{ fontSize: 12, color: "#888", marginTop: 14 }}
+                  >
+                    We assess 15–20 new projects each month.
+                  </p>
                 </div>
               </div>
-
-              {/* Renovation type */}
-              <div style={{ marginTop: 32, textAlign: "center" }}>
-                <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0D0D0D", marginBottom: 14 }}>
-                  What are you renovating?
-                </h3>
-                <div
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "center",
-                    gap: 10,
-                  }}
-                >
-                  {UNIT_TILES.map((t) => {
-                    const active = unit === t.key;
-                    const Icon = t.Icon;
-                    return (
-                      <button
-                        type="button"
-                        key={t.key}
-                        onClick={() => setUnit(t.key)}
-                        aria-pressed={active}
-                        style={{
-                          background: active ? "#0D0D0D" : "#FFFFFF",
-                          border: `1.5px solid ${active ? "#0D0D0D" : "#D3D1C7"}`,
-                          borderRadius: 999,
-                          padding: "12px 22px",
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: 8,
-                          cursor: "pointer",
-                          transition: "background 150ms, border-color 150ms, color 150ms",
-                          color: active ? "#FFFFFF" : "#0D0D0D",
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                      >
-                        <Icon size={18} strokeWidth={1.75} />
-                        {t.label}
-                      </button>
-                    );
-                  })}
-                </div>
-                {errors.unit && (
-                  <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 10 }}>{errors.unit}</p>
-                )}
-              </div>
-
-              {/* Budget */}
-              <div style={{ marginTop: 32, textAlign: "center" }}>
-                <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0D0D0D", marginBottom: 14 }}>
-                  Rough budget
-                </h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {BUDGETS.map((b) => {
-                    const active = budget === b.key;
-                    return (
-                      <button
-                        type="button"
-                        key={b.key}
-                        onClick={() => setBudget(b.key)}
-                        aria-pressed={active}
-                        style={{
-                          background: active ? "#FFFFFF" : "#F9F8F6",
-                          border: `1.5px solid ${active ? "#0D0D0D" : "transparent"}`,
-                          borderRadius: 14,
-                          padding: "18px 20px",
-                          textAlign: "center",
-                          cursor: "pointer",
-                          transition: "background 150ms, border-color 150ms",
-                          fontSize: 15,
-                          fontWeight: 500,
-                          color: "#0D0D0D",
-                        }}
-                      >
-                        {b.key}
-                      </button>
-                    );
-                  })}
-                </div>
-                {errors.budget && (
-                  <p style={{ fontSize: 12, color: "#A32D2D", marginTop: 10 }}>{errors.budget}</p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                className="reno-filled-btn"
-                disabled={submitting}
-                style={{
-                  width: "100%",
-                  marginTop: 32,
-                  height: 56,
-                  background: "#0D0D0D",
-                  color: "white",
-                  border: "none",
-                  borderRadius: 12,
-                  fontSize: 16,
-                  fontWeight: 600,
-                  cursor: submitting ? "wait" : "pointer",
-                  opacity: submitting ? 0.4 : 1,
-                  transition: "background 150ms",
-                }}
-              >
-                {submitting ? "Sending..." : "Get my assessment →"}
-              </button>
-
-              <p
-                className="text-center"
-                style={{ fontSize: 12, color: "#888", marginTop: 16 }}
-              >
-                We assess 15–20 new projects each month.
-              </p>
             </form>
           </Reveal>
         )}
@@ -297,6 +304,10 @@ export function Quiz() {
       <style>{`
         .reno-filled-btn:hover:not(:disabled) { background: #333 !important; }
         .reno-step-input:focus { border-color: #0D0D0D !important; }
+        .reno-quiz-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+        @media (min-width: 768px) {
+          .reno-quiz-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
       `}</style>
     </section>
   );
