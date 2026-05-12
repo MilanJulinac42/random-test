@@ -81,8 +81,8 @@ function CardStat({ start }: { start: boolean }) {
         </div>
         <div
           style={{
-            fontSize: 16,
-            color: "rgba(255,255,255,0.85)",
+            fontSize: 20,
+            color: "rgba(255,255,255,0.9)",
             letterSpacing: "0.01em",
           }}
         >
