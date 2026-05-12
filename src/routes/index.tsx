@@ -5,6 +5,7 @@ import { Stats } from "@/components/sections/Stats";
 import { Gallery } from "@/components/sections/Gallery";
 import { Quiz } from "@/components/sections/Quiz";
 import { WhyReno } from "@/components/sections/WhyReno";
+import { Guarantee } from "@/components/sections/Guarantee";
 import { Process } from "@/components/sections/Process";
 import { Reviews } from "@/components/sections/Reviews";
 import { InstagramFeed } from "@/components/sections/InstagramFeed";
@@ -25,6 +26,7 @@ function Index() {
       <Gallery />
       <Quiz />
       <WhyReno />
+      <Guarantee />
       <Process />
       <Reviews />
       <InstagramFeed />

@@ -1,75 +1,67 @@
 ## Goal
 
-Wrap the hero slideshow in a single rounded card that matches the reference: rounded corners on all four sides, plus **two diagonally opposite concave "bleed cuts"** at the **top-left** and **bottom-right** corners. The cuts are the same size and shape, creating a clean, symmetric "bitten" silhouette that lets floating UI sit just outside the card.
+Pull the "Our Guarantee" block out of `WhyReno` and make it a standalone, full-width white section with a large centered headline whose **opacity fills from low to 100% as the user scrolls it into view** (the screenshot's effect). Generous vertical padding keeps it visually isolated from neighbouring sections.
 
 ## Visual target
 
 ```text
-        ╭──────╮                                          
-╭───────╯      ╰──────────────────────────────────────╮   
-│  socials  logo                          chat-pill   │   
-│                                                     │   
-│   One-stop                                          │   
-│   Renovation Platform                               │   
-│   subheader…                                        │   
-│                                                     │   
-│  [thumb][thumb][thumb][thumb]                       │   
-│                                          ╭──────────╯   
-╰──────────────────────────────────────────╯              
-                                            ╰──────╮      
-                                              CTA cluster 
-                                            ╭──────╯      
+                                                  
+              GUARANTEE                              ← small eyebrow
+                                                     
+        If we run late, you're                       ← line 1
+           compensated.                              ← line 2
+        In writing, before                           ← line 3
+            we start.                                ← line 4
+                                                  
 ```
 
-- Top-left: card edge dips inward in a quarter-circle. The socials cluster sits in this notch (slightly above the main card body, flush with the dip).
-- Bottom-right: mirror-image quarter-circle dip. The CTA cluster (subheading + "Check availability" + "Download app") sits in this notch, slightly below the main card body.
-- Top-right and bottom-left: standard outward rounded corners. Chat pill stays inside the card top bar (top-right), thumbnails stay inside the card bottom area (bottom-left).
-- Both notches use the **same radius** so the silhouette reads as symmetric.
+- Background: pure white (`#FFFFFF`).
+- Eyebrow: small uppercase "GUARANTEE", muted grey.
+- Headline: 4 lines, hard-broken, centered, large display weight, dark text.
+- Headline opacity is driven by scroll position: ~15% when the section first enters the viewport from the bottom, ramps to 100% when it's centered, stays 100% past that. Light-DOM text (selectable, accessible).
+- Vertical padding: `clamp(120px, 14vw, 180px)` top and bottom — meaningfully more than the existing sections so it reads as its own beat.
 
-## Approach (single file: `src/components/Hero.tsx`, plus 2 token lines in `src/styles.css`)
+## Approach
 
-1. **Section becomes a padded shell**: `<section>` keeps `min-h-screen` and `bg-background`, gains outer padding (~12–16px) so the card has breathing room from the viewport edges.
-2. **New card wrapper** inside the section holds the slideshow images, legibility gradient, top bar, headline, and thumbnails.
-   - `position: relative; overflow: hidden`
-   - `border-radius: var(--radius-card)` (28px) on all corners
-   - `min-height: calc(100vh - 2 * shell-padding)`
-3. **Bleed cuts** carved with a CSS `mask` on the card. Two radial gradients knock out quarter-circles at top-left and bottom-right; a base layer keeps the rest opaque. Single declaration, no SVG asset:
-   ```css
-   --notch: 56px;          /* radius of the bite */
-   --notch-box: 112px;     /* 2 * notch, sized to the corner */
-   mask:
-     radial-gradient(circle var(--notch) at 0    0,    transparent 99%, #000 100%) top left     / var(--notch-box) var(--notch-box) no-repeat,
-     radial-gradient(circle var(--notch) at 100% 100%, transparent 99%, #000 100%) bottom right  / var(--notch-box) var(--notch-box) no-repeat,
-     linear-gradient(#000, #000);
-   mask-composite: exclude;
-   -webkit-mask-composite: source-out; /* Safari */
-   ```
-   The mask carves both notches while preserving the regular `border-radius` on top-right and bottom-left.
-4. **Reposition the floating elements** so they hug the notches:
-   - **Socials (Instagram + LinkedIn)** move out of the in-card top bar and become absolute on the section, anchored to top-left, sitting *above/left* of the card edge so they tuck into the top-left bite. Logo stays centered inside the card top bar; Chat pill stays top-right inside the card.
-   - **CTA cluster** (subheading + 2 buttons) moves out of the headline block and becomes absolute on the section, anchored to bottom-right, sitting *below/right* of the card edge so it tucks into the bottom-right bite.
-   - Headline/subheader and thumbnail row stay inside the card. Headline still pinned to bottom-left of the card content area; thumbnails sit beneath the headline.
-5. **Mobile (<md)**: notches and outer shell padding collapse — the card becomes near-full-bleed with a normal `rounded-2xl`, the mask is not applied. Socials remain hidden, CTA cluster stacks below the card as it does today, thumbnails stay hidden (current behavior preserved).
-6. **Scroll-down chevron**: keep, repositioned so it doesn't collide with the bottom-right notch (shift slightly left of center, or hide on this layout — minor follow-up).
+### 1. New component `src/components/sections/Guarantee.tsx`
+- Wrapper `<section id="guarantee" data-nav-theme="light">` with white background and the large vertical padding above.
+- Inside: small eyebrow `GUARANTEE`, then a centered `<h2>` containing 4 `<span className="block">` lines for the hard breaks.
+- Scroll-driven opacity:
+  - `useRef` on the headline + `useEffect` that attaches a passive `scroll` listener (and a `resize` one).
+  - On each tick, compute `progress = clamp(0..1)` from the section's bounding rect: `0` when its top is at the bottom of the viewport, `1` when its center crosses the viewport center.
+  - Apply `opacity = 0.15 + 0.85 * progress` to the headline via inline `style` or a CSS variable. Optional small `translateY(8px → 0)` for polish.
+  - Respect `prefers-reduced-motion`: skip the scroll listener and render at full opacity.
+- No new dependencies. No IntersectionObserver-only approach (we need continuous progress, not a one-shot).
+- Type sizing: `fontSize: clamp(40px, 6vw, 80px)`, `fontWeight: 700`, `lineHeight: 1.1`, `letterSpacing: -0.02em`, `color: #0D0D0D`. Centered.
 
-## Token additions (`src/styles.css`)
+### 2. Remove the old guarantee block from `WhyReno`
+- Delete the `{/* Guarantee block */}` JSX (lines 132–161 in `src/components/sections/WhyReno.tsx`) and the now-unused `<style>` block at the bottom (`.reno-guarantee-btn:hover` rules — no other usage in the file).
+- Leave the rest of `WhyReno` (eyebrow, headline, 3 stat cards) intact.
 
-```css
-:root {
-  --radius-card: 28px;
-  --notch-radius: 56px;
-}
-```
+### 3. Mount the new section in `src/routes/index.tsx`
+- Import `Guarantee` and place it **after `WhyReno`** and **before `Process`** so the flow becomes: WhyReno (numbers) → Guarantee (the promise) → Process. This keeps the narrative: proof → promise → how.
 
-Used by the Hero so the curve and bite size are tweakable in one place.
+## Copy
+
+- Eyebrow: `GUARANTEE`
+- Headline (4 lines, exactly as currently written, just split across 4 lines):
+  1. `If we run late,`
+  2. `you're compensated.`
+  3. `In writing,`
+  4. `before we start.`
+
+If you'd like different line breaks, say the word and I'll adjust — happy to keep "If we run late, you're compensated." as one line and split the second sentence too.
+
+## Responsive
+
+- Mobile: same centered layout, headline drops to ~`40px`, vertical padding clamps to `120px`. No horizontal scroll, max-width on the headline (~`min(880px, 92vw)`) so lines stay tidy.
 
 ## Out of scope
 
-- No changes to other sections (Stats, Gallery, Quiz, etc.).
-- No copy, button, or slideshow-logic changes.
-- No new components or dependencies.
-- "Try now" label in the screenshot is reference only — we keep "Chat With Us".
+- No changes to other sections' styling.
+- No new fonts, no new dependencies, no GSAP/Framer Motion.
+- No background imagery (the screenshot's orb/gradient was reference for the *fill effect*, not literal art — confirm later if you want me to add the soft purple radial accents).
 
 ## Open question (non-blocking)
 
-Notch radius — `56px` reads close to the screenshot at desktop widths. If you'd prefer deeper bites (more dramatic) or shallower bites (subtler), I'll tune `--notch-radius` after the first pass.
+Add the soft decorative purple gradient blobs in the corners (like the screenshot reference) as a polish pass, or keep the white background completely clean? Default: clean white.
