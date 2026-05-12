@@ -43,7 +43,7 @@ export function InstagramFeed() {
             <div>
               <h2
                 style={{
-                  fontSize: "clamp(28px, 4vw, 40px)",
+                  fontSize: "clamp(40px, 5vw, 64px)",
                   fontWeight: 700,
                   color: "#FFFFFF",
                   letterSpacing: "-0.02em",
