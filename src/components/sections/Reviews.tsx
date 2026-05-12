@@ -45,7 +45,6 @@ function TestimonialCard({ t }: { t: Testimonial }) {
       className="relative shrink-0 w-full flex flex-col overflow-hidden"
       style={{
         borderRadius: 24,
-        minHeight: 360,
         padding: 28,
         background: `radial-gradient(120% 80% at 50% 0%, ${t.tint}55 0%, ${t.tint}22 25%, rgba(20,20,28,0.85) 60%, rgba(15,15,22,0.95) 100%)`,
         border: "1px solid rgba(255,255,255,0.08)",
@@ -65,22 +64,14 @@ function TestimonialCard({ t }: { t: Testimonial }) {
       <p
         className="text-center"
         style={{
-          marginTop: 28,
-          fontSize: "clamp(15px, 1.2vw, 17px)",
+          marginTop: 20,
+          fontSize: "clamp(17px, 1.35vw, 19px)",
           lineHeight: 1.55,
-          color: "rgba(255,255,255,0.85)",
-          flex: 1,
+          color: "rgba(255,255,255,0.9)",
         }}
       >
         {t.quote}
       </p>
-
-      {/* Stars */}
-      <div className="flex items-center justify-center gap-1.5" style={{ marginTop: 24 }}>
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} size={16} fill="#FFFFFF" stroke="#FFFFFF" />
-        ))}
-      </div>
     </div>
   );
 }
