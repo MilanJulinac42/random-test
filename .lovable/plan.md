@@ -1,34 +1,65 @@
 ## Goal
 
-Make the purple glow currently at the bottom of the Reviews ("Hear it directly from them") section feel like it continues into the top of the InstagramFeed ("Follow the build") section, then fades out before the heading and Instagram tiles.
+Replace the three cards in the "How It Works" section with a polished image-card layout inspired by the reference image, with an interactive hover-expand behavior.
 
-## Changes
+## Card design (default state)
 
-**1. `src/components/sections/Reviews.tsx`**
-- Increase `paddingBottom` so the existing bottom glow has more breathing room below the testimonial cards before the section ends (e.g. `clamp(160px, 18vw, 260px)`).
-- Keep the existing radial-gradient glow at the bottom unchanged so it visually "starts" here.
+Each card shows:
+- A full-bleed background image (rounded corners, ~24px radius)
+- A subtle dark gradient overlay at the bottom for legibility
+- A two-line title in white at the bottom-left
+- A small white circular button with a right-arrow (`→`) sitting just above the title
 
-**2. `src/components/sections/InstagramFeed.tsx`**
-- Add a top decorative glow that mirrors the Reviews bottom glow — same purple color/stops, but anchored at the top of the section (`60% 60% at 50% 0%`) so it reads as the same gradient flipped vertically and continuing across the seam.
-- Increase `paddingTop` so the glow has space to fade out fully before the "Follow the build." heading (e.g. `clamp(140px, 16vw, 220px)`).
-- Keep section background `#0D0D0D` so the glow blends seamlessly with Reviews.
+Three cards laid out in a row using a CSS grid with animated `grid-template-columns` so widths can interpolate smoothly.
+
+## Hover interaction
+
+- Default: all three cards share equal width (`1fr 1fr 1fr`).
+- On hover of a card: that card expands (e.g. `2.4fr`), the other two contract (`0.8fr 0.8fr`) and enter a "compact" state.
+- The hovered card animates:
+  - Arrow button fades out
+  - Description text fades in from the bottom and pushes the title upward
+- The non-hovered cards stay in their compact state with only title visible (arrow hidden because there isn't room — title remains anchored bottom-left, possibly truncated to the two-line layout).
+- On mouse-leave: arrow fades back in (from the left), description fades out downward, title returns to its original position. All cards return to equal width.
+
+Mobile (<768px): stacked vertically, no hover behavior — show title + description + arrow statically.
+
+## Content mapping
+
+Keep existing copy from the current Process steps (titles + bodies). Replace the SVG illustrations with three images.
+
+| # | Title (two lines)                          | Image source                          |
+|---|---------------------------------------------|---------------------------------------|
+| 01 | Design and / planning                      | Generated interior render (planning)  |
+| 02 | Build, tracked / at every step             | Generated interior render (build)     |
+| 03 | Handover & / Warranty                      | Generated interior render (handover)  |
+
+Images will be generated into `src/assets/process-*.jpg` (portrait-ish 4:5 ratio, dark cinematic interiors to match the existing site mood) and imported as ES6 modules.
+
+## Technical approach
+
+- Convert `Process.tsx` to use a single grid container with `grid-template-columns` transitioning over ~500ms with an easing curve (`cubic-bezier(0.22, 1, 0.36, 1)`).
+- Track `hoveredIndex` in component state via `useState<number | null>(null)`.
+- Each card uses `onMouseEnter` / `onMouseLeave`. The expanded state is `hoveredIndex === i`; compact state is `hoveredIndex !== null && hoveredIndex !== i`.
+- Description and arrow use opacity + translateY transitions (~300ms), staggered slightly so the arrow leaves before the description arrives.
+- Title uses `transform: translateY()` to slide upward when description appears.
+- On mobile, render a simpler stacked layout that ignores hover state.
 
 ```text
-┌─ Reviews ──────────────────┐
-│  heading + cards           │
-│                            │
-│       ░▒▓ purple glow ▓▒░  │  ← existing
-└────────────────────────────┘
-┌─ InstagramFeed ────────────┐
-│       ░▒▓ purple glow ▓▒░  │  ← new (mirrored)
-│                            │
-│  "Follow the build."       │
-│  IG tiles                  │
-└────────────────────────────┘
+Default                    Hover card 2
+┌────┬────┬────┐          ┌──┬────────┬──┐
+│ 01 │ 02 │ 03 │   →      │01│   02   │03│
+│ →  │ →  │ →  │          │  │ desc…  │  │
+│Ttl │Ttl │Ttl │          │T │  Ttl ↑ │T │
+└────┴────┴────┘          └──┴────────┴──┘
 ```
 
-## Technical notes
+## Files changed
 
-- Both sections already share `backgroundColor: #0D0D0D`, so a continuous radial glow across the boundary will look seamless with no visible seam.
-- The new top glow in InstagramFeed will be an absolutely positioned `aria-hidden` div, matching the pattern already used in Reviews, with `z-10` kept on the content container so the heading stays above it.
-- Padding values use `clamp()` to stay responsive on mobile.
+- `src/components/sections/Process.tsx` — full rewrite of the cards block; section header + padding unchanged.
+- `src/assets/process-01.jpg`, `process-02.jpg`, `process-03.jpg` — new generated images.
+
+## Out of scope
+
+- Section header copy and the surrounding gradient/padding stay as they are.
+- No changes to other sections.
