@@ -172,7 +172,7 @@ export function Process() {
         paddingBottom: "clamp(80px, 10vw, 120px)",
       }}
     >
-      <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
+      <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16 py-0 pl-[80px] pr-[80px] pt-[40px] pb-[40px]">
         <Reveal>
           <p
             className="uppercase"
