@@ -129,7 +129,7 @@ export function Hero() {
         }}
       >
         {/* Masked layer: slideshow + gradient + glow inside the bitten silhouette */}
-        <div className="absolute inset-0 md:[mask-composite:exclude]" style={cardMaskStyle}>
+        <div className="absolute inset-0" style={cardMaskStyle}>
           {SLIDES.map((slide, i) => (
             <img
               key={slide.src}
