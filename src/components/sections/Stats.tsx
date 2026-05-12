@@ -51,26 +51,18 @@ function CardStat({ start }: { start: boolean }) {
         borderRadius: 24,
         aspectRatio: "4 / 3",
         background:
-          "radial-gradient(120% 90% at 0% 0%, rgba(255,255,255,0.85) 0%, rgba(220,215,255,0.35) 22%, rgba(72,47,255,0.55) 55%, #482FFF 85%, #482FFF 100%)",
-        boxShadow: "0 30px 80px -30px rgba(72,47,255,0.5)",
+          "linear-gradient(115deg, #000000 0%, #000069 22%, #8138FF 62%, #6D60DD 100%)",
+        boxShadow: "0 30px 80px -30px rgba(0,0,105,0.55)",
       }}
     >
-      {/* Soft sheen highlight top-left */}
+      {/* Soft purple bloom from bottom-left for depth */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(60% 50% at 10% 10%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 60%)",
-        }}
-      />
-      {/* Deep curve bottom-right */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(70% 60% at 100% 100%, rgba(10,5,60,0.7) 0%, rgba(10,5,60,0) 60%)",
+            "radial-gradient(80% 70% at 0% 100%, #8138FF 0%, rgba(129,56,255,0) 60%)",
+          mixBlendMode: "screen",
         }}
       />
 
