@@ -1,134 +1,158 @@
 import { Reveal } from "@/components/Reveal";
-import { Clock, ShieldCheck, Star } from "lucide-react";
 
 const stats = [
-  {
-    Icon: Clock,
-    number: "98%",
-    label: "ON-TIME DELIVERY",
-    story: "Delivered on or before the agreed date, across\n             all completed Reno projects.",
-  },
-  {
-    Icon: ShieldCheck,
-    number: "< 10%",
-    label: "CONTRACTOR ACCEPTANCE RATE",
-    story: "Fewer than 1 in 10 contractors who apply make\n             it onto the Reno platform.",
-  },
-  {
-    Icon: Star,
-    number: "4.9",
-    label: "HOMEOWNER RATING",
-    story: "Verified average from post-handover survey across 200+ completed projects.",
-  },
+  { number: "98%", label: "ON-TIME DELIVERY" },
+  { number: "< 10%", label: "CONTRACTOR PASS RATE" },
+  { number: "4.9", label: "HOMEOWNER RATING" },
 ];
 
 export function WhyReno() {
   return (
     <section
       id="why-reno"
-      data-nav-theme="light"
-      className="relative overflow-hidden w-full px-6 md:px-12 lg:px-16"
+      data-nav-theme="dark"
+      className="relative overflow-hidden w-full"
       style={{
-        backgroundColor: "#FFFFFF",
-        paddingTop: "clamp(64px, 8vw, 100px)",
-        paddingBottom: "clamp(64px, 8vw, 100px)",
+        backgroundColor: "#0f0f0f",
+        paddingTop: 120,
+        paddingBottom: 120,
       }}
     >
-      <div className="relative z-10 mx-auto max-w-7xl">
+      <style>{`
+        .reno-stats-row {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 48px;
+        }
+        .reno-stats-sep { display: none; }
+        .reno-stat-number { font-size: 72px; }
+        @media (min-width: 768px) {
+          .reno-stats-row {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+          }
+          .reno-stats-sep {
+            display: block;
+            width: 1px;
+            height: 80px;
+            background: #222;
+            margin: 0 48px;
+          }
+          .reno-stat-number { font-size: 100px; }
+        }
+      `}</style>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         <Reveal>
           <p
             className="text-center uppercase"
-            style={{ color: "#888", fontSize: 14, letterSpacing: "0.1em", fontWeight: 500 }}
+            style={{ color: "#555", fontSize: 11, letterSpacing: "0.2em", fontWeight: 500 }}
           >
             THE NUMBERS
           </p>
           <h2
-            className="text-center mx-auto mt-4"
+            className="text-center mx-auto"
             style={{
-              fontSize: "clamp(40px, 5vw, 64px)",
-              fontWeight: 700,
-              color: "#0D0D0D",
-              maxWidth: 600,
-              lineHeight: 1.1,
-              letterSpacing: "-0.02em",
+              marginTop: 20,
+              fontSize: "clamp(28px, 3vw, 32px)",
+              fontWeight: 600,
+              color: "#fff",
+              maxWidth: 520,
+              lineHeight: 1.2,
+              letterSpacing: "-0.01em",
             }}
           >
             We built the system homeowners deserve.
           </h2>
-          <p
-            className="text-center mx-auto mt-5"
-            style={{
-              fontSize: 16,
-              color: "#777",
-              maxWidth: 560,
-              lineHeight: 1.6,
-            }}
-          >
-            The Dubai renovation market is broken. Reno fixes
-            that with a system that keeps everyone accountable
-            — your designer, your contractor, and us.
-          </p>
         </Reveal>
 
-        {/* Stat cards */}
+        {/* Stats row */}
         <Reveal>
-          <div
-            className="grid grid-cols-1 md:grid-cols-3"
-            style={{ marginTop: 56, gap: 20 }}
-          >
-            {stats.map((s) => (
-              <div
-                key={s.label}
-                className="flex flex-col items-center text-center"
-                style={{
-                  background: "#FFFFFF",
-                  border: "1.5px solid #EBEBEB",
-                  borderRadius: 16,
-                  padding: "36px 28px",
-                }}
-              >
-                <s.Icon size={36} color="#482FFF" strokeWidth={1.5} />
-                <div
-                  style={{
-                    fontSize: "clamp(80px, 9vw, 96px)",
-                    fontWeight: 800,
-                    color: "#0D0D0D",
-                    lineHeight: 1,
-                    marginTop: 16,
-                    letterSpacing: "-0.04em",
-                    order: 2,
-                  }}
-                >
-                  {s.number}
+          <div className="reno-stats-row" style={{ marginTop: 60 }}>
+            {stats.map((s, i) => (
+              <div key={s.label} style={{ display: "contents" }}>
+                {i > 0 && <div className="reno-stats-sep" aria-hidden />}
+                <div className="flex flex-col items-center text-center">
+                  <div
+                    className="reno-stat-number"
+                    style={{
+                      fontWeight: 800,
+                      color: "#fff",
+                      lineHeight: 1,
+                      letterSpacing: "-0.04em",
+                    }}
+                  >
+                    {s.number}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 12,
+                      letterSpacing: "0.15em",
+                      color: "#666",
+                      marginTop: 14,
+                      textTransform: "uppercase",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {s.label}
+                  </div>
                 </div>
-                <div
-                  style={{
-                    fontSize: 14,
-                    letterSpacing: "0.14em",
-                    color: "#888",
-                    marginTop: 14,
-                    fontWeight: 600,
-                    textTransform: "uppercase",
-                    order: 3,
-                  }}
-                >
-                  {s.label}
-                </div>
-                <p
-                  style={{
-                    fontSize: 14,
-                    color: "#777",
-                    marginTop: 10,
-                    lineHeight: 1.6,
-                  }}
-                >
-                  {s.story}
-                </p>
               </div>
             ))}
           </div>
         </Reveal>
+      </div>
 
+      {/* Guarantee block */}
+      <div
+        style={{
+          marginTop: 80,
+          borderTop: "1px solid #1e1e1e",
+          paddingTop: 48,
+          paddingBottom: 48,
+        }}
+      >
+        <Reveal>
+          <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16 text-center">
+            <p
+              className="uppercase"
+              style={{ color: "#555", fontSize: 11, letterSpacing: "0.2em", fontWeight: 500 }}
+            >
+              OUR GUARANTEE
+            </p>
+            <h3
+              className="mx-auto"
+              style={{
+                marginTop: 16,
+                fontSize: "clamp(22px, 2.4vw, 24px)",
+                fontWeight: 500,
+                color: "#fff",
+                maxWidth: 580,
+                lineHeight: 1.3,
+              }}
+            >
+              If we run late, you're compensated. In writing, before we start.
+            </h3>
+            <div style={{ marginTop: 20 }}>
+              <a
+                href="#how-it-works"
+                style={{
+                  fontSize: 14,
+                  color: "#888",
+                  textDecoration: "none",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "#888")}
+              >
+                See how it works →
+              </a>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
