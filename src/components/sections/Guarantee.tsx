@@ -59,7 +59,6 @@ export function Guarantee() {
       style={{ position: "relative", width: "100%", height: "200vh", backgroundColor: "#FFFFFF" }}
     >
       <section
-        ref={sectionRef}
         id="guarantee"
         data-nav-theme="light"
         className="relative w-full px-6 md:px-12 lg:px-16"
