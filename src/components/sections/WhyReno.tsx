@@ -38,7 +38,7 @@ export function WhyReno() {
         <Reveal>
           <p
             className="text-center uppercase"
-            style={{ color: "#888", fontSize: 11, letterSpacing: "0.1em", fontWeight: 500 }}
+            style={{ color: "#888", fontSize: 14, letterSpacing: "0.1em", fontWeight: 500 }}
           >
             THE NUMBERS
           </p>
