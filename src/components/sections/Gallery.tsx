@@ -210,33 +210,29 @@ function PinnedHeader() {
         top: 0,
         left: 0,
         right: 0,
-        height: 80,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "0 24px",
+        padding: "56px 64px 0",
         zIndex: 5,
         pointerEvents: "none",
       }}
     >
       <p
         className="uppercase"
-        style={{ fontSize: 11, letterSpacing: "0.2em", color: "#555", fontWeight: 500, margin: 0 }}
+        style={{ fontSize: 14, letterSpacing: "0.12em", color: "#482FFF", fontWeight: 500, margin: 0 }}
       >
         OUR WORK
       </p>
-      <p
+      <h2
+        className="text-white"
         style={{
-          marginTop: 6,
-          fontSize: 18,
-          fontWeight: 500,
-          color: "#fff",
-          letterSpacing: "-0.01em",
+          marginTop: 16,
+          fontSize: "clamp(40px, 5vw, 64px)",
+          fontWeight: 700,
+          lineHeight: 1.05,
+          letterSpacing: "-0.02em",
         }}
       >
         Delivered projects, not renders.
-      </p>
+      </h2>
     </div>
   );
 }
