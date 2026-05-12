@@ -317,7 +317,7 @@ export function Gallery() {
       data-nav-theme="dark"
       ref={wrapperRef}
       className="relative w-full"
-      style={{ backgroundColor: "#0a0a0a", height: "300vh" }}
+      style={{ backgroundColor: "#0D0D0D", height: "300vh" }}
     >
       <div
         style={{
@@ -325,7 +325,7 @@ export function Gallery() {
           top: 0,
           height: "100vh",
           overflow: "hidden",
-          backgroundColor: "#0a0a0a",
+          backgroundColor: "#0D0D0D",
         }}
       >
         <PinnedHeader />
@@ -343,7 +343,7 @@ export function Gallery() {
             }}
           >
             {/* Left 55% — slider */}
-            <div style={{ width: "55%", height: "100%", paddingTop: 80 }}>
+            <div style={{ width: "55%", height: "100%", paddingTop: 220, paddingBottom: 64, paddingLeft: 64 }}>
               <BeforeAfterSlider project={p} fullHeight />
             </div>
             {/* Right 45% — info */}
@@ -353,7 +353,7 @@ export function Gallery() {
                 height: "100%",
                 display: "flex",
                 alignItems: "center",
-                padding: "0 64px",
+                padding: "220px 64px 64px",
               }}
             >
               <ProjectInfo project={p} />
