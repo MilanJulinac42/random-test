@@ -2,28 +2,19 @@ import { LinkedInIcon, InstagramIcon, WhatsAppIcon } from "@/components/SocialIc
 import { LINKEDIN_URL, INSTAGRAM_URL, WHATSAPP_GENERAL } from "@/lib/constants";
 import logo from "@/assets/logo.png";
 
-const socialLinkStyle: React.CSSProperties = {
-  color: "#666",
-  transition: "color 0.2s",
-  display: "inline-flex",
-};
-
 const navLinkStyle: React.CSSProperties = {
-  display: "block",
   fontSize: 14,
   color: "#666",
-  marginBottom: 12,
   textDecoration: "none",
   transition: "color 0.2s",
+  display: "block",
 };
 
-const columnLabelStyle: React.CSSProperties = {
-  fontSize: 10,
-  letterSpacing: "0.12em",
-  color: "#444",
-  marginBottom: 18,
-  textTransform: "uppercase",
-  fontWeight: 600,
+const legalLinkStyle: React.CSSProperties = {
+  fontSize: 12,
+  color: "#3a3a3a",
+  textDecoration: "none",
+  transition: "color 0.2s",
 };
 
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
@@ -33,6 +24,19 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
       style={navLinkStyle}
       onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
       onMouseLeave={(e) => (e.currentTarget.style.color = "#666")}
+    >
+      {children}
+    </a>
+  );
+}
+
+function LegalLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      style={legalLinkStyle}
+      onMouseEnter={(e) => (e.currentTarget.style.color = "#777")}
+      onMouseLeave={(e) => (e.currentTarget.style.color = "#3a3a3a")}
     >
       {children}
     </a>
@@ -54,9 +58,9 @@ function SocialLink({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      style={socialLinkStyle}
+      style={{ color: "#555", transition: "color 0.2s", display: "inline-flex" }}
       onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-      onMouseLeave={(e) => (e.currentTarget.style.color = "#666")}
+      onMouseLeave={(e) => (e.currentTarget.style.color = "#555")}
     >
       {children}
     </a>
@@ -68,116 +72,121 @@ export function Footer() {
     <footer
       className="relative w-full"
       style={{
-        backgroundColor: "#0D0D0D",
-        paddingTop: 64,
-        paddingBottom: 40,
+        backgroundColor: "#0a0a0a",
+        borderTop: "1px solid #1a1a1a",
+        paddingTop: 72,
+        paddingBottom: 48,
       }}
     >
-      <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
-        <div
-          className="grid gap-12 md:gap-12"
-          style={{
-            gridTemplateColumns: "1fr",
-          }}
-        >
-          <style>{`
-            @media (min-width: 600px) {
-              .reno-footer-grid { grid-template-columns: 1fr 1fr !important; }
-            }
-            @media (min-width: 900px) {
-              .reno-footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr !important; gap: 48px !important; }
-            }
-          `}</style>
-        </div>
+      <style>{`
+        .reno-footer-row {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 32px;
+        }
+        .reno-footer-col-left,
+        .reno-footer-col-center,
+        .reno-footer-col-right {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        .reno-footer-legal {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+          text-align: center;
+        }
+        @media (min-width: 768px) {
+          .reno-footer-row {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            text-align: left;
+            gap: 48px;
+          }
+          .reno-footer-col-left { align-items: flex-start; text-align: left; }
+          .reno-footer-col-center { align-items: center; text-align: center; }
+          .reno-footer-col-right { align-items: flex-end; text-align: right; }
+          .reno-footer-legal {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+          }
+        }
+      `}</style>
 
-        <div
-          className="reno-footer-grid grid"
-          style={{
-            gridTemplateColumns: "1fr",
-            gap: 40,
-          }}
-        >
-          {/* Column 1: Brand */}
-          <div>
-            <img src={logo} alt="Reno" className="h-9 w-auto" />
-            <p style={{ fontSize: 14, color: "#777", marginTop: 14 }}>
+      <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
+        <div className="reno-footer-row">
+          {/* LEFT */}
+          <div className="reno-footer-col-left">
+            <img src={logo} alt="Reno" style={{ height: 28, width: "auto" }} />
+            <p style={{ fontSize: 13, color: "#666", fontWeight: 400, marginTop: 16, marginBottom: 0 }}>
               Dubai's home renovation partner.
             </p>
-            <p style={{ fontSize: 13, color: "#555", marginTop: 8, lineHeight: 1.6 }}>
-              Full renovation management — from first brief to final handover.
-            </p>
-            <div style={{ display: "flex", gap: 14, marginTop: 20 }}>
+            <div style={{ display: "flex", gap: 20, marginTop: 24 }}>
               <SocialLink href={INSTAGRAM_URL} label="Instagram">
-                <InstagramIcon size={20} />
+                <InstagramIcon size={18} />
               </SocialLink>
               <SocialLink href={LINKEDIN_URL} label="LinkedIn">
-                <LinkedInIcon size={20} />
+                <LinkedInIcon size={18} />
               </SocialLink>
               <SocialLink href={WHATSAPP_GENERAL} label="WhatsApp">
-                <WhatsAppIcon size={20} />
+                <WhatsAppIcon size={18} />
               </SocialLink>
             </div>
           </div>
 
-          {/* Column 2: Platform */}
-          <div>
-            <p style={columnLabelStyle}>PLATFORM</p>
-            <NavLink href="#top">Home</NavLink>
+          {/* CENTER */}
+          <nav className="reno-footer-col-center" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <NavLink href="#how-it-works">How It Works</NavLink>
             <NavLink href="#gallery">Our Work</NavLink>
             <NavLink href="#quiz">Get Started</NavLink>
-          </div>
+            <NavLink href="#">For Contractors</NavLink>
+          </nav>
 
-          {/* Column 3: Company */}
-          <div>
-            <p style={columnLabelStyle}>COMPANY</p>
-            <span style={navLinkStyle}>About Reno</span>
-            <span style={navLinkStyle}>For Contractors</span>
-            <span style={navLinkStyle}>Privacy Policy</span>
-            <span style={navLinkStyle}>Terms of Service</span>
-          </div>
-
-          {/* Column 4: Contact */}
-          <div>
-            <p style={columnLabelStyle}>CONTACT</p>
-            <NavLink href={WHATSAPP_GENERAL}>Chat on WhatsApp</NavLink>
-            <NavLink href="https://instagram.com/reno_app">@reno_app</NavLink>
-            <NavLink href="https://www.linkedin.com/company/renohomeae/">Reno on LinkedIn</NavLink>
-            <p
-              style={{
-                marginTop: 20,
-                fontSize: 13,
-                color: "#444",
-                lineHeight: 1.6,
-              }}
+          {/* RIGHT */}
+          <div className="reno-footer-col-right">
+            <a
+              href={WHATSAPP_GENERAL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontSize: 14, color: "#fff", fontWeight: 500, textDecoration: "none" }}
             >
-              101, EIB Building
-              <br />
-              Dubai Media City, Dubai
+              Chat on WhatsApp →
+            </a>
+            <p style={{ fontSize: 12, color: "#444", marginTop: 12, marginBottom: 0 }}>
+              101, EIB Building, Dubai Media City
+            </p>
+            <p style={{ fontSize: 12, color: "#444", marginTop: 8, marginBottom: 0 }}>
+              <a href="#" style={{ color: "#444", textDecoration: "none" }}>iOS App</a>
+              {"  ·  "}
+              <a href="#" style={{ color: "#444", textDecoration: "none" }}>Android App</a>
             </p>
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* LEGAL */}
         <div
+          className="reno-footer-legal"
           style={{
             marginTop: 48,
-            borderTop: "1px solid #1E1E1E",
+            borderTop: "1px solid #161616",
             paddingTop: 24,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 16,
           }}
         >
-          <p style={{ fontSize: 12, color: "#444", margin: 0 }}>
-            © 2026 Reno Home Technologies LLC.{"\n"}All rights reserved.
+          <p style={{ fontSize: 12, color: "#3a3a3a", margin: 0 }}>
+            © 2026 Reno Home Technologies LLC. All rights reserved.
           </p>
-          <div style={{ display: "none" }}>
-            {["iOS App", "Android App"].map((label) => (
-              <a key={label} href="#">{label}</a>
-            ))}
+          <div style={{ display: "flex", gap: 12 }}>
+            <LegalLink href="#">Privacy Policy</LegalLink>
+            <span style={{ color: "#3a3a3a", fontSize: 12 }}>·</span>
+            <LegalLink href="#">Terms of Service</LegalLink>
           </div>
         </div>
       </div>
