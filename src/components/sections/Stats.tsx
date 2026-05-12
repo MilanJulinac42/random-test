@@ -110,8 +110,8 @@ export function Stats() {
       <div className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
           <p
-            className="uppercase text-xs font-medium mb-12 md:mb-16"
-            style={{ letterSpacing: "0.25em", color: "#482FFF" }}
+            className="uppercase font-medium mb-12 md:mb-16"
+            style={{ fontSize: 14, letterSpacing: "0.25em", color: "#482FFF" }}
           >
             Trusted by Dubai Homeowners
           </p>
