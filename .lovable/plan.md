@@ -1,43 +1,54 @@
-All changes are mobile-only (≤768px). Desktop layouts are untouched.
+## Revamp: How It Works
 
-## 1. `Stats.tsx` — three stats inline, compact
+Replace the current dark, gradient-overlaid hover-expand cards with a cleaner layout inspired by the reference: the imagery stays fully visible (no dark veil, no arrow buttons), and the textual content lives **below** each card on a single shared row.
 
-- On mobile, render all three stats (`98%`, `100+`, `200+`) as a single horizontal row, equal width, center-aligned. Replace the current stacked LeftStat / large gradient CardStat with a unified compact 3-column flex/grid for mobile only.
-- Numbers shrink to `clamp(28px, 9vw, 40px)`, labels to `11–12px`, max 2 lines, center-aligned.
-- Eyebrow ("Trusted by Dubai Homeowners"): center-align on mobile, `12px`, single-line, allow wrap to max 2 lines if needed but tighten letter-spacing so it fits one line at 390px.
-- Section vertical padding on mobile: `48px` top/bottom (was 80+).
-- Desktop grid + gradient card preserved via `hidden md:` / `md:hidden` split.
+### Layout
 
-## 2. `Quiz.tsx` — borderless, full-width form
+```
+HOW IT WORKS
+From first call to keys in hand.
 
-- On mobile: section horizontal padding `24px` (override the current `px-6` which is already 24, but also override the form's internal `clamp(28px,5vw,48px)` padding down to `0` on mobile).
-- Form: remove `border` and `boxShadow` on mobile; remove `borderRadius` so it sits flush; `background: transparent`; `maxWidth: 100%`.
-- Heading "Tell us about your project." — cap at 2 lines; mobile size `clamp(28px, 8vw, 36px)`.
-- Subhead: `15px` on mobile, single short paragraph.
-- Inputs/buttons keep current styling (already full-width).
+[ image 1 ]   [ image 2 ]   [ image 3 ]
+01 Design     02 Build       03 Handover
+description   description    description
+```
 
-## 3. `Process.tsx` ("How It Works") — less crowded mobile
+- 3-column grid (equal widths), generous gap (~24px).
+- Each column = stacked: image on top, text block below.
+- Cards no longer expand on hover; remove the hover-expand grid logic, the dark gradient overlay, the white arrow circle, and the on-image title.
+- Keep section eyebrow + main heading as today.
 
-- Mobile container padding: collapse the desktop `pl-[80px] pr-[80px]` so it does not leak into mobile (use responsive classes: `px-6 md:pl-[80px] md:pr-[80px]`).
-- Eyebrow + heading center-aligned on mobile; heading max 2 lines, `clamp(30px, 8vw, 40px)`.
-- Mobile cards: change `aspectRatio: "4 / 5"` → `"3 / 4"` (a touch shorter), increase gap between cards to `20px`, add `marginTop: 32`.
-- Section gets `paddingBottom: 48px` on mobile so it doesn't crowd into the next section.
+### Card
 
-## 4. `Reviews.tsx` — roomier mobile testimonial cards
+- Image container: `aspect-ratio: 4/5`, `borderRadius: 20`, `object-fit: cover`, no overlay, no filter — the photo shows in full clean quality.
+- Subtle hover: gentle scale on the image only (1.0 → 1.03), no darkening.
 
-- Section vertical padding on mobile: `64px` top/bottom (currently `clamp(80px,10vw,140px)` = 80px, fine but feels tight given header). Reduce header → cards gap by tightening header.
-- Header row center-aligned on mobile (currently left).
-- Heading "Hear it directly from them": mobile `clamp(28px, 8vw, 36px)`, max 2 lines.
-- Stat pill (`200+ Happy Clients`): center it on mobile, reduce number to `48px`, padding `14px 24px`.
-- Mobile carousel cards: keep horizontal scroll; reduce card `padding` to `22px`, `minHeight: 300px`, quote font `14px`.
+### Text block (below image)
 
-## 5. `TrustBar.tsx` — single horizontal line on mobile
+To guarantee equal heights across the three columns:
 
-- Replace the mobile `grid grid-cols-2` block with the same horizontal flex layout used on desktop, but compacted: icons `16px`, labels `10–11px`, gap `8px`, no dividers, allow horizontal scroll if it overflows (`overflow-x-auto no-scrollbar`, `whitespace-nowrap`).
-- Section padding: `py-5` on mobile.
+- **Step number + title on one line**: `01  Design and planning` (tabular small grey "01", then bold dark title). One line only — `whiteSpace: nowrap` with `overflow: hidden; text-overflow: ellipsis` as a safety net, but copy is short enough to fit.
+- **Description**: fixed to **3 lines** via `-webkit-line-clamp: 3` with `min-height` set to 3 lines × line-height so columns align even if a description is shorter.
+- Titles shortened so they fit one line at desktop widths:
+  - `01  Design & Planning`
+  - `02  Build & Track`
+  - `03  Handover & Warranty`
+- Description copy trimmed/normalized to ~3 lines each at desktop width (existing copy mostly already fits; light edits only to balance line counts).
 
-## Technical notes
+### Mobile
 
-- All changes scoped via Tailwind responsive prefixes (`md:hidden`, `md:flex`, etc.) and inline `@media (max-width: 767px)` overrides in component-local `<style>` blocks where inline styles need to differ between breakpoints.
-- No business logic, schema, or copy changes (except trimming where lines must shorten).
-- Brand purple `#482FFF` preserved.
+- Stack the 3 cards vertically.
+- Same card structure (image on top, text below).
+- Description allowed to flow naturally (no line clamp on mobile), but min-heights drop so it doesn't look empty.
+- Section padding aligned with current mobile spec in `.lovable/plan.md`.
+
+### Files touched
+
+- `src/components/sections/Process.tsx` — rewrite the card + grid; drop `hoveredIndex` state, `ProcessCard`, `ArrowIcon`, gradient overlays.
+- No new assets — the recently swapped `process-01.jpg`, `process-02.jpg`, `process-03.jpg` are reused as-is.
+
+### Out of scope
+
+- No copy rewrite beyond shortening titles and balancing description line counts.
+- No changes to other sections.
+- No new dependencies.
