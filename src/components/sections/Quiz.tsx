@@ -293,6 +293,28 @@ export function Quiz() {
       {submitted && <ConfirmationPopup onClose={() => setSubmitted(false)} />}
 
       <style>{`
+        .reno-quiz-h2 { font-size: clamp(28px, 8vw, 52px); }
+        .reno-quiz-sub { font-size: 15px; }
+        .reno-quiz-form {
+          max-width: 100%;
+          background: transparent;
+          border: none;
+          border-radius: 0;
+          padding: 0;
+          box-shadow: none;
+        }
+        @media (min-width: 768px) {
+          .reno-quiz-h2 { font-size: clamp(36px, 5.5vw, 52px); }
+          .reno-quiz-sub { font-size: 17px; }
+          .reno-quiz-form {
+            max-width: 980px;
+            background: #FFFFFF;
+            border: 1px solid #E6E4DD;
+            border-radius: 20px;
+            padding: clamp(28px, 5vw, 48px);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+          }
+        }
         .reno-filled-btn:hover:not(:disabled) { background: #333 !important; }
         .reno-step-input:focus { border-color: #0D0D0D !important; }
         .reno-quiz-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
