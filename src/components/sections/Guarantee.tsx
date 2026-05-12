@@ -82,7 +82,7 @@ export function Guarantee() {
               fontWeight: 600,
             }}
           >
-            Guarantee
+            Our Guarantee
           </p>
 
           <h2
