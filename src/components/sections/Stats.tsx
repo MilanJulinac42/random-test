@@ -31,8 +31,8 @@ function LeftStat({
       <div
         className="mt-4"
         style={{
-          fontSize: 15,
-          color: "rgba(255,255,255,0.6)",
+          fontSize: 20,
+          color: "rgba(255,255,255,0.7)",
           letterSpacing: "0.01em",
         }}
       >
@@ -81,8 +81,8 @@ function CardStat({ start }: { start: boolean }) {
         </div>
         <div
           style={{
-            fontSize: 16,
-            color: "rgba(255,255,255,0.85)",
+            fontSize: 20,
+            color: "rgba(255,255,255,0.9)",
             letterSpacing: "0.01em",
           }}
         >
