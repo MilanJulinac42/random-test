@@ -87,22 +87,21 @@ export function Quiz() {
       className="relative w-full px-6 md:px-12 lg:px-16"
       style={{
         backgroundColor: "#FFFFFF",
-        paddingTop: "clamp(80px, 10vw, 140px)",
-        paddingBottom: "clamp(80px, 10vw, 140px)",
+        paddingTop: "clamp(64px, 10vw, 140px)",
+        paddingBottom: "clamp(64px, 10vw, 140px)",
       }}
     >
       <div className="relative z-10 mx-auto max-w-7xl">
         <Reveal>
           <p
             className="text-center uppercase"
-            style={{ fontSize: 14, letterSpacing: "0.1em", color: "#888", fontWeight: 500 }}
+            style={{ fontSize: 13, letterSpacing: "0.1em", color: "#888", fontWeight: 500 }}
           >
             GET STARTED
           </p>
           <h2
-            className="text-center mt-3"
+            className="text-center mt-3 reno-quiz-h2"
             style={{
-              fontSize: "clamp(36px, 5.5vw, 52px)",
               fontWeight: 700,
               color: "#0D0D0D",
               lineHeight: 1.05,
@@ -112,8 +111,8 @@ export function Quiz() {
             Tell us about your project.
           </h2>
           <p
-            className="text-center mx-auto mt-5"
-            style={{ fontSize: 17, color: "#555", maxWidth: 520, lineHeight: 1.55 }}
+            className="text-center mx-auto mt-4 reno-quiz-sub"
+            style={{ color: "#555", maxWidth: 520, lineHeight: 1.55 }}
           >
             One short form. We call back within 24 hours to confirm if we can take your project.
           </p>
@@ -124,15 +123,7 @@ export function Quiz() {
             <form
               onSubmit={handleSubmit}
               noValidate
-              className="mx-auto mt-12 reno-quiz-form"
-              style={{
-                maxWidth: 980,
-                background: "#FFFFFF",
-                borderRadius: 20,
-                border: "1px solid #E6E4DD",
-                padding: "clamp(28px, 5vw, 48px)",
-                boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
-              }}
+              className="mx-auto mt-10 reno-quiz-form"
             >
               <div className="reno-quiz-grid">
                 {/* LEFT COLUMN */}
