@@ -171,13 +171,13 @@ export function Process() {
         backgroundColor: "#FFFFFF",
       }}
     >
-      <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16 pl-[80px] pr-[80px] pt-[96px] pb-[40px]">
+      <div className="mx-auto max-w-7xl px-6 md:pl-[80px] md:pr-[80px] pt-[64px] md:pt-[96px] pb-[48px] md:pb-[40px]">
         <Reveal>
           <p
-            className="uppercase"
+            className="uppercase text-center md:text-left"
             style={{
               color: "#482FFF",
-              fontSize: 14,
+              fontSize: 13,
               letterSpacing: "0.12em",
               fontWeight: 500,
             }}
@@ -185,9 +185,9 @@ export function Process() {
             HOW IT WORKS
           </p>
           <h2
-            className="mt-5"
+            className="mt-4 md:mt-5 text-center md:text-left"
             style={{
-              fontSize: "clamp(40px, 5vw, 64px)",
+              fontSize: "clamp(30px, 8vw, 64px)",
               fontWeight: 700,
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
