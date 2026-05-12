@@ -112,7 +112,7 @@ export function Process() {
           <h2
             className="text-white mt-5"
             style={{
-              fontSize: "clamp(36px, 4.6vw, 44px)",
+              fontSize: "clamp(40px, 5vw, 64px)",
               fontWeight: 700,
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
