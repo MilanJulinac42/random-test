@@ -105,7 +105,7 @@ export function Process() {
         <Reveal>
           <p
             className="uppercase"
-            style={{ color: "#482FFF", fontSize: 11, letterSpacing: "0.12em", fontWeight: 500 }}
+            style={{ color: "#482FFF", fontSize: 14, letterSpacing: "0.12em", fontWeight: 500 }}
           >
             HOW IT WORKS
           </p>
