@@ -14,7 +14,7 @@ const steps = [
         <line x1="90" y1="90" x2="180" y2="90" stroke="white" strokeWidth="1" />
         <line x1="20" y1="110" x2="90" y2="110" stroke="white" strokeWidth="1" />
         {/* Highlighted room */}
-        <rect x="90" y="30" width="90" height="60" fill="#4A24FF" fillOpacity="0.2" />
+        <rect x="90" y="30" width="90" height="60" fill="#482FFF" fillOpacity="0.2" />
         {/* Door arcs */}
         <path d="M 50 30 A 15 15 0 0 1 65 45" stroke="white" strokeWidth="1" fill="none" />
         <path d="M 130 90 A 12 12 0 0 1 142 102" stroke="white" strokeWidth="1" fill="none" />
@@ -56,8 +56,8 @@ const steps = [
         <circle cx="116" cy="131" r="2" stroke="white" strokeWidth="1" />
 
         {/* Checkmarks in circles */}
-        <circle cx="100" cy="35" r="10" stroke="#4A24FF" strokeWidth="1" />
-        <path d="M 95 35 L 99 39 L 106 31" stroke="#4A24FF" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="100" cy="35" r="10" stroke="#482FFF" strokeWidth="1" />
+        <path d="M 95 35 L 99 39 L 106 31" stroke="#482FFF" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
 
         <circle cx="60" cy="110" r="8" stroke="white" strokeWidth="1" />
         <path d="M 56 110 L 59 113 L 64 107" stroke="white" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
@@ -88,7 +88,7 @@ const steps = [
         <line x1="166" y1="90" x2="166" y2="96" stroke="white" strokeWidth="1.2" />
 
         {/* Accent dot */}
-        <circle cx="80" cy="90" r="3" fill="#4A24FF" />
+        <circle cx="80" cy="90" r="3" fill="#482FFF" />
       </svg>
     ),
   },
@@ -105,7 +105,7 @@ export function Process() {
         <Reveal>
           <p
             className="uppercase"
-            style={{ color: "#4A24FF", fontSize: 11, letterSpacing: "0.12em", fontWeight: 500 }}
+            style={{ color: "#482FFF", fontSize: 11, letterSpacing: "0.12em", fontWeight: 500 }}
           >
             HOW IT WORKS
           </p>

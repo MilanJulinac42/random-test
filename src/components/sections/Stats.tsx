@@ -51,8 +51,8 @@ function CardStat({ start }: { start: boolean }) {
         borderRadius: 24,
         aspectRatio: "4 / 3",
         background:
-          "radial-gradient(120% 90% at 0% 0%, rgba(255,255,255,0.85) 0%, rgba(220,215,255,0.35) 22%, rgba(120,100,240,0.55) 55%, #2A1BA8 85%, #140A6B 100%)",
-        boxShadow: "0 30px 80px -30px rgba(74,36,255,0.5)",
+          "radial-gradient(120% 90% at 0% 0%, rgba(255,255,255,0.85) 0%, rgba(220,215,255,0.35) 22%, rgba(72,47,255,0.55) 55%, #482FFF 85%, #482FFF 100%)",
+        boxShadow: "0 30px 80px -30px rgba(72,47,255,0.5)",
       }}
     >
       {/* Soft sheen highlight top-left */}
@@ -119,7 +119,7 @@ export function Stats() {
         <Reveal>
           <p
             className="uppercase text-xs font-medium mb-12 md:mb-16"
-            style={{ letterSpacing: "0.25em", color: "#A78BFA" }}
+            style={{ letterSpacing: "0.25em", color: "#482FFF" }}
           >
             Trusted by Dubai Homeowners
           </p>
