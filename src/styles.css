@@ -472,7 +472,7 @@ body {
 /* Brand purple button — locked hover/focus/active states.
    Always purple-on-white, never gold. WCAG-AA contrast preserved. */
 .reno-btn-purple {
-  background-color: #4A24FF !important;
+  background-color: #482FFF !important;
   color: #FFFFFF !important;
   border: 1px solid transparent;
   transition:
@@ -495,7 +495,7 @@ body {
   transform: translateY(1px);
 }
 .reno-btn-purple:disabled {
-  background-color: #4A24FF !important;
+  background-color: #482FFF !important;
   color: #FFFFFF !important;
   opacity: 0.6;
   cursor: not-allowed;

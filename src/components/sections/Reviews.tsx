@@ -115,7 +115,7 @@ export function Reviews() {
         style={{
           height: "70%",
           background:
-            "radial-gradient(60% 60% at 50% 100%, rgba(42,27,168,0.55) 0%, rgba(42,27,168,0.18) 40%, transparent 75%)",
+            "radial-gradient(60% 60% at 50% 100%, rgba(72,47,255,0.55) 0%, rgba(72,47,255,0.18) 40%, transparent 75%)",
         }}
       />
 

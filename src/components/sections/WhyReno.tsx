@@ -87,7 +87,7 @@ export function WhyReno() {
                   padding: "36px 28px",
                 }}
               >
-                <s.Icon size={36} color="#4A24FF" strokeWidth={1.5} />
+                <s.Icon size={36} color="#482FFF" strokeWidth={1.5} />
                 <div
                   style={{
                     fontSize: "clamp(80px, 9vw, 96px)",
