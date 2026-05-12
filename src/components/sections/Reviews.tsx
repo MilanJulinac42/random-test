@@ -140,7 +140,7 @@ export function Reviews() {
                   lineHeight: 1,
                 }}
               >
-                200+
+                100+
               </span>
               <span
                 className="uppercase"
