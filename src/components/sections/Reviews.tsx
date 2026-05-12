@@ -160,33 +160,13 @@ export function Reviews() {
           </div>
         </Reveal>
 
-        {/* Desktop: center-emphasis layout */}
+        {/* Desktop grid */}
         <div className="hidden md:block" style={{ marginTop: 64 }}>
           <Reveal>
-            <div className="flex items-center justify-center" style={{ gap: 24 }}>
-              <div
-                style={{
-                  width: "26%",
-                  transform: "scale(0.9) translateY(28px)",
-                  transformOrigin: "center",
-                  opacity: 0.85,
-                }}
-              >
-                <TestimonialCard t={testimonials[0]} variant="side" />
-              </div>
-              <div style={{ width: "42%", position: "relative", zIndex: 2 }}>
-                <TestimonialCard t={testimonials[1]} variant="hero" />
-              </div>
-              <div
-                style={{
-                  width: "26%",
-                  transform: "scale(0.9) translateY(28px)",
-                  transformOrigin: "center",
-                  opacity: 0.85,
-                }}
-              >
-                <TestimonialCard t={testimonials[2]} variant="side" />
-              </div>
+            <div className="grid grid-cols-3" style={{ gap: 20 }}>
+              {testimonials.map((t) => (
+                <TestimonialCard key={t.name} t={t} />
+              ))}
             </div>
           </Reveal>
         </div>
