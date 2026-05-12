@@ -20,15 +20,6 @@ const testimonials: Testimonial[] = [
       "Brilliant team – took them a week to renovate the entire apartment. You have never seen this before in the UAE market.",
   },
   {
-    name: "Camillo",
-    meta: "Apartment · Downtown Dubai",
-    tint: "#1D6B5A",
-    image:
-      "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=200&h=200&fit=crop&crop=face&q=80",
-    quote:
-      "Credit card payments are a huge plus, I earned cashback and used it to purchase garden furniture for my house.",
-  },
-  {
     name: "Amir",
     meta: "Townhouse · JVC",
     tint: "#1F3560",
@@ -37,37 +28,59 @@ const testimonials: Testimonial[] = [
     quote:
       "Reno completely transformed my Dubai Hills apartment in just a few weeks. Sleek finishes, on-time delivery, and I barely had to lift a finger.",
   },
+  {
+    name: "Camillo",
+    meta: "Apartment · Downtown Dubai",
+    tint: "#1D6B5A",
+    image:
+      "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=200&h=200&fit=crop&crop=face&q=80",
+    quote:
+      "Credit card payments are a huge plus, I earned cashback and used it to purchase garden furniture for my house.",
+  },
 ];
 
-function TestimonialCard({ t }: { t: Testimonial }) {
+function TestimonialCard({
+  t,
+  variant = "hero",
+}: {
+  t: Testimonial;
+  variant?: "hero" | "side";
+}) {
+  const isHero = variant === "hero";
   return (
     <div
-      className="relative shrink-0 w-full flex flex-col overflow-hidden"
+      className="relative w-full flex flex-col overflow-hidden"
       style={{
         borderRadius: 24,
-        padding: 28,
-        background: `radial-gradient(120% 80% at 50% 0%, ${t.tint}55 0%, ${t.tint}22 25%, rgba(20,20,28,0.85) 60%, rgba(15,15,22,0.95) 100%)`,
-        border: "1px solid rgba(255,255,255,0.08)",
-        boxShadow:
-          "0 30px 60px -30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06)",
+        padding: isHero ? 32 : 24,
+        background: `radial-gradient(120% 80% at 50% 0%, ${t.tint}${isHero ? "66" : "33"} 0%, ${t.tint}22 25%, rgba(20,20,28,0.85) 60%, rgba(15,15,22,0.95) 100%)`,
+        border: `1px solid rgba(255,255,255,${isHero ? 0.12 : 0.06})`,
+        boxShadow: isHero
+          ? "0 40px 80px -30px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.08)"
+          : "0 20px 40px -25px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)",
         backdropFilter: "blur(8px)",
       }}
     >
-      {/* Top: name */}
       <div className="flex items-center justify-center">
-        <span style={{ color: "#FFFFFF", fontSize: 22, fontWeight: 600, letterSpacing: "-0.01em" }}>
+        <span
+          style={{
+            color: "#FFFFFF",
+            fontSize: isHero ? 24 : 18,
+            fontWeight: 600,
+            letterSpacing: "-0.01em",
+          }}
+        >
           {t.name}
         </span>
       </div>
 
-      {/* Quote */}
       <p
         className="text-center"
         style={{
-          marginTop: 20,
-          fontSize: "clamp(17px, 1.35vw, 19px)",
+          marginTop: isHero ? 22 : 16,
+          fontSize: isHero ? "clamp(17px, 1.35vw, 20px)" : 14.5,
           lineHeight: 1.55,
-          color: "rgba(255,255,255,0.9)",
+          color: `rgba(255,255,255,${isHero ? 0.92 : 0.78})`,
         }}
       >
         {t.quote}
