@@ -47,18 +47,15 @@ export function Gallery() {
   const [activeProject, setActiveProject] = useState(0);
   const [mode, setMode] = useState<Mode>("after");
 
-  // Flat image refs — index = projectIndex * 2 + modeIndex (0 = before, 1 = after)
   const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
   const infoRefs = useRef<(HTMLDivElement | null)[]>([]);
   const firstRunRef = useRef(true);
 
-  /* Derive the active project from scroll progress. */
   useEffect(() => {
     const next = progress < 0.34 ? 0 : progress < 0.67 ? 1 : 2;
     setActiveProject((cur) => (cur === next ? cur : next));
   }, [progress]);
 
-  /* Animate project + before/after transitions with Anime.js. */
   useLayoutEffect(() => {
     const reduced = prefersReducedMotion();
     const first = firstRunRef.current;
@@ -72,11 +69,7 @@ export function Gallery() {
         if (reduced || first) {
           img.style.opacity = visible ? "1" : "0";
         } else {
-          animate(img, {
-            opacity: visible ? 1 : 0,
-            duration: 640,
-            ease: RENO_EASE,
-          });
+          animate(img, { opacity: visible ? 1 : 0, duration: 640, ease: RENO_EASE });
         }
       }
     }
@@ -109,7 +102,7 @@ export function Gallery() {
       className="relative w-full"
       style={{ backgroundColor: "#0A0A0A", height: "300vh" }}
     >
-      {/* ── Desktop sticky container ── */}
+      {/* ── Sticky viewport ── */}
       <div
         className="reno-gallery-sticky"
         style={{
@@ -119,36 +112,38 @@ export function Gallery() {
           display: "flex",
           flexDirection: "column",
           backgroundColor: "#0A0A0A",
-          padding: "0 clamp(16px, 2.4vw, 20px) clamp(20px, 3vw, 32px)",
-          paddingTop: "clamp(72px, 9vw, 96px)",
+          /* Section-level padding creates the dark "frame" visible around the
+             stage card on all sides — matches the Paper design inset look. */
+          padding: "clamp(72px,9vw,96px) clamp(16px,1.8vw,24px) clamp(16px,2vw,24px)",
           overflow: "hidden",
+          boxSizing: "border-box",
         }}
       >
-        {/* Heading */}
+        {/* Heading — sits above the image card on the dark background */}
         <h2
           style={{
             color: "#FFFFFF",
             fontWeight: 600,
-            fontSize: "clamp(28px, 4.6vw, 64px)",
+            fontSize: "clamp(28px,4.6vw,64px)",
             lineHeight: 1.16,
             letterSpacing: "-0.02em",
-            padding: "0 clamp(8px, 1.5vw, 24px)",
-            marginBottom: "clamp(14px, 1.8vw, 22px)",
+            marginBottom: "clamp(12px,1.6vw,20px)",
             flexShrink: 0,
           }}
         >
           Delivered projects, not renders
         </h2>
 
-        {/* Stage — images fill with object-fit:contain so the baked-in
-            rounded corners and dark border in each PNG are fully visible */}
+        {/* Stage — fills remaining height; border-radius + overflow:hidden clip
+            the images to a rounded card.  object-fit:cover fills the card fully
+            so the dark section padding around it creates the visible frame. */}
         <div
           className="reno-gallery-stage"
           style={{
             position: "relative",
             flex: 1,
             minHeight: 0,
-            borderRadius: "clamp(20px, 2.4vw, 35px)",
+            borderRadius: "clamp(16px,2vw,28px)",
             overflow: "hidden",
             backgroundColor: "#0A0A0A",
           }}
@@ -158,9 +153,7 @@ export function Gallery() {
             (["before", "after"] as Mode[]).map((m, mi) => (
               <img
                 key={`${i}-${m}`}
-                ref={(el) => {
-                  imgRefs.current[i * 2 + mi] = el;
-                }}
+                ref={(el) => { imgRefs.current[i * 2 + mi] = el; }}
                 src={m === "before" ? p.before : p.after}
                 alt={i === activeProject && m === mode ? `${p.title} — ${m}` : ""}
                 aria-hidden={!(i === activeProject && m === mode)}
@@ -170,21 +163,31 @@ export function Gallery() {
                   inset: 0,
                   width: "100%",
                   height: "100%",
-                  objectFit: "contain",
+                  objectFit: "cover",
                   objectPosition: "center",
                   opacity: i === 0 && mi === 1 ? 1 : 0,
                 }}
               />
-            )),
+            ))
           )}
+
+          {/* Bottom-left legibility scrim */}
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: 0,
+              pointerEvents: "none",
+              background:
+                "linear-gradient(to top right, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.22) 40%, rgba(0,0,0,0) 65%)",
+            }}
+          />
 
           {/* Info blocks — one per project, crossfaded */}
           {projects.map((p, i) => (
             <div
               key={p.title}
-              ref={(el) => {
-                infoRefs.current[i] = el;
-              }}
+              ref={(el) => { infoRefs.current[i] = el; }}
               className="reno-gallery-info"
               style={{ opacity: i === 0 ? 1 : 0 }}
             >
@@ -201,7 +204,8 @@ export function Gallery() {
           ))}
         </div>
 
-        {/* Before / After toggle — sits below the stage on the dark background */}
+        {/* Before / After toggle — below the card on the dark background.
+            Right padding keeps buttons clear of the fixed WhatsApp FAB. */}
         <div
           className="reno-gallery-toggle"
           role="group"
@@ -231,73 +235,81 @@ export function Gallery() {
       <style>{`
         .reno-gallery-info {
           position: absolute;
-          left: clamp(20px, 4vw, 60px);
-          bottom: clamp(28px, 6vw, 80px);
+          left: clamp(20px,4vw,52px);
+          bottom: clamp(24px,5vw,72px);
           display: flex;
           flex-direction: column;
-          gap: clamp(10px, 1.2vw, 14px);
-          width: min(544px, calc(100% - 40px));
+          gap: clamp(8px,1vw,12px);
+          width: min(520px, calc(100% - 40px));
         }
         .reno-gallery-location {
           text-transform: uppercase;
-          color: rgba(255,255,255,0.7);
+          color: rgba(255,255,255,0.65);
           font-weight: 500;
-          font-size: clamp(11px, 1vw, 13px);
+          font-size: clamp(11px,1vw,13px);
           letter-spacing: 0.14em;
         }
         .reno-gallery-title {
           color: #FFFFFF;
           font-weight: 600;
-          font-size: clamp(28px, 4vw, 48px);
+          font-size: clamp(26px,3.6vw,44px);
           line-height: 1.12;
           letter-spacing: -0.02em;
         }
         .reno-gallery-desc {
-          color: rgba(255,255,255,0.7);
-          font-weight: 500;
-          font-size: clamp(14px, 1.5vw, 20px);
-          line-height: 1.4;
+          color: rgba(255,255,255,0.72);
+          font-weight: 400;
+          font-size: clamp(13px,1.3vw,17px);
+          line-height: 1.5;
           margin: 0;
         }
         .reno-gallery-progress {
           position: relative;
-          width: min(120px, 100%);
-          height: 4px;
+          width: 100px;
+          height: 3px;
           border-radius: 100px;
           background-color: rgba(255,255,255,0.2);
-          margin-top: 4px;
+          margin-top: 6px;
         }
         .reno-gallery-progress-fill {
           position: absolute;
           top: 0;
-          height: 4px;
+          height: 3px;
           width: 33.333%;
           border-radius: 100px;
           background-color: #FFFFFF;
         }
+        /* Toggle row — right-aligned below the stage card */
         .reno-gallery-toggle {
           display: flex;
           justify-content: flex-end;
           gap: 8px;
-          padding: clamp(12px, 1.6vw, 20px) clamp(8px, 1.5vw, 24px) 0;
+          /* 200px right clearance keeps both buttons visible above the WhatsApp FAB */
+          padding: clamp(10px,1.4vw,16px) 200px 0 0;
           flex-shrink: 0;
         }
         .reno-gallery-toggle-btn {
-          width: clamp(96px, 13vw, 177px);
-          height: clamp(44px, 5vw, 56px);
-          border-radius: 14px;
+          width: clamp(88px,10vw,140px);
+          height: clamp(40px,4.4vw,52px);
+          border-radius: 12px;
           border: none;
           cursor: pointer;
           font-weight: 600;
-          font-size: clamp(14px, 1.4vw, 17px);
+          font-size: clamp(13px,1.2vw,16px);
+          letter-spacing: 0.01em;
           transition: background-color 280ms ease, color 280ms ease;
         }
 
-        /* Mobile — stack vertically, no pinned scroll */
+        /* ── Mobile — stack, disable sticky ── */
         @media (max-width: 767px) {
           .reno-gallery-sticky {
             position: relative !important;
             height: auto !important;
+            padding-right: clamp(16px,5vw,24px) !important;
+          }
+          .reno-gallery-toggle {
+            padding-right: 0 !important;
+            justify-content: flex-start;
           }
         }
       `}</style>
