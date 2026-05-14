@@ -99,7 +99,7 @@ export function Hero() {
           top: "clamp(8px, 1.2vw, 15px)",
           left: "clamp(8px, 1.2vw, 15px)",
           right: "clamp(8px, 1.2vw, 15px)",
-          bottom: "clamp(88px, 9.5vw, 120px)",
+          bottom: "clamp(8px, 1.2vw, 15px)",
           borderRadius: 24,
         }}
       >
