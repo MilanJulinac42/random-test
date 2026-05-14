@@ -1,12 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { animate } from "animejs";
 import { prefersReducedMotion, RENO_EASE, useScrollProgress } from "@/lib/anime";
-import livingBefore from "@/assets/gallery/living-before.jpg";
-import livingAfter from "@/assets/gallery/living-after.jpg";
-import kitchenBefore from "@/assets/gallery/kitchen-before.jpg";
-import kitchenAfter from "@/assets/gallery/kitchen-after.jpg";
-import kidsBefore from "@/assets/gallery/kids-before.jpg";
-import kidsAfter from "@/assets/gallery/kids-after.jpg";
+import livingBefore from "@/assets/gallery/living-before.png";
+import livingAfter from "@/assets/gallery/living-after.png";
+import kitchenBefore from "@/assets/gallery/kitchen-before.png";
+import kitchenAfter from "@/assets/gallery/kitchen-after.png";
+import kidsBefore from "@/assets/gallery/kids-before.png";
+import kidsAfter from "@/assets/gallery/kids-after.png";
 
 type Project = {
   title: string;
@@ -104,11 +104,12 @@ export function Gallery() {
   return (
     <section
       id="gallery"
-      data-nav-theme="light"
+      data-nav-theme="dark"
       ref={wrapperRef}
       className="relative w-full"
-      style={{ backgroundColor: "#FFFFFF", height: "300vh" }}
+      style={{ backgroundColor: "#0A0A0A", height: "300vh" }}
     >
+      {/* ── Desktop sticky container ── */}
       <div
         className="reno-gallery-sticky"
         style={{
@@ -117,27 +118,30 @@ export function Gallery() {
           height: "100vh",
           display: "flex",
           flexDirection: "column",
-          backgroundColor: "#FFFFFF",
-          padding: "clamp(20px, 4vw, 40px) clamp(16px, 2.4vw, 20px)",
+          backgroundColor: "#0A0A0A",
+          padding: "0 clamp(16px, 2.4vw, 20px) clamp(20px, 3vw, 32px)",
           paddingTop: "clamp(72px, 9vw, 96px)",
           overflow: "hidden",
         }}
       >
+        {/* Heading */}
         <h2
           style={{
-            color: "#000000",
+            color: "#FFFFFF",
             fontWeight: 600,
             fontSize: "clamp(28px, 4.6vw, 64px)",
             lineHeight: 1.16,
             letterSpacing: "-0.02em",
             padding: "0 clamp(8px, 1.5vw, 24px)",
-            marginBottom: "clamp(16px, 2vw, 24px)",
+            marginBottom: "clamp(14px, 1.8vw, 22px)",
+            flexShrink: 0,
           }}
         >
           Delivered projects, not renders
         </h2>
 
-        {/* Stage */}
+        {/* Stage — images fill with object-fit:contain so the baked-in
+            rounded corners and dark border in each PNG are fully visible */}
         <div
           className="reno-gallery-stage"
           style={{
@@ -146,7 +150,7 @@ export function Gallery() {
             minHeight: 0,
             borderRadius: "clamp(20px, 2.4vw, 35px)",
             overflow: "hidden",
-            backgroundColor: "#0D0D0D",
+            backgroundColor: "#0A0A0A",
           }}
         >
           {/* Images — 3 projects × (before, after) */}
@@ -166,24 +170,13 @@ export function Gallery() {
                   inset: 0,
                   width: "100%",
                   height: "100%",
-                  objectFit: "cover",
+                  objectFit: "contain",
+                  objectPosition: "center",
                   opacity: i === 0 && mi === 1 ? 1 : 0,
                 }}
               />
             )),
           )}
-
-          {/* Legibility scrim for the bottom-left info block */}
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-              background:
-                "linear-gradient(to top right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.25) 42%, rgba(0,0,0,0) 68%)",
-            }}
-          />
 
           {/* Info blocks — one per project, crossfaded */}
           {projects.map((p, i) => (
@@ -206,32 +199,32 @@ export function Gallery() {
               </div>
             </div>
           ))}
+        </div>
 
-          {/* Before / After toggle */}
-          <div
-            className="reno-gallery-toggle"
-            role="group"
-            aria-label="Before or after view"
-          >
-            {(["before", "after"] as Mode[]).map((m) => {
-              const isActive = mode === m;
-              return (
-                <button
-                  key={m}
-                  type="button"
-                  onClick={() => setMode(m)}
-                  aria-pressed={isActive}
-                  className="reno-gallery-toggle-btn"
-                  style={{
-                    backgroundColor: isActive ? "#0D0D0D" : "#9A9A9A",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  {m === "before" ? "Before" : "After"}
-                </button>
-              );
-            })}
-          </div>
+        {/* Before / After toggle — sits below the stage on the dark background */}
+        <div
+          className="reno-gallery-toggle"
+          role="group"
+          aria-label="Before or after view"
+        >
+          {(["before", "after"] as Mode[]).map((m) => {
+            const isActive = mode === m;
+            return (
+              <button
+                key={m}
+                type="button"
+                onClick={() => setMode(m)}
+                aria-pressed={isActive}
+                className="reno-gallery-toggle-btn"
+                style={{
+                  backgroundColor: isActive ? "#FFFFFF" : "rgba(255,255,255,0.12)",
+                  color: isActive ? "#0D0D0D" : "rgba(255,255,255,0.55)",
+                }}
+              >
+                {m === "before" ? "Before" : "After"}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -239,7 +232,7 @@ export function Gallery() {
         .reno-gallery-info {
           position: absolute;
           left: clamp(20px, 4vw, 60px);
-          bottom: clamp(28px, 6vw, 96px);
+          bottom: clamp(28px, 6vw, 80px);
           display: flex;
           flex-direction: column;
           gap: clamp(10px, 1.2vw, 14px);
@@ -268,7 +261,7 @@ export function Gallery() {
         }
         .reno-gallery-progress {
           position: relative;
-          width: min(420px, 100%);
+          width: min(120px, 100%);
           height: 4px;
           border-radius: 100px;
           background-color: rgba(255,255,255,0.2);
@@ -283,11 +276,11 @@ export function Gallery() {
           background-color: #FFFFFF;
         }
         .reno-gallery-toggle {
-          position: absolute;
-          right: clamp(16px, 3vw, 40px);
-          bottom: clamp(20px, 4vw, 40px);
           display: flex;
+          justify-content: flex-end;
           gap: 8px;
+          padding: clamp(12px, 1.6vw, 20px) clamp(8px, 1.5vw, 24px) 0;
+          flex-shrink: 0;
         }
         .reno-gallery-toggle-btn {
           width: clamp(96px, 13vw, 177px);
@@ -297,7 +290,15 @@ export function Gallery() {
           cursor: pointer;
           font-weight: 600;
           font-size: clamp(14px, 1.4vw, 17px);
-          transition: background-color 280ms ease;
+          transition: background-color 280ms ease, color 280ms ease;
+        }
+
+        /* Mobile — stack vertically, no pinned scroll */
+        @media (max-width: 767px) {
+          .reno-gallery-sticky {
+            position: relative !important;
+            height: auto !important;
+          }
         }
       `}</style>
     </section>
