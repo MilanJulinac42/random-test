@@ -2,15 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Stats } from "@/components/sections/Stats";
+import { Process } from "@/components/sections/Process";
 import { Gallery } from "@/components/sections/Gallery";
 import { Quiz } from "@/components/sections/Quiz";
-
-import { Guarantee } from "@/components/sections/Guarantee";
-import { Process } from "@/components/sections/Process";
 import { Reviews } from "@/components/sections/Reviews";
+import { RenoStatement } from "@/components/sections/RenoStatement";
 import { InstagramFeed } from "@/components/sections/InstagramFeed";
-import { TrustBar } from "@/components/sections/TrustBar";
-import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Footer } from "@/components/sections/Footer";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 
@@ -21,16 +18,15 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <main>
+      <Navbar />
       <Hero />
       <Stats />
+      <Process />
       <Gallery />
       <Quiz />
-      <Guarantee />
-      <Process />
       <Reviews />
+      <RenoStatement />
       <InstagramFeed />
-      <TrustBar />
-      <FinalCTA />
       <Footer />
       <WhatsAppFAB />
     </main>

@@ -3,31 +3,16 @@ import { z } from "zod";
 import { Check } from "lucide-react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { Reveal } from "@/components/Reveal";
 import { supabase } from "@/integrations/supabase/client";
+import { useAnimeRevealGroup } from "@/lib/anime";
+import houseMark from "@/assets/quiz-house-mark.png";
 
-const UNIT_TILES = [
-  {
-    key: "Villa",
-    label: "Villa",
-    image:
-      "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=600&h=320&fit=crop",
-  },
-  {
-    key: "Apartment",
-    label: "Apartment",
-    image:
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=320&fit=crop",
-  },
-  {
-    key: "Landscape",
-    label: "Landscape",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=320&fit=crop",
-  },
+const UNITS = ["Villa", "Apartment", "Landscape"] as const;
+const BUDGETS = [
+  "AED 100k – 500k",
+  "AED 500k – 1.5M",
+  "AED 1.5M +",
 ] as const;
-
-const BUDGETS = ["AED 100K – 500K", "AED 500K – 1.5M", "AED 1.5M+"] as const;
 
 const formSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name").max(100),
@@ -41,9 +26,20 @@ export function Quiz() {
   const [phone, setPhone] = useState("971");
   const [unit, setUnit] = useState("");
   const [budget, setBudget] = useState("");
-  const [errors, setErrors] = useState<{ name?: string; phone?: string; unit?: string; budget?: string }>({});
+  const [errors, setErrors] = useState<{
+    name?: string;
+    phone?: string;
+    unit?: string;
+    budget?: string;
+  }>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  const revealRef = useAnimeRevealGroup<HTMLDivElement>("[data-quiz-anim]", {
+    staggerMs: 110,
+    duration: 720,
+    translateY: 26,
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,265 +73,231 @@ export function Quiz() {
     }
   };
 
-  const sectionLabel: React.CSSProperties = {
-    fontSize: 13,
-    fontWeight: 600,
-    color: "#0D0D0D",
-    marginBottom: 12,
-  };
-  const errorText: React.CSSProperties = {
-    fontSize: 12,
-    color: "#e53935",
-    marginTop: 6,
-  };
-
   return (
     <section
       id="quiz"
-      data-nav-theme="light"
-      className="relative w-full px-6 md:px-12 lg:px-16"
+      data-nav-theme="dark"
+      className="relative w-full overflow-hidden"
       style={{
-        backgroundColor: "#FFFFFF",
-        paddingTop: "clamp(64px, 10vw, 140px)",
-        paddingBottom: "clamp(64px, 10vw, 140px)",
+        backgroundColor: "#000000",
+        paddingBlock: "clamp(56px, 9vw, 80px)",
+        paddingInline: "clamp(20px, 6vw, 80px)",
       }}
     >
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <Reveal>
-          <p
-            className="text-center uppercase"
-            style={{ fontSize: 13, letterSpacing: "0.1em", color: "#888", fontWeight: 500 }}
-          >
-            GET STARTED
-          </p>
-          <h2
-            className="text-center mt-3 reno-quiz-h2"
+      {/* Decorative background glows */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{ overflow: "hidden" }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            left: "-12%",
+            top: "8%",
+            width: 640,
+            height: 640,
+            background:
+              "radial-gradient(circle, rgba(82,60,255,0.30) 0%, rgba(82,60,255,0) 70%)",
+            filter: "blur(30px)",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            right: "-14%",
+            bottom: "-12%",
+            width: 760,
+            height: 760,
+            background:
+              "radial-gradient(circle, rgba(36,28,150,0.40) 0%, rgba(36,28,150,0) 70%)",
+            filter: "blur(30px)",
+          }}
+        />
+      </div>
+
+      <div
+        ref={revealRef}
+        className="relative"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "clamp(28px, 4vw, 40px)",
+        }}
+      >
+        {/* Header */}
+        <div
+          data-quiz-anim
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={houseMark}
+            alt=""
+            aria-hidden
             style={{
-              fontWeight: 700,
-              color: "#0D0D0D",
-              lineHeight: 1.05,
+              width: "clamp(200px, 28vw, 400px)",
+              height: "clamp(200px, 28vw, 400px)",
+              objectFit: "contain",
+              userSelect: "none",
+            }}
+          />
+          <h2
+            style={{
+              color: "#FFFFFF",
+              fontWeight: 600,
+              fontSize: "clamp(30px, 5.2vw, 64px)",
+              lineHeight: 1.18,
               letterSpacing: "-0.02em",
+              textAlign: "center",
+              marginTop: "clamp(-8px, -0.5vw, 0px)",
             }}
           >
-            Tell us about your project.
+            Tell us about your project
           </h2>
-          <p
-            className="text-center mx-auto mt-4 reno-quiz-sub"
-            style={{ color: "#555", maxWidth: "100%", lineHeight: 1.55 }}
-          >
-            We call back within 24 hours.
-          </p>
-        </Reveal>
+        </div>
 
-        <Reveal>
-          <form
-            onSubmit={handleSubmit}
-            noValidate
-            className="reno-quiz-form mx-auto mt-10"
+        <form
+          onSubmit={handleSubmit}
+          noValidate
+          style={{
+            width: "100%",
+            maxWidth: 768,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "clamp(20px, 3vw, 40px)",
+          }}
+        >
+          {/* Unit type pill group */}
+          <div data-quiz-anim style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+            <div className="reno-quiz-pillgroup">
+              {UNITS.map((u) => {
+                const isActive = unit === u;
+                return (
+                  <button
+                    key={u}
+                    type="button"
+                    onClick={() => setUnit(u)}
+                    aria-pressed={isActive}
+                    className="reno-quiz-pill"
+                    style={{
+                      backgroundColor: isActive ? "#FFFFFF" : "#2B2B2B",
+                      color: isActive ? "#0D0D0D" : "#FFFFFF",
+                    }}
+                  >
+                    {u}
+                  </button>
+                );
+              })}
+            </div>
+            {errors.unit && <p className="reno-quiz-error">{errors.unit}</p>}
+          </div>
+
+          {/* Name + Phone */}
+          <div data-quiz-anim style={{ width: "100%" }}>
+            <div className="reno-quiz-row">
+              <div>
+                <div className="reno-quiz-field">
+                  <label htmlFor="quiz-name" className="reno-quiz-label">
+                    Your name
+                  </label>
+                  <input
+                    id="quiz-name"
+                    type="text"
+                    autoComplete="given-name"
+                    placeholder=" "
+                    value={name}
+                    maxLength={100}
+                    onChange={(e) => setName(e.target.value)}
+                    className="reno-quiz-input"
+                  />
+                </div>
+                {errors.name && <p className="reno-quiz-error">{errors.name}</p>}
+              </div>
+              <div>
+                <div className="reno-quiz-field">
+                  <span className="reno-quiz-label">Phone number</span>
+                  <PhoneInput
+                    country="ae"
+                    value={phone}
+                    onChange={(v) => setPhone(v)}
+                    enableSearch
+                    disableSearchIcon
+                    searchPlaceholder="Search country"
+                    countryCodeEditable={false}
+                    placeholder="50 123 4567"
+                    inputProps={{ name: "phone", autoComplete: "tel" }}
+                  />
+                </div>
+                {errors.phone && (
+                  <p className="reno-quiz-error">{errors.phone}</p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Budget */}
+          <div
+            data-quiz-anim
             style={{
-              maxWidth: 720,
-              background: "white",
-              border: "1px solid #ececec",
-              borderRadius: 12,
-              padding: 32,
-              boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
+              width: "100%",
               display: "flex",
               flexDirection: "column",
-              gap: 24,
+              gap: 20,
             }}
           >
-            {/* Row 1: Name + Phone */}
-            <div className="reno-row-name-phone">
-              <div>
-                <input
-                  type="text"
-                  autoComplete="given-name"
-                  placeholder="Your name"
-                  value={name}
-                  maxLength={100}
-                  onChange={(e) => setName(e.target.value)}
-                  style={{
-                    width: "100%",
-                    height: 48,
-                    border: "1.5px solid #e0e0e0",
-                    borderRadius: 8,
-                    padding: "0 14px",
-                    fontSize: 14,
-                    background: "white",
-                    color: "#0D0D0D",
-                    outline: "none",
-                  }}
-                />
-                {errors.name && <p style={errorText}>{errors.name}</p>}
-              </div>
-              <div>
-                <PhoneInput
-                  country="ae"
-                  value={phone}
-                  onChange={(v) => setPhone(v)}
-                  enableSearch
-                  disableSearchIcon
-                  searchPlaceholder="Search country"
-                  countryCodeEditable={false}
-                  placeholder="50 123 4567"
-                  inputProps={{ name: "phone", autoComplete: "tel" }}
-                />
-                {errors.phone && <p style={errorText}>{errors.phone}</p>}
-              </div>
+            <h3
+              style={{
+                color: "#FFFFFF",
+                fontWeight: 600,
+                fontSize: "clamp(17px, 1.6vw, 20px)",
+                lineHeight: 1.2,
+              }}
+            >
+              Budget
+            </h3>
+            <div className="reno-quiz-budget-row">
+              {BUDGETS.map((b) => {
+                const isActive = budget === b;
+                return (
+                  <button
+                    key={b}
+                    type="button"
+                    onClick={() => setBudget(b)}
+                    aria-pressed={isActive}
+                    className="reno-quiz-budget-card"
+                    style={{
+                      backgroundColor: isActive
+                        ? "#FFFFFF"
+                        : "rgba(255,255,255,0.1)",
+                      color: isActive ? "#0D0D0D" : "#FFFFFF",
+                    }}
+                  >
+                    {b}
+                  </button>
+                );
+              })}
             </div>
+            {errors.budget && (
+              <p className="reno-quiz-error">{errors.budget}</p>
+            )}
+          </div>
 
-            {/* Row 2: Renovation type */}
-            <div>
-              <h3 style={sectionLabel}>What are you renovating?</h3>
-              <div className="reno-row-cards">
-                {UNIT_TILES.map((t) => {
-                  const active = unit === t.key;
-                  return (
-                    <button
-                      type="button"
-                      key={t.key}
-                      onClick={() => setUnit(t.key)}
-                      aria-pressed={active}
-                      style={{
-                        position: "relative",
-                        padding: 0,
-                        background: "white",
-                        border: `2px solid ${active ? "#111" : "#e0e0e0"}`,
-                        borderRadius: 10,
-                        overflow: "hidden",
-                        cursor: "pointer",
-                        textAlign: "left",
-                        transition: "border-color 150ms",
-                      }}
-                    >
-                      <div style={{ position: "relative", width: "100%", height: 140 }}>
-                        <img
-                          src={t.image}
-                          alt={t.label}
-                          loading="lazy"
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            display: "block",
-                          }}
-                        />
-                        {active && (
-                          <>
-                            <div
-                              style={{
-                                position: "absolute",
-                                inset: 0,
-                                background: "rgba(0,0,0,0.2)",
-                              }}
-                            />
-                            <div
-                              style={{
-                                position: "absolute",
-                                top: 10,
-                                right: 10,
-                                width: 28,
-                                height: 28,
-                                borderRadius: 999,
-                                background: "#111",
-                                color: "white",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <Check size={16} strokeWidth={3} />
-                            </div>
-                          </>
-                        )}
-                      </div>
-                      <div
-                        style={{
-                          padding: "10px 14px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          fontSize: 14,
-                          fontWeight: 600,
-                          color: "#0D0D0D",
-                        }}
-                      >
-                        <span>{t.label}</span>
-                        {active && <Check size={16} strokeWidth={2.5} color="#111" />}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-              {errors.unit && <p style={errorText}>{errors.unit}</p>}
-            </div>
-
-            {/* Row 3: Budget */}
-            <div>
-              <h3 style={sectionLabel}>Your rough budget</h3>
-              <div className="reno-row-pills">
-                {BUDGETS.map((b) => {
-                  const active = budget === b;
-                  return (
-                    <button
-                      type="button"
-                      key={b}
-                      onClick={() => setBudget(b)}
-                      aria-pressed={active}
-                      style={{
-                        flex: 1,
-                        height: 52,
-                        borderRadius: 8,
-                        fontSize: 13,
-                        fontWeight: 600,
-                        background: active ? "#111" : "#fafafa",
-                        border: `1.5px solid ${active ? "#111" : "#d8d8d8"}`,
-                        color: active ? "white" : "#444",
-                        cursor: "pointer",
-                        transition: "background 150ms, border-color 150ms, color 150ms",
-                      }}
-                    >
-                      {b}
-                    </button>
-                  );
-                })}
-              </div>
-              {errors.budget && <p style={errorText}>{errors.budget}</p>}
-            </div>
-
-            {/* Row 4: Submit */}
-            <div>
-              <button
-                type="submit"
-                disabled={submitting}
-                style={{
-                  width: "100%",
-                  height: 56,
-                  background: "#111",
-                  color: "white",
-                  border: "none",
-                  borderRadius: 10,
-                  fontSize: 16,
-                  fontWeight: 600,
-                  cursor: submitting ? "wait" : "pointer",
-                  opacity: submitting ? 0.5 : 1,
-                }}
-              >
-                {submitting ? "Sending..." : "Get my assessment →"}
-              </button>
-              <p
-                style={{
-                  fontSize: 12,
-                  color: "#999",
-                  textAlign: "center",
-                  marginTop: 12,
-                }}
-              >
-                We assess 15–20 new projects each month.
-              </p>
-            </div>
-          </form>
-        </Reveal>
+          {/* Submit */}
+          <button
+            data-quiz-anim
+            type="submit"
+            disabled={submitting}
+            className="reno-quiz-submit"
+          >
+            {submitting ? "Sending…" : "Submit"}
+          </button>
+        </form>
       </div>
 
       {submitted && (
@@ -347,114 +309,161 @@ export function Quiz() {
       )}
 
       <style>{`
-        .reno-quiz-h2 { font-size: clamp(28px, 8vw, 52px); }
-        .reno-quiz-sub { font-size: 15px; }
-        @media (min-width: 768px) {
-          .reno-quiz-h2 { font-size: clamp(36px, 5.5vw, 52px); }
-          .reno-quiz-sub { font-size: 17px; }
+        .reno-quiz-pillgroup {
+          display: flex;
+          gap: 4px;
+          padding: 8px;
+          border-radius: 100px;
+          background-color: rgba(62,62,62,0.3);
         }
-
-        .reno-row-name-phone {
+        .reno-quiz-pill {
+          width: clamp(96px, 13vw, 144px);
+          padding: 16px;
+          border: none;
+          border-radius: 100px;
+          cursor: pointer;
+          font-weight: 500;
+          font-size: clamp(14px, 1.4vw, 16px);
+          line-height: 1.2;
+          transition: background-color 240ms ease, color 240ms ease;
+        }
+        .reno-quiz-row {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 12px;
+          gap: 20px;
         }
-        .reno-row-cards {
+        .reno-quiz-field {
+          position: relative;
+          background-color: rgba(255,255,255,0.1);
+          border-radius: 16px;
+          height: 80px;
+          padding: 14px 16px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 6px;
+        }
+        .reno-quiz-label {
+          color: rgba(255,255,255,0.5);
+          font-weight: 600;
+          font-size: 13px;
+          line-height: 1.2;
+        }
+        .reno-quiz-input {
+          width: 100%;
+          background: transparent;
+          border: none;
+          outline: none;
+          color: #FFFFFF;
+          font-family: inherit;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 1.2;
+          padding: 0;
+        }
+        .reno-quiz-input::placeholder { color: transparent; }
+        .reno-quiz-budget-row {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
-          gap: 12px;
+          gap: 20px;
         }
-        .reno-row-pills {
-          display: flex;
-          gap: 10px;
+        .reno-quiz-budget-card {
+          height: 80px;
+          padding: 16px;
+          border: none;
+          border-radius: 16px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: clamp(13px, 1.4vw, 16px);
+          line-height: 1.2;
+          transition: background-color 240ms ease, color 240ms ease;
         }
-        @media (max-width: 767px) {
-          .reno-row-name-phone { grid-template-columns: 1fr; }
-          .reno-row-cards { grid-template-columns: 1fr; }
-          .reno-row-pills { flex-direction: column; }
+        .reno-quiz-submit {
+          width: min(400px, 100%);
+          height: 56px;
+          border: none;
+          border-radius: 14px;
+          background: #FFFFFF;
+          color: #0D0D0D;
+          font-family: inherit;
+          font-weight: 600;
+          font-size: 16px;
+          cursor: pointer;
+          transition: opacity 200ms ease;
+        }
+        .reno-quiz-submit:disabled { opacity: 0.55; cursor: wait; }
+        .reno-quiz-error {
+          color: #ff6b6b;
+          font-size: 12px;
+          margin-top: 8px;
+          text-align: center;
+        }
+        @media (max-width: 720px) {
+          .reno-quiz-row { grid-template-columns: 1fr; }
+          .reno-quiz-budget-row { grid-template-columns: 1fr; }
+          .reno-quiz-pillgroup { flex-wrap: wrap; justify-content: center; }
         }
 
-        /* Phone input overrides */
-        .react-tel-input,
-        .react-tel-input * {
+        /* react-phone-input-2 — dark theme overrides */
+        .reno-quiz-field .react-tel-input,
+        .reno-quiz-field .react-tel-input * {
           font-family: 'ZT Talk', system-ui, sans-serif !important;
         }
-        .react-tel-input .form-control {
+        .reno-quiz-field .react-tel-input .form-control {
           width: 100% !important;
-          height: 48px !important;
-          font-size: 14px !important;
-          border: 1.5px solid #e0e0e0 !important;
-          border-radius: 8px !important;
-          padding-left: 100px !important;
-          background: white !important;
-          color: #0D0D0D !important;
-        }
-        .react-tel-input .form-control:focus {
-          border-color: #111 !important;
+          height: 28px !important;
+          font-size: 16px !important;
+          font-weight: 600 !important;
+          border: none !important;
+          border-radius: 0 !important;
+          padding-left: 44px !important;
+          background: transparent !important;
+          color: #FFFFFF !important;
           box-shadow: none !important;
         }
-        .react-tel-input .flag-dropdown {
-          background: #f0f0f0 !important;
-          border: 1.5px solid #e0e0e0 !important;
-          border-right: 1px solid #e0e0e0 !important;
-          border-radius: 8px 0 0 8px !important;
-          width: 90px !important;
+        .reno-quiz-field .react-tel-input .flag-dropdown,
+        .reno-quiz-field .react-tel-input .flag-dropdown.open,
+        .reno-quiz-field .react-tel-input .flag-dropdown.open .selected-flag,
+        .reno-quiz-field .react-tel-input .selected-flag {
+          background: transparent !important;
+          border: none !important;
+          border-radius: 0 !important;
         }
-        .react-tel-input .flag-dropdown.open,
-        .react-tel-input .flag-dropdown.open .selected-flag {
-          background: #f0f0f0 !important;
-          border-radius: 8px 0 0 8px !important;
+        .reno-quiz-field .react-tel-input .selected-flag { padding-left: 0 !important; }
+        .reno-quiz-field .react-tel-input .selected-flag .arrow {
+          border-top-color: rgba(255,255,255,0.6) !important;
         }
-        .react-tel-input .selected-flag {
-          width: 90px !important;
-          padding-left: 14px !important;
-          border-radius: 8px 0 0 8px !important;
+        .reno-quiz-field .react-tel-input .country-list {
+          background: #161616 !important;
+          border-radius: 10px !important;
+          box-shadow: 0 12px 32px rgba(0,0,0,0.5) !important;
+          max-height: 260px !important;
         }
-        .react-tel-input .selected-flag .flag {
-          margin-top: -6px;
-        }
-        .react-tel-input .selected-flag .arrow {
-          left: 28px !important;
-          border-top-color: #555 !important;
-        }
-        .react-tel-input .country-list {
-          background: white !important;
-          border-radius: 8px !important;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
-          max-height: 280px !important;
-        }
-        .react-tel-input .country-list .search {
+        .reno-quiz-field .react-tel-input .country-list .search {
+          background: #161616 !important;
           padding: 10px !important;
-          background: white !important;
         }
-        .react-tel-input .country-list .search-box {
+        .reno-quiz-field .react-tel-input .country-list .search-box {
           width: 100% !important;
           padding: 8px 12px !important;
-          border: 1.5px solid #e0e0e0 !important;
+          border: 1px solid #2c2c2c !important;
           border-radius: 6px !important;
           margin: 0 !important;
-          color: #0D0D0D !important;
+          background: #0d0d0d !important;
+          color: #FFFFFF !important;
           font-size: 13px !important;
         }
-        .react-tel-input .country-list .country {
-          color: #0D0D0D !important;
+        .reno-quiz-field .react-tel-input .country-list .country {
+          color: #FFFFFF !important;
           font-size: 13px !important;
           padding: 8px 10px !important;
         }
-        .react-tel-input .country-list .country .country-name {
-          color: #0D0D0D !important;
-          margin-right: 6px !important;
+        .reno-quiz-field .react-tel-input .country-list .country .dial-code {
+          color: rgba(255,255,255,0.55) !important;
         }
-        .react-tel-input .country-list .country .dial-code {
-          color: #666 !important;
-        }
-        .react-tel-input .country-list .country:hover,
-        .react-tel-input .country-list .country.highlight {
-          background: #f5f5f5 !important;
-        }
-        .react-tel-input .country-list .country:hover .dial-code,
-        .react-tel-input .country-list .country.highlight .dial-code {
-          color: #0D0D0D !important;
+        .reno-quiz-field .react-tel-input .country-list .country:hover,
+        .reno-quiz-field .react-tel-input .country-list .country.highlight {
+          background: #242424 !important;
         }
       `}</style>
     </section>

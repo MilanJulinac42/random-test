@@ -1,4 +1,4 @@
-import { Reveal } from "@/components/Reveal";
+import { useAnimeReveal } from "@/lib/anime";
 
 const TILE_BGS = ["#E8E0D5", "#D5E0DC", "#D5D8E8", "#E8DDD5", "#D5E8E0", "#E8E5D5"];
 const IG_URL = "https://instagram.com/reno_app";
@@ -23,6 +23,10 @@ function LinkedInIcon({ size = 16, color = "currentColor" }: { size?: number; co
 }
 
 export function InstagramFeed() {
+  const headerRef = useAnimeReveal<HTMLDivElement>({ translateY: 22 });
+  const gridRef = useAnimeReveal<HTMLDivElement>({ translateY: 24 });
+  const cardRef = useAnimeReveal<HTMLDivElement>({ translateY: 20 });
+
   return (
     <section
       id="social"
@@ -36,7 +40,7 @@ export function InstagramFeed() {
 
       <div className="relative z-10 mx-auto max-w-7xl">
         {/* Header row */}
-        <Reveal>
+        <div ref={headerRef}>
           <div
             className="flex flex-col md:flex-row md:items-end md:justify-between"
             style={{ marginBottom: 40, gap: 20 }}
@@ -92,10 +96,10 @@ export function InstagramFeed() {
               </a>
             </div>
           </div>
-        </Reveal>
+        </div>
 
         {/* Instagram grid */}
-        <Reveal>
+        <div ref={gridRef}>
           <div className="reno-ig-grid">
             {TILE_BGS.map((bg, i) => (
               <a
@@ -117,10 +121,10 @@ export function InstagramFeed() {
               </a>
             ))}
           </div>
-        </Reveal>
+        </div>
 
         {/* LinkedIn card */}
-        <Reveal>
+        <div ref={cardRef}>
           <div
             className="reno-li-card flex flex-col md:flex-row md:items-center md:justify-between"
             style={{
@@ -163,7 +167,7 @@ export function InstagramFeed() {
               Follow us ↗
             </a>
           </div>
-        </Reveal>
+        </div>
       </div>
 
       <style>{`

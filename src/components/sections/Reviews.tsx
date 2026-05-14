@@ -1,206 +1,185 @@
-
-import { Reveal } from "@/components/Reveal";
+import { Star } from "lucide-react";
+import { useAnimeReveal, useAnimeRevealGroup } from "@/lib/anime";
 
 type Testimonial = {
   name: string;
-  meta: string;
-  tint: string;
   image: string;
   quote: string;
 };
 
 const testimonials: Testimonial[] = [
   {
-    name: "Walter",
-    meta: "Villa · Arabian Ranches",
-    tint: "#8B4513",
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=face&q=80",
-    quote:
-      "Brilliant team – took them a week to renovate the entire apartment. You have never seen this before in the UAE market.",
-  },
-  {
     name: "Amir",
-    meta: "Townhouse · JVC",
-    tint: "#1F3560",
     image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face&q=80",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&q=80",
     quote:
       "Reno completely transformed my Dubai Hills apartment in just a few weeks. Sleek finishes, on-time delivery, and I barely had to lift a finger.",
   },
   {
-    name: "Camillo",
-    meta: "Apartment · Downtown Dubai",
-    tint: "#1D6B5A",
+    name: "Walter",
     image:
-      "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=200&h=200&fit=crop&crop=face&q=80",
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face&q=80",
+    quote:
+      "Brilliant team — took them a week to renovate the entire apartment. You have never seen this before in the UAE market.",
+  },
+  {
+    name: "Camillo",
+    image:
+      "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=400&h=400&fit=crop&crop=face&q=80",
     quote:
       "Credit card payments are a huge plus, I earned cashback and used it to purchase garden furniture for my house.",
   },
 ];
 
-function TestimonialCard({
-  t,
-  variant = "hero",
-}: {
-  t: Testimonial;
-  variant?: "hero" | "side";
-}) {
-  const isHero = variant === "hero";
-  return (
-    <div
-      className="relative w-full flex flex-col overflow-hidden"
-      style={{
-        borderRadius: 24,
-        padding: isHero ? 32 : 24,
-        background: `radial-gradient(120% 80% at 50% 0%, ${t.tint}${isHero ? "66" : "33"} 0%, ${t.tint}22 25%, rgba(20,20,28,0.85) 60%, rgba(15,15,22,0.95) 100%)`,
-        border: `1px solid rgba(255,255,255,${isHero ? 0.12 : 0.06})`,
-        boxShadow: isHero
-          ? "0 40px 80px -30px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.08)"
-          : "0 20px 40px -25px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)",
-        backdropFilter: "blur(8px)",
-      }}
-    >
-      <div className="flex items-center justify-center">
-        <span
-          style={{
-            color: "#FFFFFF",
-            fontSize: isHero ? 24 : 18,
-            fontWeight: 600,
-            letterSpacing: "-0.01em",
-          }}
-        >
-          {t.name}
-        </span>
-      </div>
-
-      <p
-        className="text-center"
-        style={{
-          marginTop: isHero ? 22 : 16,
-          fontSize: isHero ? "clamp(17px, 1.35vw, 20px)" : 14.5,
-          lineHeight: 1.55,
-          color: `rgba(255,255,255,${isHero ? 0.92 : 0.78})`,
-        }}
-      >
-        {t.quote}
-      </p>
-    </div>
-  );
-}
-
 export function Reviews() {
+  const headerRef = useAnimeReveal<HTMLDivElement>({ translateY: 22 });
+  const cardsRef = useAnimeRevealGroup<HTMLDivElement>(".reno-review-card", {
+    staggerMs: 140,
+    duration: 760,
+    translateY: 32,
+  });
+
   return (
     <section
       id="reviews"
       data-nav-theme="dark"
-      className="relative overflow-hidden w-full"
+      className="relative w-full"
       style={{
-        backgroundColor: "#0D0D0D",
-        paddingTop: "clamp(64px, 10vw, 140px)",
-        paddingBottom: "clamp(64px, 10vw, 140px)",
+        backgroundColor: "#000000",
+        paddingBlock: "clamp(56px, 9vw, 80px)",
+        paddingInline: "clamp(20px, 6vw, 80px)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "clamp(32px, 5vw, 40px)",
       }}
     >
-
-      <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
-        {/* Header row */}
-        <Reveal>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8 items-center md:items-stretch text-center md:text-left">
-            <h2
-              style={{
-                fontSize: "clamp(28px, 8vw, 64px)",
-                fontWeight: 700,
-                color: "#FFFFFF",
-                lineHeight: 1.05,
-                letterSpacing: "-0.03em",
-              }}
-            >
-              Hear it directly
-              <br />
-              from them
-            </h2>
-
-            {/* Stat pill */}
-            <div
-              className="inline-flex items-center self-center md:self-auto reno-stat-pill"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: 999,
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
-                backdropFilter: "blur(10px)",
-              }}
-            >
-              <span
-                className="reno-stat-num"
-                style={{
-                  fontWeight: 700,
-                  color: "#FFFFFF",
-                  letterSpacing: "-0.04em",
-                  lineHeight: 1,
-                }}
-              >
-                100+
-              </span>
-              <span
-                className="uppercase"
-                style={{
-                  fontSize: 12,
-                  letterSpacing: "0.14em",
-                  color: "rgba(255,255,255,0.6)",
-                  fontWeight: 500,
-                  lineHeight: 1.3,
-                }}
-              >
-                Happy
-                <br />
-                Clients
-              </span>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* Desktop grid */}
-        <div className="hidden md:block" style={{ marginTop: 64 }}>
-          <Reveal>
-            <div className="grid grid-cols-3" style={{ gap: 20 }}>
-              {testimonials.map((t) => (
-                <TestimonialCard key={t.name} t={t} />
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </div>
-
-      {/* Mobile horizontal scroll */}
+      {/* Header */}
       <div
-        className="md:hidden flex overflow-x-auto no-scrollbar relative z-10"
+        ref={headerRef}
         style={{
-          marginTop: 48,
-          gap: 12,
-          paddingLeft: 24,
-          paddingRight: 24,
-          scrollSnapType: "x mandatory",
-          scrollPaddingLeft: 24,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 10,
+          textAlign: "center",
         }}
       >
+        <h2
+          style={{
+            color: "#FFFFFF",
+            fontWeight: 600,
+            fontSize: "clamp(30px, 5.2vw, 64px)",
+            lineHeight: 1.18,
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Hear it from our clients
+        </h2>
+        <p
+          style={{
+            color: "rgba(255,255,255,0.7)",
+            fontWeight: 600,
+            fontSize: "clamp(15px, 1.6vw, 20px)",
+            lineHeight: 1.3,
+          }}
+        >
+          Insights from those who know us best.
+        </p>
+      </div>
+
+      {/* Cards */}
+      <div ref={cardsRef} className="reno-reviews-grid">
         {testimonials.map((t) => (
-          <div
-            key={t.name}
-            style={{ width: "82vw", flexShrink: 0, scrollSnapAlign: "start" }}
-          >
-            <TestimonialCard t={t} />
-          </div>
+          <article key={t.name} className="reno-review-card">
+            <div
+              aria-hidden
+              className="reno-review-card-bg"
+              style={{ backgroundImage: `url(${t.image})` }}
+            />
+            <div aria-hidden className="reno-review-card-scrim" />
+            <div className="reno-review-card-content">
+              <div className="reno-review-name">{t.name}</div>
+              <p className="reno-review-quote">{t.quote}</p>
+              <div className="reno-review-stars" aria-label="5 out of 5 stars">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} size={18} fill="currentColor" strokeWidth={0} />
+                ))}
+              </div>
+            </div>
+          </article>
         ))}
-        <div style={{ width: 12, flexShrink: 0 }} />
       </div>
 
       <style>{`
-        .reno-stat-pill { padding: 14px 24px; gap: 14px; }
-        .reno-stat-num { font-size: 48px; }
-        @media (min-width: 768px) {
-          .reno-stat-pill { padding: 20px 36px; gap: 20px; }
-          .reno-stat-num { font-size: clamp(56px, 6vw, 80px); }
+        .reno-reviews-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+          width: 100%;
+          max-width: 1280px;
+        }
+        .reno-review-card {
+          position: relative;
+          overflow: hidden;
+          border-radius: 24px;
+          min-height: 287px;
+          background-color: #141414;
+        }
+        .reno-review-card-bg {
+          position: absolute;
+          inset: -40px;
+          background-size: cover;
+          background-position: 50%;
+          filter: blur(44px);
+          transform: scale(1.2);
+          opacity: 0.7;
+        }
+        .reno-review-card-scrim {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            180deg,
+            rgba(0,0,0,0.45) 0%,
+            rgba(0,0,0,0.62) 100%
+          );
+        }
+        .reno-review-card-content {
+          position: relative;
+          z-index: 1;
+          height: 100%;
+          min-height: 287px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+          padding: clamp(24px, 3vw, 36px) clamp(20px, 2.6vw, 32px);
+          text-align: center;
+        }
+        .reno-review-name {
+          color: rgba(255,255,255,0.72);
+          font-weight: 500;
+          font-size: clamp(20px, 2vw, 26px);
+          line-height: 1.2;
+        }
+        .reno-review-quote {
+          color: #FFFFFF;
+          font-weight: 500;
+          font-size: clamp(16px, 1.6vw, 21px);
+          line-height: 1.45;
+          margin: 0;
+        }
+        .reno-review-stars {
+          display: flex;
+          gap: 4px;
+          color: #FFFFFF;
+        }
+        @media (max-width: 860px) {
+          .reno-reviews-grid {
+            grid-template-columns: 1fr;
+            max-width: 480px;
+          }
         }
       `}</style>
     </section>

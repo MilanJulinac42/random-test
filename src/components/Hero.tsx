@@ -1,10 +1,6 @@
-import { ChevronDown, MessageCircle } from "lucide-react";
-import { useEffect, useState } from "react";
-import { AnimatedHeading } from "@/components/AnimatedHeading";
-import { FadeIn } from "@/components/FadeIn";
-import { LinkedInIcon, InstagramIcon } from "@/components/SocialIcons";
-import { WHATSAPP_GENERAL, LINKEDIN_URL, INSTAGRAM_URL } from "@/lib/constants";
-import logoLight from "@/assets/logo.png";
+import { useEffect, useRef, useState } from "react";
+import { animate } from "animejs";
+import { prefersReducedMotion, RENO_EASE } from "@/lib/anime";
 import hero1 from "@/assets/hero/hero-1.jpg";
 import hero2 from "@/assets/hero/hero-2.jpg";
 import hero3 from "@/assets/hero/hero-3.jpg";
@@ -22,18 +18,66 @@ const SLIDE_INTERVAL = 5000;
 export function Hero() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const slideRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const contentRef = useRef<HTMLDivElement | null>(null);
 
+  /* Auto-advance the background slideshow. */
   useEffect(() => {
-    if (paused) return;
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
-    const id = setInterval(() => {
-      setActive((i) => (i + 1) % SLIDES.length);
-    }, SLIDE_INTERVAL);
+    if (paused || prefersReducedMotion()) return;
+    const id = setInterval(
+      () => setActive((i) => (i + 1) % SLIDES.length),
+      SLIDE_INTERVAL,
+    );
     return () => clearInterval(id);
   }, [paused]);
+
+  /* Crossfade the background between slides with Anime.js when `active` changes. */
+  useEffect(() => {
+    slideRefs.current.forEach((img, i) => {
+      if (!img) return;
+      if (prefersReducedMotion()) {
+        img.style.opacity = i === active ? "1" : "0";
+        return;
+      }
+      animate(img, {
+        opacity: i === active ? 1 : 0,
+        duration: 900,
+        ease: RENO_EASE,
+      });
+    });
+  }, [active]);
+
+  /* Entrance: stagger the foreground content in on mount. */
+  useEffect(() => {
+    const root = contentRef.current;
+    if (!root) return;
+    const items = root.querySelectorAll<HTMLElement>("[data-hero-anim]");
+    if (!items.length) return;
+
+    if (prefersReducedMotion()) {
+      items.forEach((el) => (el.style.opacity = "1"));
+      return;
+    }
+
+    items.forEach((el) => (el.style.opacity = "0"));
+    animate(items, {
+      opacity: [0, 1],
+      translateY: [24, 0],
+      duration: 900,
+      delay: (_el: HTMLElement, i: number) => 200 + i * 120,
+      ease: RENO_EASE,
+    });
+
+    // Watchdog: guarantee the hero content appears even if the
+    // animation loop can't run (e.g. loaded in a background tab).
+    const watchdog = setTimeout(() => {
+      items.forEach((el) => {
+        el.style.opacity = "1";
+        el.style.transform = "none";
+      });
+    }, 200 + items.length * 120 + 900 + 400);
+    return () => clearTimeout(watchdog);
+  }, []);
 
   const handleSelect = (i: number) => {
     setActive(i);
@@ -44,237 +88,195 @@ export function Hero() {
   return (
     <section
       id="top"
+      data-nav-theme="dark"
       className="relative w-full overflow-hidden"
-      style={{ background: "#0D0D0D", minHeight: "100vh" }}
+      style={{ background: "#000000", minHeight: "100vh" }}
     >
-      {/* Diagonally-offset rounded card. Sized larger than the viewport so
-          its top-left and bottom-right corners bleed off-screen, leaving
-          only the top-right and bottom-left rounded corners visible. */}
+      {/* Background image card — inset from the black artboard edge, rounded. */}
       <div
-        className="hero-card absolute overflow-hidden rounded-[24px]"
+        className="absolute overflow-hidden"
         style={{
-          top: "calc(-1 * var(--hero-bleed))",
-          left: "calc(-1 * var(--hero-bleed))",
-          width: "calc(100% + 2 * var(--hero-bleed))",
-          height: "calc(100% + 2 * var(--hero-bleed))",
+          top: "clamp(8px, 1.2vw, 15px)",
+          left: "clamp(8px, 1.2vw, 15px)",
+          right: "clamp(8px, 1.2vw, 15px)",
+          bottom: "clamp(8px, 1.2vw, 15px)",
+          borderRadius: 24,
         }}
       >
-        {/* Slideshow */}
         {SLIDES.map((slide, i) => (
           <img
             key={slide.src}
+            ref={(el) => {
+              slideRefs.current[i] = el;
+            }}
             src={slide.src}
             alt={i === active ? slide.alt : ""}
             aria-hidden={i !== active}
             loading={i === 0 ? "eager" : "lazy"}
             className="absolute inset-0 h-full w-full object-cover"
-            style={{
-              opacity: i === active ? 1 : 0,
-              transition: "opacity 800ms ease-in-out",
-            }}
+            style={{ opacity: i === 0 ? 1 : 0 }}
           />
         ))}
 
-        {/* Legibility gradient */}
+        {/* Legibility gradients — dark on the left (per Paper) plus a soft
+            bottom wash so the carousel + caption stay readable. */}
         <div
           aria-hidden
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(to bottom left, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%)",
+              "linear-gradient(90deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.58) 44%, rgba(0,0,0,0) 100%)",
           }}
         />
-        <div className="glow-aura-bottom" aria-hidden />
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 32%)",
+          }}
+        />
       </div>
 
-      {/* Foreground content layer — viewport-relative, NOT translated with the
-          card, so everything sits flush with the visible viewport edges. */}
+      {/* Foreground content — viewport-relative, anchored to the bottom. */}
       <div
-        className="relative z-20 flex flex-col"
-        style={{ minHeight: "100vh" }}
+        ref={contentRef}
+        className="relative z-10 flex flex-col justify-end px-6 md:px-12 lg:px-20"
+        style={{
+          minHeight: "100vh",
+          paddingBottom: "var(--hero-pad-bottom)",
+          paddingTop: 120,
+        }}
       >
-        {/* Top bar */}
-        <div className="flex items-center justify-between px-4 md:px-8 pt-4 md:pt-6">
-          {/* Left: socials */}
-          <div className="flex items-center gap-2">
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="liquid-glass hidden md:inline-flex items-center justify-center rounded-sh hover:opacity-80"
-              style={{ width: 40, height: 40, color: "#FFFFFF" }}
-            >
-              <InstagramIcon size={18} />
-            </a>
-            <a
-              href={LINKEDIN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="liquid-glass hidden md:inline-flex items-center justify-center rounded-sh hover:opacity-80"
-              style={{ width: 40, height: 40, color: "#FFFFFF" }}
-            >
-              <LinkedInIcon size={18} />
-            </a>
-          </div>
-
-          {/* Center: logo */}
-          <a
-            href="#top"
-            aria-label="Reno home"
-            className="absolute left-1/2 -translate-x-1/2 flex items-center"
-          >
-            <img src={logoLight} alt="Reno" className="h-10 md:h-12 lg:h-14 w-auto" />
-          </a>
-
-          {/* Right: chat */}
-          <a
-            href={WHATSAPP_GENERAL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="liquid-glass hidden md:inline-flex items-center rounded-sh hover:bg-white/10"
+        {/* Headline block */}
+        <div className="flex flex-col" style={{ gap: 20, maxWidth: 640 }}>
+          <p
+            data-hero-anim
+            className="uppercase"
             style={{
-              fontSize: 13,
-              fontWeight: 500,
-              padding: "8px 16px",
-              height: 40,
               color: "#FFFFFF",
+              fontSize: "clamp(13px, 1.4vw, 20px)",
+              fontWeight: 500,
+              letterSpacing: "0.08em",
+              lineHeight: 1.2,
             }}
           >
-            Chat With Us
-          </a>
-          <a
-            href={WHATSAPP_GENERAL}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Contact us on WhatsApp"
-            className="liquid-glass md:hidden inline-flex items-center justify-center rounded-sh hover:bg-white/10"
-            style={{ width: 40, height: 40, color: "#FFFFFF" }}
+            End to end renovation in Dubai
+          </p>
+
+          <h1
+            data-hero-anim
+            style={{
+              color: "#FFFFFF",
+              fontWeight: 600,
+              fontSize: "clamp(40px, 6.5vw, 64px)",
+              lineHeight: 1.06,
+              letterSpacing: "-0.02em",
+            }}
           >
-            <MessageCircle size={16} />
+            <span className="block">One-stop</span>
+            <span className="block">Renovation Platform</span>
+          </h1>
+
+          <a
+            data-hero-anim
+            href="#quiz"
+            className="inline-flex items-center justify-center self-start"
+            style={{
+              height: 56,
+              padding: "0 28px",
+              borderRadius: 12,
+              background: "#FFFFFF",
+              color: "#0D0D0D",
+              fontSize: 16,
+              fontWeight: 600,
+              gap: 10,
+            }}
+          >
+            Check availability <span aria-hidden>→</span>
           </a>
         </div>
 
-        {/* Headline area */}
-        <div className="flex-1 flex flex-col justify-end pb-8 md:pb-12 px-6 md:px-12 lg:px-16">
-          <div className="max-w-3xl">
-            <FadeIn delay={150}>
-              <p
-                className="text-primary uppercase font-medium"
-                style={{ letterSpacing: "0.22em", fontSize: "14px" }}
-              >
-                End-to-end renovation in Dubai
-              </p>
-            </FadeIn>
-
-            <AnimatedHeading
-              text={"One-stop \nRenovation Platform"}
-              className="text-white mt-3"
-              style={{
-                fontWeight: 800,
-                lineHeight: 1.02,
-                letterSpacing: "-0.04em",
-                fontSize: "clamp(48px, 7vw, 72px)",
-              }}
-              initialDelay={150}
-            />
-
-            <FadeIn delay={350}>
-              <p
-                className="mt-6 max-w-2xl"
-                style={{
-                  fontSize: "clamp(18px, 1.4vw, 20px)",
-                  lineHeight: 1.6,
-                  color: "rgba(255,255,255,0.78)",
-                }}
-              >
-                We manage the designers, contractors, and payments with{"\n"}daily photo updates and a written on-time guarantee.
-              </p>
-            </FadeIn>
-          </div>
-
-          {/* Bottom row: thumbs (left) + CTA cluster (right) */}
-          <div className="mt-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            {/* Thumbnails */}
-            <div
-              className="liquid-glass rounded-sh p-2 hidden md:flex gap-2 self-start"
-              role="tablist"
-              aria-label="Hero slideshow thumbnails"
-            >
-              {SLIDES.map((slide, i) => {
-                const isActive = i === active;
-                return (
-                  <button
-                    key={slide.src}
-                    type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    aria-label={`Show slide ${i + 1}`}
-                    onClick={() => handleSelect(i)}
-                    className="rounded-sh overflow-hidden transition-all"
-                    style={{
-                      width: 72,
-                      height: 50,
-                      opacity: isActive ? 1 : 0.6,
-                      outline: isActive
-                        ? "2px solid hsl(var(--primary))"
-                        : "1px solid rgba(255,255,255,0.2)",
-                      outlineOffset: 0,
-                    }}
-                  >
-                    <img
-                      src={slide.src}
-                      alt=""
-                      className="h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* CTA cluster */}
-            <FadeIn delay={550} className="md:text-right w-full md:w-auto">
-              <div className="flex flex-col sm:flex-row gap-3 md:justify-end">
-                <a
-                  href="#quiz"
-                  className="reno-btn-purple reno-cta inline-flex items-center justify-center rounded-sh font-semibold"
-                  style={{ height: 56, padding: "0 28px", fontSize: 16 }}
-                >
-                  Check availability →
-                </a>
-                <a
-                  href="#"
-                  className="liquid-glass inline-flex items-center justify-center rounded-sh font-semibold hover:bg-white/10"
+        {/* Bottom row — carousel (left) + caption (right) */}
+        <div
+          className="flex flex-col md:flex-row md:items-end md:justify-between"
+          style={{ marginTop: "clamp(40px, 7vw, 88px)", gap: 32 }}
+        >
+          {/* Carousel — selecting a thumbnail swaps the background image. */}
+          <div
+            data-hero-anim
+            role="tablist"
+            aria-label="Featured project images"
+            className="flex"
+            style={{ gap: 12 }}
+          >
+            {SLIDES.map((slide, i) => {
+              const isActive = i === active;
+              return (
+                <button
+                  key={slide.src}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-label={`Show project image ${i + 1}`}
+                  onClick={() => handleSelect(i)}
+                  className="overflow-hidden"
                   style={{
-                    height: 56,
-                    padding: "0 28px",
-                    fontSize: 16,
-                    color: "#FFFFFF",
-                    border: "1px solid rgba(255,255,255,0.25)",
+                    width: "var(--hero-thumb)",
+                    height: "var(--hero-thumb)",
+                    borderRadius: 12,
+                    flexShrink: 0,
+                    cursor: "pointer",
+                    opacity: isActive ? 1 : 0.55,
+                    outline: isActive
+                      ? "2px solid #FFFFFF"
+                      : "1px solid rgba(255,255,255,0.25)",
+                    outlineOffset: 0,
+                    transition: "opacity 300ms ease, outline-color 300ms ease",
                   }}
                 >
-                  Download app
-                </a>
-              </div>
-            </FadeIn>
+                  <img
+                    src={slide.src}
+                    alt=""
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                </button>
+              );
+            })}
           </div>
-        </div>
 
-        {/* Scroll indicator */}
-        <a
-          href="#gallery"
-          aria-label="Scroll down"
-          className="absolute z-20 bottom-4 left-1/2 -translate-x-1/2 reno-bounce text-primary hidden md:inline-flex items-center justify-center"
-        >
-          <ChevronDown size={28} />
-        </a>
+          {/* Caption */}
+          <p
+            data-hero-anim
+            className="md:text-right"
+            style={{
+              color: "rgba(255,255,255,0.7)",
+              fontSize: "clamp(15px, 1.3vw, 20px)",
+              fontWeight: 500,
+              lineHeight: 1.4,
+              maxWidth: 520,
+            }}
+          >
+            We manage the designers, contractors, and payments with daily
+            photo updates and a written on-time guarantee.
+          </p>
+        </div>
       </div>
 
       <style>{`
-        .hero-card { --hero-bleed: 16px; }
-        @media (min-width: 768px) { .hero-card { --hero-bleed: 56px; } }
+        #top {
+          --hero-inset: 10px;
+          --hero-pad-bottom: 40px;
+          --hero-thumb: 68px;
+        }
+        @media (min-width: 768px) {
+          #top {
+            --hero-inset: 15px;
+            --hero-pad-bottom: 53px;
+            --hero-thumb: 104px;
+          }
+        }
       `}</style>
     </section>
   );

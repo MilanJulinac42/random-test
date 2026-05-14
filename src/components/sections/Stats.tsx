@@ -1,163 +1,168 @@
-import { useInView } from "@/hooks/useInView";
-import { useCountUp } from "@/hooks/useCountUp";
-import { Reveal } from "@/components/Reveal";
+import { useAnimeCountUp, useAnimeRevealGroup } from "@/lib/anime";
 
-function LeftStat({
-  target,
-  suffix,
-  label,
-  start,
-}: {
-  target: number;
-  suffix: string;
-  label: string;
-  start: boolean;
-}) {
-  const value = useCountUp(target, 1200, start);
-  return (
-    <div className="py-6 md:py-8">
-      <div
-        style={{
-          fontSize: "clamp(72px, 9vw, 112px)",
-          fontWeight: 700,
-          letterSpacing: "-0.04em",
-          lineHeight: 1,
-          color: "#FFFFFF",
-        }}
-      >
-        <span>{value}</span>
-        <span>{suffix}</span>
-      </div>
-      <div
-        className="mt-4"
-        style={{
-          fontSize: 20,
-          color: "rgba(255,255,255,0.7)",
-          letterSpacing: "0.01em",
-        }}
-      >
-        {label}
-      </div>
-    </div>
-  );
-}
-
-function CardStat({ start }: { start: boolean }) {
-  const value = useCountUp(200, 1400, start);
-  return (
-    <div
-      className="relative overflow-hidden w-full"
-      style={{
-        borderRadius: 24,
-        aspectRatio: "4 / 3",
-        background:
-          "linear-gradient(115deg, #000000 0%, #000069 40%, #8138FF 82%, #6D60DD 100%)",
-        boxShadow: "0 30px 80px -30px rgba(0,0,105,0.55)",
-      }}
-    >
-      {/* Soft purple bloom from bottom-left for depth */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(70% 60% at 5% 95%, rgba(129,56,255,0.55) 0%, rgba(129,56,255,0) 65%)",
-          mixBlendMode: "screen",
-        }}
-      />
-
-      <div className="relative z-10 h-full w-full flex flex-col justify-between p-8 md:p-12">
-        <div
-          style={{
-            fontSize: "clamp(80px, 10vw, 140px)",
-            fontWeight: 700,
-            letterSpacing: "-0.04em",
-            lineHeight: 1,
-            color: "#FFFFFF",
-          }}
-        >
-          <span>{value}</span>
-          <span>+</span>
-        </div>
-        <div
-          style={{
-            fontSize: 20,
-            color: "rgba(255,255,255,0.9)",
-            letterSpacing: "0.01em",
-          }}
-        >
-          Projects delivered across the network
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MobileStat({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  return (
-    <div className="flex flex-col items-center">
-      <div
-        style={{
-          fontSize: "clamp(28px, 9vw, 40px)",
-          fontWeight: 700,
-          letterSpacing: "-0.03em",
-          lineHeight: 1,
-          color: "#FFFFFF",
-        }}
-      >
-        <span>{value}</span>
-        <span>{suffix}</span>
-      </div>
-      <div
-        className="mt-2"
-        style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", lineHeight: 1.3 }}
-      >
-        {label}
-      </div>
-    </div>
-  );
-}
-
+/**
+ * Stats — three figures: 120 vetted contractors, 98% on-time delivery,
+ * 200+ projects delivered. Each number counts up when it scrolls into view.
+ */
 export function Stats() {
-  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.3 });
+  const gridRef = useAnimeRevealGroup<HTMLDivElement>(".reno-stat-card", {
+    staggerMs: 110,
+    duration: 700,
+    translateY: 22,
+  });
+
+  const count120 = useAnimeCountUp<HTMLSpanElement>(120, { duration: 1600 });
+  const count98 = useAnimeCountUp<HTMLSpanElement>(98, { duration: 1600 });
+  const count200 = useAnimeCountUp<HTMLSpanElement>(200, { duration: 1900 });
 
   return (
     <section
+      id="stats"
       data-nav-theme="dark"
-      className="relative overflow-hidden px-6 md:px-12 lg:px-16 py-12 md:py-28"
+      className="relative w-full"
       style={{
-        backgroundColor: "#0D0D0D",
-        borderTop: "1px solid #1E1E1E",
-        borderBottom: "1px solid #1E1E1E",
+        background: "#000000",
+        paddingBlock: "clamp(48px, 8vw, 80px)",
+        paddingInline: "clamp(20px, 6vw, 80px)",
       }}
     >
-      <div className="glow-aura-center" aria-hidden style={{ opacity: 0.5 }} />
-      <div ref={ref} className="relative z-10 mx-auto max-w-7xl">
-        <Reveal>
-          <p
-            className="uppercase font-medium mb-8 md:mb-16 text-center md:text-left"
-            style={{ fontSize: 12, letterSpacing: "0.18em", color: "#482FFF", whiteSpace: "nowrap" }}
+      <div ref={gridRef} className="reno-stats-grid">
+        {/* Left column — two stacked cards */}
+        <div className="reno-stats-left">
+          {/* 120 — white card, content top-aligned */}
+          <div
+            className="reno-stat-card"
+            style={{
+              background: "#FFFFFF",
+              borderRadius: 24,
+              padding: "clamp(24px, 3.4vw, 44px)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              gap: 14,
+            }}
           >
-            Trusted by Dubai Homeowners
-          </p>
-        </Reveal>
+            <div className="reno-stat-number" style={{ color: "#0D0D0D" }}>
+              <span ref={count120}>0</span>
+            </div>
+            <div className="reno-stat-label" style={{ color: "#6E6E6E" }}>
+              Vetted contractors
+            </div>
+          </div>
 
-        {/* Mobile: 3 compact stats in a row */}
-        <div className="md:hidden grid grid-cols-3 gap-3 items-start text-center">
-          <MobileStat value={useCountUp(98, 1200, inView)} suffix="%" label="On-time delivery" />
-          <MobileStat value={useCountUp(100, 1300, inView)} suffix="+" label="Vetted contractors" />
-          <MobileStat value={useCountUp(200, 1400, inView)} suffix="+" label="Projects delivered" />
+          {/* 98% — dark card, content bottom-aligned */}
+          <div
+            className="reno-stat-card"
+            style={{
+              background: "#0E0E0E",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: 24,
+              padding: "clamp(24px, 3.4vw, 44px)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              gap: 14,
+            }}
+          >
+            <div className="reno-stat-number" style={{ color: "#FFFFFF" }}>
+              <span ref={count98}>0</span>
+              <span>%</span>
+            </div>
+            <div
+              className="reno-stat-label"
+              style={{ color: "rgba(255,255,255,0.5)" }}
+            >
+              On time delivery
+            </div>
+          </div>
         </div>
 
-        {/* Desktop layout */}
-        <div className="hidden md:grid md:grid-cols-[0.9fr_1.1fr] gap-16 items-center">
-          <div className="flex flex-col divide-y divide-white/10">
-            <LeftStat target={98} suffix="%" label="On-time delivery" start={inView} />
-            <LeftStat target={100} suffix="+" label="Vetted contractors" start={inView} />
+        {/* Right — large gradient card */}
+        <div
+          className="reno-stat-card reno-stat-gradient"
+          style={{
+            borderRadius: 24,
+            padding: "clamp(28px, 4vw, 56px)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            gap: 24,
+            overflow: "hidden",
+            position: "relative",
+          }}
+        >
+          <div
+            className="reno-stat-number reno-stat-number-xl"
+            style={{ color: "#FFFFFF", position: "relative", zIndex: 1 }}
+          >
+            <span ref={count200}>0</span>
+            <span>+</span>
           </div>
-          <CardStat start={inView} />
+          <div
+            className="reno-stat-label reno-stat-label-lg"
+            style={{ color: "rgba(255,255,255,0.85)", position: "relative", zIndex: 1 }}
+          >
+            Projects delivered across the network
+          </div>
         </div>
       </div>
+
+      <style>{`
+        .reno-stats-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 16px;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .reno-stats-left {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .reno-stat-card {
+          min-height: 200px;
+        }
+        .reno-stat-gradient {
+          min-height: 280px;
+          background:
+            radial-gradient(120% 90% at 78% 100%, rgba(110,72,255,0.55) 0%, rgba(110,72,255,0) 58%),
+            linear-gradient(145deg, #050514 0%, #0b0b2c 34%, #2c1fae 78%, #4f37f5 100%);
+        }
+        .reno-stat-number {
+          font-weight: 700;
+          font-size: clamp(54px, 6.6vw, 90px);
+          line-height: 0.96;
+          letter-spacing: -0.04em;
+        }
+        .reno-stat-number-xl {
+          font-size: clamp(76px, 11vw, 150px);
+        }
+        .reno-stat-label {
+          font-weight: 500;
+          font-size: clamp(16px, 1.7vw, 26px);
+          line-height: 1.3;
+        }
+        .reno-stat-label-lg {
+          font-size: clamp(18px, 2vw, 30px);
+        }
+        @media (min-width: 900px) {
+          .reno-stats-grid {
+            grid-template-columns: 0.62fr 0.78fr;
+            gap: 20px;
+          }
+          .reno-stats-left {
+            gap: 20px;
+          }
+          .reno-stat-card {
+            min-height: 238px;
+          }
+          .reno-stat-gradient {
+            min-height: 496px;
+          }
+        }
+      `}</style>
     </section>
   );
 }
