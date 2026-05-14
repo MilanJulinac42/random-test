@@ -258,8 +258,9 @@ export function Hero() {
               maxWidth: 520,
             }}
           >
-            We manage the designers, contractors, and payments with daily
-            photo updates and a written on-time guarantee.
+            We manage the designers, contractors, and payments
+            <br />
+            with daily photo updates and a written on-time guarantee.
           </p>
         </div>
       </div>
@@ -268,15 +269,15 @@ export function Hero() {
         #top {
           --hero-inset: 10px;
           --hero-pad-bottom: 40px;
-          --hero-thumb: 68px;
-          --hero-thumb-h: 84px;
+          --hero-thumb: 72px;
+          --hero-thumb-h: 46px;
         }
         @media (min-width: 768px) {
           #top {
             --hero-inset: 15px;
             --hero-pad-bottom: 53px;
-            --hero-thumb: 104px;
-            --hero-thumb-h: 123px;
+            --hero-thumb: 100px;
+            --hero-thumb-h: 62px;
           }
         }
       `}</style>
