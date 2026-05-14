@@ -255,7 +255,7 @@ export function Hero() {
               fontSize: "clamp(15px, 1.3vw, 20px)",
               fontWeight: 500,
               lineHeight: 1.4,
-              maxWidth: 520,
+              maxWidth: 640,
             }}
           >
             We manage the designers, contractors, and payments
