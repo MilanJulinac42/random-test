@@ -99,7 +99,7 @@ export function Hero() {
           top: "clamp(8px, 1.2vw, 15px)",
           left: "clamp(8px, 1.2vw, 15px)",
           right: "clamp(8px, 1.2vw, 15px)",
-          bottom: "clamp(8px, 1.2vw, 15px)",
+          bottom: "clamp(88px, 9.5vw, 120px)",
           borderRadius: 24,
         }}
       >
@@ -268,14 +268,14 @@ export function Hero() {
       <style>{`
         #top {
           --hero-inset: 10px;
-          --hero-pad-bottom: 40px;
+          --hero-pad-bottom: 24px;
           --hero-thumb: 72px;
           --hero-thumb-h: 46px;
         }
         @media (min-width: 768px) {
           #top {
             --hero-inset: 15px;
-            --hero-pad-bottom: 53px;
+            --hero-pad-bottom: 28px;
             --hero-thumb: 100px;
             --hero-thumb-h: 62px;
           }
