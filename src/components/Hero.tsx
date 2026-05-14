@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { animate } from "animejs";
 import { prefersReducedMotion, RENO_EASE } from "@/lib/anime";
-import hero1 from "@/assets/hero/hero-1.jpg";
-import hero2 from "@/assets/hero/hero-2.jpg";
-import hero3 from "@/assets/hero/hero-3.jpg";
-import hero4 from "@/assets/hero/hero-4.jpeg";
+import hero1 from "@/assets/hero/hero-1.png";
+import hero2 from "@/assets/hero/hero-2.png";
+import hero3 from "@/assets/hero/hero-3.png";
+import hero4 from "@/assets/hero/hero-4.png";
 
 const SLIDES = [
   { src: hero1, alt: "Modern living room with curved sofa and panoramic city view" },
@@ -170,7 +170,7 @@ export function Hero() {
               color: "#FFFFFF",
               fontWeight: 600,
               fontSize: "clamp(40px, 6.5vw, 64px)",
-              lineHeight: 1.06,
+              lineHeight: 1.22,
               letterSpacing: "-0.02em",
             }}
           >
@@ -223,7 +223,7 @@ export function Hero() {
                   className="overflow-hidden"
                   style={{
                     width: "var(--hero-thumb)",
-                    height: "var(--hero-thumb)",
+                    height: "var(--hero-thumb-h)",
                     borderRadius: 12,
                     flexShrink: 0,
                     cursor: "pointer",
@@ -269,12 +269,14 @@ export function Hero() {
           --hero-inset: 10px;
           --hero-pad-bottom: 40px;
           --hero-thumb: 68px;
+          --hero-thumb-h: 84px;
         }
         @media (min-width: 768px) {
           #top {
             --hero-inset: 15px;
             --hero-pad-bottom: 53px;
             --hero-thumb: 104px;
+            --hero-thumb-h: 123px;
           }
         }
       `}</style>
