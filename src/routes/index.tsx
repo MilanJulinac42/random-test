@@ -9,8 +9,6 @@ import { Reviews } from "@/components/sections/Reviews";
 import { RenoStatement } from "@/components/sections/RenoStatement";
 import { InstagramFeed } from "@/components/sections/InstagramFeed";
 import { Footer } from "@/components/sections/Footer";
-import { WhatsAppFAB } from "@/components/WhatsAppFAB";
-
 export const Route = createFileRoute("/")({
   component: Index,
 });
@@ -28,7 +26,6 @@ function Index() {
       <RenoStatement />
       <InstagramFeed />
       <Footer />
-      <WhatsAppFAB />
     </main>
   );
 }

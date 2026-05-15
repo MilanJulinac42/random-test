@@ -1,14 +1,22 @@
+import { useEffect, useState } from "react";
 import { useNavbarTheme } from "@/hooks/useNavbarTheme";
 import logoLight from "@/assets/logo.png";
 import logoDark from "@/assets/logo-dark.png";
 
-/**
- * Minimal navbar — a single centered "reno" logo, nothing else.
- * The dual-logo crossfade keeps the mark legible over both light
- * and dark sections as the user scrolls.
- */
 export function Navbar() {
   const isLight = useNavbarTheme() === "light";
+  const [heroVisible, setHeroVisible] = useState(true);
+
+  useEffect(() => {
+    const hero = document.getElementById("top");
+    if (!hero) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    obs.observe(hero);
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 pt-5 md:pt-7 flex justify-center pointer-events-none">
@@ -16,6 +24,11 @@ export function Navbar() {
         href="#top"
         className="relative flex items-center pointer-events-auto"
         aria-label="Reno home"
+        style={{
+          opacity: heroVisible ? 1 : 0,
+          pointerEvents: heroVisible ? "auto" : "none",
+          transition: "opacity 400ms ease",
+        }}
       >
         <img
           src={logoLight}
