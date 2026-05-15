@@ -1,8 +1,5 @@
-/**
- * "Start your journey with Reno" section.
- * Background city photo goes in src/assets/reno-bg.jpg — drop it in and
- * uncomment the <img> below to enable it.
- */
+import renoBg from "@/assets/reno-bg.png";
+
 export function RenoStatement() {
   return (
     <section
@@ -20,7 +17,7 @@ export function RenoStatement() {
         overflow: "hidden",
       }}
     >
-      {/* Background photo — uncomment once reno-bg.jpg is added to assets
+      {/* Background photo */}
       <img
         src={renoBg}
         alt=""
@@ -34,7 +31,6 @@ export function RenoStatement() {
           objectPosition: "center",
         }}
       />
-      */}
 
       {/* Dark overlay for legibility */}
       <div
