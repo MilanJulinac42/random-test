@@ -33,14 +33,14 @@ export function Navbar() {
         <img
           src={logoLight}
           alt="Reno"
-          className="h-10 md:h-12 w-auto block"
+          className="h-14 md:h-16 w-auto block"
           style={{ opacity: isLight ? 0 : 1, transition: "opacity 300ms ease" }}
         />
         <img
           src={logoDark}
           alt=""
           aria-hidden
-          className="h-10 md:h-12 w-auto absolute inset-0"
+          className="h-14 md:h-16 w-auto absolute inset-0"
           style={{ opacity: isLight ? 1 : 0, transition: "opacity 300ms ease" }}
         />
       </a>

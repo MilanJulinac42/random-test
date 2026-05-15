@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { animate } from "animejs";
 import { prefersReducedMotion, RENO_EASE } from "@/lib/anime";
+import { WordReveal } from "@/components/WordReveal";
 import hero1 from "@/assets/hero/hero-1.png";
 import hero2 from "@/assets/hero/hero-2.png";
 import hero3 from "@/assets/hero/hero-3.png";
@@ -165,7 +166,6 @@ export function Hero() {
           </p>
 
           <h1
-            data-hero-anim
             style={{
               color: "#FFFFFF",
               fontWeight: 600,
@@ -174,8 +174,26 @@ export function Hero() {
               letterSpacing: "-0.02em",
             }}
           >
-            <span className="block">One-stop</span>
-            <span className="block">Renovation Platform</span>
+            <WordReveal
+              as="span"
+              variant="slide-up"
+              trigger="mount"
+              delay={320}
+              staggerMs={80}
+              style={{ display: "block" }}
+            >
+              One-stop
+            </WordReveal>
+            <WordReveal
+              as="span"
+              variant="slide-up"
+              trigger="mount"
+              delay={400}
+              staggerMs={80}
+              style={{ display: "block" }}
+            >
+              Renovation Platform
+            </WordReveal>
           </h1>
 
           <a

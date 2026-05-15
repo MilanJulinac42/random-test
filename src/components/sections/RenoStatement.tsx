@@ -1,4 +1,6 @@
 import renoBg from "@/assets/reno-bg.png";
+import { Footer } from "@/components/sections/Footer";
+import { WordReveal } from "@/components/WordReveal";
 
 export function RenoStatement() {
   return (
@@ -8,12 +10,9 @@ export function RenoStatement() {
       style={{
         position: "relative",
         width: "100%",
-        minHeight: "100vh",
         backgroundColor: "#0D1A1E",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
         overflow: "hidden",
       }}
     >
@@ -38,7 +37,7 @@ export function RenoStatement() {
         style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 100%)",
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 100%)",
           pointerEvents: "none",
         }}
       />
@@ -52,13 +51,16 @@ export function RenoStatement() {
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
-          padding: "clamp(80px,10vw,120px) clamp(24px,6vw,80px) clamp(120px,14vw,160px)",
+          padding: "clamp(80px,10vw,120px) clamp(24px,6vw,80px) clamp(48px,5vw,64px)",
           gap: "clamp(20px,2.4vw,28px)",
           width: "100%",
           maxWidth: 1200,
+          margin: "0 auto",
         }}
       >
-        <h2
+        <WordReveal
+          as="h2"
+          variant="clip"
           style={{
             color: "#FFFFFF",
             fontWeight: 600,
@@ -70,22 +72,7 @@ export function RenoStatement() {
           }}
         >
           Start your journey with Reno
-        </h2>
-
-        <p
-          style={{
-            color: "rgba(255,255,255,0.72)",
-            fontSize: "clamp(15px,1.3vw,18px)",
-            fontWeight: 400,
-            lineHeight: 1.6,
-            maxWidth: 600,
-            margin: 0,
-          }}
-        >
-          Reno Collective is continuously expanding. We welcome designers,
-          contractors, and specialists who combine creative vision with
-          operational discipline.
-        </p>
+        </WordReveal>
 
         <a
           href="#quiz"
@@ -93,19 +80,23 @@ export function RenoStatement() {
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            height: "clamp(52px,5.2vw,60px)",
-            padding: "0 clamp(28px,3.2vw,40px)",
-            borderRadius: 100,
+            height: 56,
+            padding: "0 28px",
+            borderRadius: 12,
             backgroundColor: "#FFFFFF",
             color: "#0D0D0D",
-            fontSize: "clamp(15px,1.2vw,17px)",
+            fontSize: 16,
             fontWeight: 600,
             textDecoration: "none",
-            marginTop: 4,
           }}
         >
-          Start now
+          Check availability
         </a>
+      </div>
+
+      {/* Footer — rendered over the dark image */}
+      <div style={{ position: "relative", zIndex: 1 }}>
+        <Footer />
       </div>
 
     </section>

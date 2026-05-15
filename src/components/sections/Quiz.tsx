@@ -5,6 +5,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { supabase } from "@/integrations/supabase/client";
 import { useAnimeRevealGroup } from "@/lib/anime";
+import { WordReveal } from "@/components/WordReveal";
 import houseMark from "@/assets/quiz-house-mark.png";
 
 const UNITS = ["Villa", "Apartment", "Landscape"] as const;
@@ -146,7 +147,9 @@ export function Quiz() {
               userSelect: "none",
             }}
           />
-          <h2
+          <WordReveal
+            as="h2"
+            variant="scale"
             style={{
               color: "#FFFFFF",
               fontWeight: 600,
@@ -158,7 +161,7 @@ export function Quiz() {
             }}
           >
             Tell us about your project
-          </h2>
+          </WordReveal>
         </div>
 
         <form

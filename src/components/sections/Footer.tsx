@@ -4,7 +4,7 @@ import logo from "@/assets/logo.png";
 
 const navLinkStyle: React.CSSProperties = {
   fontSize: 14,
-  color: "#666",
+  color: "rgba(255,255,255,0.6)",
   textDecoration: "none",
   transition: "color 0.2s",
   display: "block",
@@ -12,7 +12,7 @@ const navLinkStyle: React.CSSProperties = {
 
 const legalLinkStyle: React.CSSProperties = {
   fontSize: 12,
-  color: "#3a3a3a",
+  color: "rgba(255,255,255,0.4)",
   textDecoration: "none",
   transition: "color 0.2s",
 };
@@ -23,7 +23,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
       href={href}
       style={navLinkStyle}
       onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-      onMouseLeave={(e) => (e.currentTarget.style.color = "#666")}
+      onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
     >
       {children}
     </a>
@@ -35,8 +35,8 @@ function LegalLink({ href, children }: { href: string; children: React.ReactNode
     <a
       href={href}
       style={legalLinkStyle}
-      onMouseEnter={(e) => (e.currentTarget.style.color = "#777")}
-      onMouseLeave={(e) => (e.currentTarget.style.color = "#3a3a3a")}
+      onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
+      onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
     >
       {children}
     </a>
@@ -58,9 +58,9 @@ function SocialLink({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      style={{ color: "#555", transition: "color 0.2s", display: "inline-flex" }}
+      style={{ color: "rgba(255,255,255,0.6)", transition: "color 0.2s", display: "inline-flex" }}
       onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-      onMouseLeave={(e) => (e.currentTarget.style.color = "#555")}
+      onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
     >
       {children}
     </a>
@@ -72,8 +72,7 @@ export function Footer() {
     <footer
       className="relative w-full"
       style={{
-        backgroundColor: "#0a0a0a",
-        borderTop: "1px solid #1a1a1a",
+        background: "transparent",
         paddingTop: 48,
         paddingBottom: 32,
       }}
@@ -126,7 +125,7 @@ export function Footer() {
           {/* LEFT */}
           <div className="reno-footer-col-left">
             <img src={logo} alt="Reno" style={{ height: 44, width: "auto" }} />
-            <p style={{ fontSize: 13, color: "#666", fontWeight: 400, marginTop: 12, marginBottom: 0 }}>
+            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", fontWeight: 400, marginTop: 12, marginBottom: 0 }}>
               Dubai's home renovation partner.
             </p>
             <div style={{ display: "flex", gap: 20, marginTop: 18 }}>
@@ -163,13 +162,13 @@ export function Footer() {
             >
               Chat on WhatsApp →
             </a>
-            <p style={{ fontSize: 12, color: "#444", marginTop: 12, marginBottom: 0 }}>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 12, marginBottom: 0 }}>
               101, EIB Building, Dubai Media City
             </p>
-            <p style={{ fontSize: 12, color: "#444", marginTop: 8, marginBottom: 0 }}>
-              <a href="#" style={{ color: "#444", textDecoration: "none" }}>iOS App</a>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 8, marginBottom: 0 }}>
+              <a href="#" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>iOS App</a>
               {"  ·  "}
-              <a href="#" style={{ color: "#444", textDecoration: "none" }}>Android App</a>
+              <a href="#" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Android App</a>
             </p>
           </div>
         </div>
@@ -179,16 +178,15 @@ export function Footer() {
           className="reno-footer-legal"
           style={{
             marginTop: 28,
-            borderTop: "1px solid #161616",
             paddingTop: 20,
           }}
         >
-          <p style={{ fontSize: 12, color: "#3a3a3a", margin: 0 }}>
+          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", margin: 0 }}>
             © 2026 Reno Home Technologies LLC. All rights reserved.
           </p>
           <div style={{ display: "flex", gap: 12 }}>
             <LegalLink href="#">Privacy Policy</LegalLink>
-            <span style={{ color: "#3a3a3a", fontSize: 12 }}>·</span>
+            <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 12 }}>·</span>
             <LegalLink href="#">Terms of Service</LegalLink>
           </div>
         </div>

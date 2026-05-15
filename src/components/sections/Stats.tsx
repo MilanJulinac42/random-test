@@ -1,4 +1,5 @@
 import { useAnimeCountUp, useAnimeRevealGroup } from "@/lib/anime";
+import { WordReveal } from "@/components/WordReveal";
 
 /**
  * Stats — three figures: 120 vetted contractors, 98% on-time delivery,
@@ -45,9 +46,9 @@ export function Stats() {
             <div className="reno-stat-number" style={{ color: "#0D0D0D" }}>
               <span ref={count120}>0</span>
             </div>
-            <div className="reno-stat-label" style={{ color: "#6E6E6E" }}>
+            <WordReveal as="div" variant="blur-in" delay={600} className="reno-stat-label" style={{ color: "#6E6E6E" }}>
               Vetted contractors
-            </div>
+            </WordReveal>
           </div>
 
           {/* 98% — dark card, content bottom-aligned */}
@@ -68,12 +69,9 @@ export function Stats() {
               <span ref={count98}>0</span>
               <span>%</span>
             </div>
-            <div
-              className="reno-stat-label"
-              style={{ color: "rgba(255,255,255,0.5)" }}
-            >
+            <WordReveal as="div" variant="blur-in" delay={600} className="reno-stat-label" style={{ color: "rgba(255,255,255,0.5)" }}>
               On time delivery
-            </div>
+            </WordReveal>
           </div>
         </div>
 
@@ -98,12 +96,9 @@ export function Stats() {
             <span ref={count200}>0</span>
             <span>+</span>
           </div>
-          <div
-            className="reno-stat-label reno-stat-label-lg"
-            style={{ color: "rgba(255,255,255,0.85)", position: "relative", zIndex: 1 }}
-          >
+          <WordReveal as="div" variant="blur-in" delay={600} className="reno-stat-label reno-stat-label-lg" style={{ color: "rgba(255,255,255,0.85)", position: "relative", zIndex: 1 }}>
             Projects delivered across the network
-          </div>
+          </WordReveal>
         </div>
       </div>
 

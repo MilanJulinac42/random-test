@@ -1,4 +1,5 @@
 import { useAnimeReveal } from "@/lib/anime";
+import { WordReveal } from "@/components/WordReveal";
 
 const TILE_BGS = ["#E8E0D5", "#D5E0DC", "#D5D8E8", "#E8DDD5", "#D5E8E0", "#E8E5D5"];
 const IG_URL = "https://instagram.com/reno_app";
@@ -32,7 +33,7 @@ export function InstagramFeed() {
       id="social"
       className="relative overflow-hidden w-full px-6 md:px-12 lg:px-16"
       style={{
-        backgroundColor: "#0D0D0D",
+        backgroundColor: "#000000",
         paddingTop: "clamp(60px, 7vw, 100px)",
         paddingBottom: "clamp(80px, 8vw, 120px)",
       }}
@@ -46,7 +47,9 @@ export function InstagramFeed() {
             style={{ marginBottom: 40, gap: 20 }}
           >
             <div>
-              <h2
+              <WordReveal
+                as="h2"
+                variant="pop"
                 style={{
                   fontSize: "clamp(40px, 5vw, 64px)",
                   fontWeight: 700,
@@ -56,7 +59,7 @@ export function InstagramFeed() {
                 }}
               >
                 Follow the build.
-              </h2>
+              </WordReveal>
               <p style={{ fontSize: 15, color: "#999", marginTop: 6 }}>
                 Real progress from real projects — updated regularly.
               </p>

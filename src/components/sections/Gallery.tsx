@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { animate } from "animejs";
 import { prefersReducedMotion, RENO_EASE, useScrollProgress } from "@/lib/anime";
+import { WordReveal } from "@/components/WordReveal";
 import livingBefore from "@/assets/gallery/living-before.png";
 import livingAfter from "@/assets/gallery/living-after.png";
 import kitchenBefore from "@/assets/gallery/kitchen-before.png";
@@ -97,7 +98,7 @@ export function Gallery() {
   return (
     <section
       id="gallery"
-      data-nav-theme="light"
+      data-nav-theme="dark"
       ref={wrapperRef}
       className="relative w-full"
       style={{ backgroundColor: "#FFFFFF", height: "300vh" }}
@@ -113,35 +114,16 @@ export function Gallery() {
           overflow: "hidden",
         }}
       >
-        {/* Heading — white background, top-left, clear of image card */}
-        <h2
-          style={{
-            position: "absolute",
-            top: "clamp(20px,2.2vw,28px)",
-            left: "clamp(16px,1.6vw,24px)",
-            right: "clamp(16px,1.6vw,24px)",
-            zIndex: 1,
-            color: "#0D0D0D",
-            fontWeight: 600,
-            fontSize: "clamp(32px,5vw,68px)",
-            lineHeight: 1.1,
-            letterSpacing: "-0.02em",
-            margin: 0,
-          }}
-        >
-          Delivered projects, not renders
-        </h2>
-
-        {/* Image card — starts below heading, ends above button strip */}
+        {/* Image card — full viewport like the hero */}
         <div
           className="reno-gallery-stage"
           style={{
             position: "absolute",
-            top: "clamp(100px,10vw,140px)",
-            bottom: "clamp(80px,8.5vw,96px)",
-            left: "clamp(16px,1.6vw,24px)",
-            right: "clamp(16px,1.6vw,24px)",
-            borderRadius: "clamp(16px,2vw,28px)",
+            top: "clamp(8px,1.2vw,15px)",
+            bottom: "clamp(8px,1.2vw,15px)",
+            left: "clamp(8px,1.2vw,15px)",
+            right: "clamp(8px,1.2vw,15px)",
+            borderRadius: 24,
             overflow: "hidden",
             backgroundColor: "#E8E3DB",
           }}
@@ -169,17 +151,27 @@ export function Gallery() {
             ))
           )}
 
-          {/* Bottom-left legibility scrim */}
-          <div
-            aria-hidden
+
+          {/* Heading — top-left inside the image */}
+          <WordReveal
+            as="h2"
+            variant="slide-right"
             style={{
               position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-              background:
-                "linear-gradient(to top right, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0) 65%)",
+              top: "clamp(12px,1.4vw,20px)",
+              left: "clamp(20px,2.2vw,28px)",
+              right: "clamp(20px,2.2vw,28px)",
+              zIndex: 2,
+              color: "#FFFFFF",
+              fontWeight: 600,
+              fontSize: "clamp(32px,5vw,68px)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              margin: 0,
             }}
-          />
+          >
+            Delivered projects, not renders
+          </WordReveal>
 
           {/* Info blocks — one per project, crossfaded */}
           {projects.map((p, i) => (
@@ -199,32 +191,32 @@ export function Gallery() {
               </div>
             </div>
           ))}
-        </div>
 
-        {/* Before / After toggle — below image card on white background, right-aligned */}
-        <div
-          className="reno-gallery-toggle"
-          role="group"
-          aria-label="Before or after view"
-        >
-          {(["before", "after"] as Mode[]).map((m) => {
-            const isActive = mode === m;
-            return (
-              <button
-                key={m}
-                type="button"
-                onClick={() => setMode(m)}
-                aria-pressed={isActive}
-                className="reno-gallery-toggle-btn"
-                style={{
-                  backgroundColor: isActive ? "#0D0D0D" : "rgba(0,0,0,0.08)",
-                  color: isActive ? "#FFFFFF" : "rgba(0,0,0,0.55)",
-                }}
-              >
-                {m === "before" ? "Before" : "After"}
-              </button>
-            );
-          })}
+          {/* Before / After toggle — inside image, bottom-right */}
+          <div
+            className="reno-gallery-toggle"
+            role="group"
+            aria-label="Before or after view"
+          >
+            {(["before", "after"] as Mode[]).map((m) => {
+              const isActive = mode === m;
+              return (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setMode(m)}
+                  aria-pressed={isActive}
+                  className="reno-gallery-toggle-btn"
+                  style={{
+                    backgroundColor: isActive ? "#FFFFFF" : "rgba(255,255,255,0.18)",
+                    color: isActive ? "#0D0D0D" : "rgba(255,255,255,0.8)",
+                  }}
+                >
+                  {m === "before" ? "Before" : "After"}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -269,10 +261,10 @@ export function Gallery() {
           background-color: #FFFFFF;
         }
 
-        /* Toggle — sits below the image card on the white background strip */
+        /* Toggle — inside image card, bottom-right */
         .reno-gallery-toggle {
           position: absolute;
-          bottom: clamp(16px,1.8vw,22px);
+          bottom: clamp(16px,1.6vw,24px);
           right: clamp(20px,2vw,28px);
           display: flex;
           gap: 8px;
@@ -296,9 +288,6 @@ export function Gallery() {
             position: relative !important;
             height: auto !important;
             padding: 24px 16px 80px;
-          }
-          .reno-gallery-toggle {
-            right: 16px !important;
           }
         }
       `}</style>

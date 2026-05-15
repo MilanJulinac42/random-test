@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { animate } from "animejs";
 import { prefersReducedMotion, RENO_EASE, useScrollProgress } from "@/lib/anime";
+import { WordReveal } from "@/components/WordReveal";
 import process01 from "@/assets/process-01.jpg";
 import process02 from "@/assets/process-02.jpg";
 import process03 from "@/assets/process-03.jpg";
@@ -144,7 +145,9 @@ export function Process() {
           className="reno-process-inner"
           style={{ width: "100%", maxWidth: 1280, margin: "0 auto" }}
         >
-          <h2
+          <WordReveal
+            as="h2"
+            variant="drop"
             style={{
               color: "#000000",
               fontWeight: 600,
@@ -155,7 +158,7 @@ export function Process() {
             }}
           >
             From first call to keys in hand.
-          </h2>
+          </WordReveal>
 
           <div className="reno-process-row">
             {/* Steps */}

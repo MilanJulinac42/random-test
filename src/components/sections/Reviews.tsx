@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { useAnimeReveal, useAnimeRevealGroup } from "@/lib/anime";
+import { WordReveal } from "@/components/WordReveal";
 
 type Testimonial = {
   name: string;
@@ -65,7 +66,9 @@ export function Reviews() {
           textAlign: "center",
         }}
       >
-        <h2
+        <WordReveal
+          as="h2"
+          variant="slide-up"
           style={{
             color: "#FFFFFF",
             fontWeight: 600,
@@ -75,7 +78,7 @@ export function Reviews() {
           }}
         >
           Hear it from our clients
-        </h2>
+        </WordReveal>
         <p
           style={{
             color: "rgba(255,255,255,0.7)",
@@ -159,15 +162,17 @@ export function Reviews() {
         }
         .reno-review-name {
           color: rgba(255,255,255,0.72);
+          font-family: 'ZT Talk', sans-serif;
           font-weight: 500;
-          font-size: clamp(20px, 2vw, 26px);
+          font-size: clamp(13px, 1.1vw, 15px);
           line-height: 1.2;
         }
         .reno-review-quote {
           color: #FFFFFF;
+          font-family: 'ZT Talk', sans-serif;
           font-weight: 500;
-          font-size: clamp(16px, 1.6vw, 21px);
-          line-height: 1.45;
+          font-size: clamp(13px, 1.2vw, 16px);
+          line-height: 1.5;
           margin: 0;
         }
         .reno-review-stars {
