@@ -112,62 +112,6 @@ export function RenoStatement() {
         </a>
       </div>
 
-      {/* Bottom cards row */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "clamp(24px,3vw,40px)",
-          left: "clamp(16px,2.4vw,32px)",
-          right: "clamp(16px,2.4vw,32px)",
-          display: "flex",
-          gap: "clamp(8px,1vw,12px)",
-          zIndex: 1,
-        }}
-      >
-        {[
-          { label: "Find out about Reno Design", href: "#" },
-          { label: "Find out about RNPL", href: "#" },
-        ].map(({ label, href }) => (
-          <a
-            key={label}
-            href={href}
-            style={{
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "clamp(16px,1.8vw,22px) clamp(20px,2.2vw,28px)",
-              borderRadius: "clamp(14px,1.4vw,18px)",
-              backgroundColor: "rgba(255,255,255,0.10)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              border: "1px solid rgba(255,255,255,0.10)",
-              color: "#FFFFFF",
-              fontSize: "clamp(14px,1.2vw,16px)",
-              fontWeight: 500,
-              textDecoration: "none",
-              gap: 16,
-            }}
-          >
-            <span>{label}</span>
-            <span
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "clamp(34px,3vw,40px)",
-                height: "clamp(34px,3vw,40px)",
-                borderRadius: 10,
-                backgroundColor: "rgba(255,255,255,0.14)",
-                fontSize: 16,
-                flexShrink: 0,
-              }}
-            >
-              →
-            </span>
-          </a>
-        ))}
-      </div>
     </section>
   );
 }
