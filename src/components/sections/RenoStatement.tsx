@@ -1,159 +1,173 @@
-import { useAnimeReveal, useScrollProgress } from "@/lib/anime";
-import renoMark from "@/assets/reno-mark.png";
-
-const LINE_ONE = "Whole journey, beautifully handled.";
-const LINE_TWO =
-  "Reno unifies design, financing and execution into one effortless experience.";
-
-const WORDS = LINE_TWO.split(" ");
-const DIM = 0.3;
-
-function clamp(v: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, v));
-}
-
 /**
- * Reno brand statement — a pinned section where the dim second line
- * fills to full opacity, word by word, as the user scrolls through.
+ * "Start your journey with Reno" section.
+ * Background city photo goes in src/assets/reno-bg.jpg — drop it in and
+ * uncomment the <img> below to enable it.
  */
 export function RenoStatement() {
-  const { ref: wrapperRef, progress } = useScrollProgress<HTMLDivElement>();
-  const lineOneRef = useAnimeReveal<HTMLHeadingElement>({ translateY: 24 });
-  const markRef = useAnimeReveal<HTMLImageElement>({
-    translateY: 0,
-    fadeOnly: true,
-    duration: 1100,
-  });
-
   return (
     <section
+      id="reno-statement"
       data-nav-theme="dark"
-      ref={wrapperRef}
-      className="relative w-full"
-      style={{ backgroundColor: "#000000", height: "200vh" }}
+      style={{
+        position: "relative",
+        width: "100%",
+        minHeight: "100vh",
+        backgroundColor: "#0D1A1E",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+      }}
     >
-      <div
-        className="reno-statement-sticky"
+      {/* Background photo — uncomment once reno-bg.jpg is added to assets
+      <img
+        src={renoBg}
+        alt=""
+        aria-hidden
         style={{
-          position: "sticky",
-          top: 0,
-          minHeight: "100vh",
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "center",
+        }}
+      />
+      */}
+
+      {/* Dark overlay for legibility */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 100%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Center content */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
-          backgroundColor: "#000000",
-          padding: "clamp(56px, 8vw, 80px)",
-          overflow: "hidden",
+          textAlign: "center",
+          padding: "clamp(80px,10vw,120px) clamp(24px,6vw,80px) clamp(120px,14vw,160px)",
+          gap: "clamp(20px,2.4vw,28px)",
+          width: "100%",
+          maxWidth: 1200,
         }}
       >
-        {/* Decorative background glows */}
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{ overflow: "hidden" }}
+        <h2
+          style={{
+            color: "#FFFFFF",
+            fontWeight: 600,
+            fontSize: "clamp(44px,7.2vw,96px)",
+            lineHeight: 1.08,
+            letterSpacing: "-0.02em",
+            margin: 0,
+            maxWidth: 860,
+          }}
         >
-          <div
-            style={{
-              position: "absolute",
-              left: "-16%",
-              top: "0%",
-              width: 720,
-              height: 900,
-              background:
-                "radial-gradient(circle, rgba(70,52,220,0.32) 0%, rgba(70,52,220,0) 68%)",
-              filter: "blur(36px)",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              right: "-18%",
-              bottom: "-20%",
-              width: 900,
-              height: 900,
-              background:
-                "radial-gradient(circle, rgba(40,30,160,0.42) 0%, rgba(40,30,160,0) 70%)",
-              filter: "blur(36px)",
-            }}
-          />
-        </div>
+          Start your journey with Reno
+        </h2>
 
-        <div className="reno-statement-row">
-          {/* Text */}
-          <div className="reno-statement-text">
-            <h2 ref={lineOneRef} className="reno-statement-line reno-statement-line-1">
-              {LINE_ONE}
-            </h2>
-            <p
-              className="reno-statement-line reno-statement-line-2"
-              aria-label={LINE_TWO}
-            >
-              {WORDS.map((word, i) => {
-                const lit = progress * 1.15 * WORDS.length - i;
-                const opacity = DIM + (1 - DIM) * clamp(lit, 0, 1);
-                return (
-                  <span key={`${word}-${i}`} aria-hidden style={{ opacity }}>
-                    {word}
-                    {i < WORDS.length - 1 ? " " : ""}
-                  </span>
-                );
-              })}
-            </p>
-          </div>
+        <p
+          style={{
+            color: "rgba(255,255,255,0.72)",
+            fontSize: "clamp(15px,1.3vw,18px)",
+            fontWeight: 400,
+            lineHeight: 1.6,
+            maxWidth: 600,
+            margin: 0,
+          }}
+        >
+          Reno Collective is continuously expanding. We welcome designers,
+          contractors, and specialists who combine creative vision with
+          operational discipline.
+        </p>
 
-          {/* Reno mark */}
-          <img
-            ref={markRef}
-            src={renoMark}
-            alt=""
-            aria-hidden
-            className="reno-statement-mark"
-          />
-        </div>
+        <a
+          href="#quiz"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "clamp(52px,5.2vw,60px)",
+            padding: "0 clamp(28px,3.2vw,40px)",
+            borderRadius: 100,
+            backgroundColor: "#FFFFFF",
+            color: "#0D0D0D",
+            fontSize: "clamp(15px,1.2vw,17px)",
+            fontWeight: 600,
+            textDecoration: "none",
+            marginTop: 4,
+          }}
+        >
+          Start now
+        </a>
       </div>
 
-      <style>{`
-        .reno-statement-row {
-          position: relative;
-          width: 100%;
-          max-width: 1280px;
-          margin: 0 auto;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: clamp(24px, 4vw, 48px);
-        }
-        .reno-statement-text {
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-        }
-        .reno-statement-line {
-          color: #FFFFFF;
-          font-weight: 600;
-          font-size: clamp(28px, 4.6vw, 64px);
-          line-height: 1.22;
-          letter-spacing: -0.02em;
-          margin: 0;
-          max-width: 746px;
-        }
-        .reno-statement-line-2 {
-          color: transparent;
-        }
-        .reno-statement-mark {
-          width: clamp(220px, 42vw, 640px);
-          height: auto;
-          object-fit: contain;
-          user-select: none;
-        }
-        @media (min-width: 900px) {
-          .reno-statement-row {
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-          }
-          .reno-statement-text { flex: 1; }
-        }
-      `}</style>
+      {/* Bottom cards row */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "clamp(24px,3vw,40px)",
+          left: "clamp(16px,2.4vw,32px)",
+          right: "clamp(16px,2.4vw,32px)",
+          display: "flex",
+          gap: "clamp(8px,1vw,12px)",
+          zIndex: 1,
+        }}
+      >
+        {[
+          { label: "Find out about Reno Design", href: "#" },
+          { label: "Find out about RNPL", href: "#" },
+        ].map(({ label, href }) => (
+          <a
+            key={label}
+            href={href}
+            style={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "clamp(16px,1.8vw,22px) clamp(20px,2.2vw,28px)",
+              borderRadius: "clamp(14px,1.4vw,18px)",
+              backgroundColor: "rgba(255,255,255,0.10)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              border: "1px solid rgba(255,255,255,0.10)",
+              color: "#FFFFFF",
+              fontSize: "clamp(14px,1.2vw,16px)",
+              fontWeight: 500,
+              textDecoration: "none",
+              gap: 16,
+            }}
+          >
+            <span>{label}</span>
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "clamp(34px,3vw,40px)",
+                height: "clamp(34px,3vw,40px)",
+                borderRadius: 10,
+                backgroundColor: "rgba(255,255,255,0.14)",
+                fontSize: 16,
+                flexShrink: 0,
+              }}
+            >
+              →
+            </span>
+          </a>
+        ))}
+      </div>
     </section>
   );
 }
