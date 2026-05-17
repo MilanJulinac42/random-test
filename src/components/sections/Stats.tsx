@@ -22,7 +22,7 @@ export function Stats() {
       data-nav-theme="dark"
       className="relative w-full"
       style={{
-        background: "#000000",
+        background: "#0A0A0A",
         paddingBlock: "clamp(48px, 8vw, 80px)",
         paddingInline: "clamp(20px, 6vw, 80px)",
       }}

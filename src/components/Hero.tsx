@@ -92,7 +92,7 @@ export function Hero() {
       id="top"
       data-nav-theme="dark"
       className="relative w-full overflow-hidden"
-      style={{ background: "#000000", minHeight: "100vh" }}
+      style={{ background: "#0A0A0A", minHeight: "100vh" }}
     >
       {/* Background image card — inset from the black artboard edge, rounded. */}
       <div

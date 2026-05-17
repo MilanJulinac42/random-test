@@ -81,7 +81,7 @@ export function Quiz() {
       data-nav-theme="dark"
       className="relative w-full overflow-hidden"
       style={{
-        backgroundColor: "#000000",
+        backgroundColor: "#0A0A0A",
         paddingBlock: "clamp(56px, 9vw, 80px)",
         paddingInline: "clamp(20px, 6vw, 80px)",
       }}
