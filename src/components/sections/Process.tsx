@@ -185,20 +185,22 @@ export function Process() {
             </div>
 
             {/* Media */}
-            <div className="reno-process-media">
-              {steps.map((step, i) => (
-                <img
-                  key={step.image}
-                  ref={(el) => {
-                    imgRefs.current[i] = el;
-                  }}
-                  src={step.image}
-                  alt={`${step.title} — Reno app`}
-                  loading="lazy"
-                  className="reno-process-media-img"
-                  style={{ opacity: i === 0 ? 1 : 0 }}
-                />
-              ))}
+            <div className="reno-process-media-shell">
+              <div className="reno-process-media">
+                {steps.map((step, i) => (
+                  <img
+                    key={step.image}
+                    ref={(el) => {
+                      imgRefs.current[i] = el;
+                    }}
+                    src={step.image}
+                    alt={`${step.title} — Reno app`}
+                    loading="lazy"
+                    className="reno-process-media-img"
+                    style={{ opacity: i === 0 ? 1 : 0 }}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -239,13 +241,24 @@ export function Process() {
           padding-top: 10px;
           margin: 0;
         }
+        .reno-process-media-shell {
+          position: relative;
+          width: 100%;
+          max-width: 433px;
+          align-self: center;
+          flex-shrink: 0;
+          background: rgba(0,0,0,0.04);
+          padding: 8px;
+          border-radius: 32px;
+          box-shadow:
+            0 0 0 1px rgba(0,0,0,0.04),
+            0 1px 0 rgba(255,255,255,0.6) inset,
+            0 16px 40px rgba(0,0,0,0.05);
+        }
         .reno-process-media {
           position: relative;
           width: 100%;
-          max-width: 417px;
           aspect-ratio: 417 / 505;
-          align-self: center;
-          flex-shrink: 0;
           border-radius: 24px;
           overflow: hidden;
         }
@@ -265,8 +278,11 @@ export function Process() {
           .reno-process-steps {
             gap: 24px;
           }
-          .reno-process-media {
+          .reno-process-media-shell {
             align-self: stretch;
+            max-height: 521px;
+          }
+          .reno-process-media {
             max-height: 505px;
           }
         }

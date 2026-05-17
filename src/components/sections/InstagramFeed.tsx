@@ -129,13 +129,24 @@ export function InstagramFeed() {
         {/* LinkedIn card */}
         <div ref={cardRef}>
           <div
+            className="reno-li-shell"
+            style={{
+              marginTop: 20,
+              background: "rgba(255,255,255,0.04)",
+              borderRadius: 22,
+              padding: 6,
+              boxShadow:
+                "0 0 0 1px rgba(255,255,255,0.06), 0 1px 0 rgba(255,255,255,0.06) inset",
+            }}
+          >
+          <div
             className="reno-li-card flex flex-col md:flex-row md:items-center md:justify-between"
             style={{
               background: "#1A1A1A",
               borderRadius: 16,
               padding: "28px 32px",
-              marginTop: 20,
               gap: 20,
+              boxShadow: "0 1px 0 rgba(255,255,255,0.05) inset",
             }}
           >
             <div>
@@ -170,6 +181,7 @@ export function InstagramFeed() {
               Follow us ↗
             </a>
           </div>
+          </div>
         </div>
       </div>
 
@@ -189,8 +201,14 @@ export function InstagramFeed() {
           overflow: hidden;
           aspect-ratio: 1 / 1;
           display: block;
-          border-radius: 12px;
+          border-radius: 14px;
+          box-shadow:
+            0 0 0 1px rgba(255,255,255,0.06) inset,
+            0 1px 0 rgba(255,255,255,0.05) inset;
+          transition: transform 480ms cubic-bezier(0.32, 0.72, 0, 1);
+          will-change: transform;
         }
+        .reno-ig-cell:hover { transform: translateY(-2px); }
         .reno-ig-overlay {
           position: absolute;
           inset: 0;

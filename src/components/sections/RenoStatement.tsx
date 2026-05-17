@@ -1,6 +1,7 @@
 import renoBg from "@/assets/reno-bg.png";
 import { Footer } from "@/components/sections/Footer";
 import { WordReveal } from "@/components/WordReveal";
+import { ArrowButton } from "@/components/ArrowButton";
 
 export function RenoStatement() {
   return (
@@ -74,24 +75,9 @@ export function RenoStatement() {
           Start your journey with Reno
         </WordReveal>
 
-        <a
-          href="#quiz"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: 56,
-            padding: "0 28px",
-            borderRadius: 12,
-            backgroundColor: "#FFFFFF",
-            color: "#0D0D0D",
-            fontSize: 16,
-            fontWeight: 600,
-            textDecoration: "none",
-          }}
-        >
+        <ArrowButton as="a" href="#quiz" variant="light-on-dark">
           Check availability
-        </a>
+        </ArrowButton>
       </div>
 
       {/* Footer — rendered over the dark image */}

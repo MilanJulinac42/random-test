@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { animate } from "animejs";
 import { prefersReducedMotion, RENO_EASE } from "@/lib/anime";
 import { WordReveal } from "@/components/WordReveal";
+import { ArrowButton } from "@/components/ArrowButton";
 import hero1 from "@/assets/hero/hero-1.png";
 import hero2 from "@/assets/hero/hero-2.png";
 import hero3 from "@/assets/hero/hero-3.png";
@@ -196,23 +197,11 @@ export function Hero() {
             </WordReveal>
           </h1>
 
-          <a
-            data-hero-anim
-            href="#quiz"
-            className="inline-flex items-center justify-center self-start"
-            style={{
-              height: 56,
-              padding: "0 28px",
-              borderRadius: 12,
-              background: "#FFFFFF",
-              color: "#0D0D0D",
-              fontSize: 16,
-              fontWeight: 600,
-              gap: 10,
-            }}
-          >
-            Check availability <span aria-hidden>→</span>
-          </a>
+          <div data-hero-anim className="self-start">
+            <ArrowButton as="a" href="#quiz" variant="light-on-dark">
+              Check availability
+            </ArrowButton>
+          </div>
         </div>
 
         {/* Bottom row — carousel (left) + caption (right) */}

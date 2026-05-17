@@ -6,6 +6,7 @@ import "react-phone-input-2/lib/style.css";
 import { supabase } from "@/integrations/supabase/client";
 import { useAnimeRevealGroup } from "@/lib/anime";
 import { WordReveal } from "@/components/WordReveal";
+import { ArrowButton } from "@/components/ArrowButton";
 import houseMark from "@/assets/quiz-house-mark.png";
 
 const UNITS = ["Villa", "Apartment", "Landscape"] as const;
@@ -292,14 +293,17 @@ export function Quiz() {
           </div>
 
           {/* Submit */}
-          <button
-            data-quiz-anim
-            type="submit"
-            disabled={submitting}
-            className="reno-quiz-submit"
-          >
-            {submitting ? "Sending…" : "Submit"}
-          </button>
+          <div data-quiz-anim style={{ width: "min(400px, 100%)" }}>
+            <ArrowButton
+              as="button"
+              type="submit"
+              disabled={submitting}
+              variant="light-on-dark"
+              style={{ width: "100%" }}
+            >
+              {submitting ? "Sending…" : "Submit"}
+            </ArrowButton>
+          </div>
         </form>
       </div>
 
@@ -317,7 +321,10 @@ export function Quiz() {
           gap: 4px;
           padding: 8px;
           border-radius: 100px;
-          background-color: rgba(62,62,62,0.3);
+          background-color: rgba(255,255,255,0.04);
+          box-shadow:
+            0 0 0 1px rgba(255,255,255,0.07),
+            0 1px 0 rgba(255,255,255,0.06) inset;
         }
         .reno-quiz-pill {
           width: clamp(96px, 13vw, 144px);
@@ -381,20 +388,6 @@ export function Quiz() {
           line-height: 1.2;
           transition: background-color 240ms ease, color 240ms ease;
         }
-        .reno-quiz-submit {
-          width: min(400px, 100%);
-          height: 56px;
-          border: none;
-          border-radius: 14px;
-          background: #FFFFFF;
-          color: #0D0D0D;
-          font-family: inherit;
-          font-weight: 600;
-          font-size: 16px;
-          cursor: pointer;
-          transition: opacity 200ms ease;
-        }
-        .reno-quiz-submit:disabled { opacity: 0.55; cursor: wait; }
         .reno-quiz-error {
           color: #ff6b6b;
           font-size: 12px;

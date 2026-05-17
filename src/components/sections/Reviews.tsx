@@ -34,7 +34,7 @@ const testimonials: Testimonial[] = [
 
 export function Reviews() {
   const headerRef = useAnimeReveal<HTMLDivElement>({ translateY: 22 });
-  const cardsRef = useAnimeRevealGroup<HTMLDivElement>(".reno-review-card", {
+  const cardsRef = useAnimeRevealGroup<HTMLDivElement>(".reno-review-shell", {
     staggerMs: 140,
     duration: 760,
     translateY: 32,
@@ -62,10 +62,11 @@ export function Reviews() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 10,
+          gap: 14,
           textAlign: "center",
         }}
       >
+        <div className="reno-eyebrow reno-eyebrow--dark">Testimonials</div>
         <WordReveal
           as="h2"
           variant="slide-up"
@@ -94,27 +95,44 @@ export function Reviews() {
       {/* Cards */}
       <div ref={cardsRef} className="reno-reviews-grid">
         {testimonials.map((t) => (
-          <article key={t.name} className="reno-review-card">
-            <div
-              aria-hidden
-              className="reno-review-card-bg"
-              style={{ backgroundImage: `url(${t.image})` }}
-            />
-            <div aria-hidden className="reno-review-card-scrim" />
-            <div className="reno-review-card-content">
-              <div className="reno-review-name">{t.name}</div>
-              <p className="reno-review-quote">{t.quote}</p>
-              <div className="reno-review-stars" aria-label="5 out of 5 stars">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} size={18} fill="currentColor" strokeWidth={0} />
-                ))}
+          <div key={t.name} className="reno-review-shell">
+            <article className="reno-review-card">
+              <div
+                aria-hidden
+                className="reno-review-card-bg"
+                style={{ backgroundImage: `url(${t.image})` }}
+              />
+              <div aria-hidden className="reno-review-card-scrim" />
+              <div className="reno-review-card-content">
+                <div className="reno-review-name">{t.name}</div>
+                <p className="reno-review-quote">{t.quote}</p>
+                <div className="reno-review-stars" aria-label="5 out of 5 stars">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} size={18} fill="currentColor" strokeWidth={0} />
+                  ))}
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
         ))}
       </div>
 
       <style>{`
+        .reno-eyebrow {
+          display: inline-block;
+          text-transform: uppercase;
+          letter-spacing: 0.22em;
+          font-size: 11px;
+          font-weight: 500;
+          font-family: 'ZT Talk', system-ui, sans-serif;
+          padding: 6px 12px;
+          border-radius: 999px;
+        }
+        .reno-eyebrow--dark {
+          background: rgba(255,255,255,0.06);
+          color: rgba(255,255,255,0.7);
+          box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 1px 0 rgba(255,255,255,0.06) inset;
+        }
         .reno-reviews-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -122,11 +140,20 @@ export function Reviews() {
           width: 100%;
           max-width: 1280px;
         }
+        .reno-review-shell {
+          background: rgba(255,255,255,0.04);
+          border-radius: 28px;
+          padding: 6px;
+          box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 0 rgba(255,255,255,0.05) inset;
+          transition: transform 480ms cubic-bezier(0.32, 0.72, 0, 1);
+          will-change: transform;
+        }
+        .reno-review-shell:hover { transform: translateY(-3px); }
         .reno-review-card {
           position: relative;
           overflow: hidden;
-          border-radius: 24px;
-          min-height: 287px;
+          border-radius: 22px;
+          min-height: 275px;
           background-color: #141414;
         }
         .reno-review-card-bg {
