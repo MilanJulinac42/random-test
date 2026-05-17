@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
+import { FloatingCTA } from "@/components/FloatingCTA";
 import { Hero } from "@/components/Hero";
 import { Stats } from "@/components/sections/Stats";
 import { WhyUs } from "@/components/sections/WhyUs";
@@ -18,14 +19,15 @@ function Index() {
   return (
     <main>
       <Navbar />
+      <FloatingCTA />
       <Hero />
       <Stats />
       <WhyUs />
-      <Process />
       <Gallery />
       <Guarantee />
       <Quiz />
       <Reviews />
+      <Process />
       <InstagramFeed />
       <RenoStatement />
     </main>

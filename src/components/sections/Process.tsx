@@ -50,6 +50,9 @@ export function Process() {
     const reduced = prefersReducedMotion();
     const first = firstRunRef.current;
 
+    const ACTIVE_BG = "rgba(255,255,255,0.06)";
+    const INACTIVE_BG = "rgba(255,255,255,0)";
+
     bodyWrapRefs.current.forEach((wrap, i) => {
       if (!wrap) return;
       const isActive = i === active;
@@ -86,14 +89,10 @@ export function Process() {
       if (!step) return;
       const isActive = i === active;
       if (reduced || first) {
-        step.style.backgroundColor = isActive
-          ? "rgba(239,239,239,1)"
-          : "rgba(239,239,239,0)";
+        step.style.backgroundColor = isActive ? ACTIVE_BG : INACTIVE_BG;
       } else {
         animate(step, {
-          backgroundColor: isActive
-            ? "rgba(239,239,239,1)"
-            : "rgba(239,239,239,0)",
+          backgroundColor: isActive ? ACTIVE_BG : INACTIVE_BG,
           duration: 460,
           ease: RENO_EASE,
         });
@@ -121,10 +120,10 @@ export function Process() {
   return (
     <section
       id="how-it-works"
-      data-nav-theme="light"
+      data-nav-theme="dark"
       ref={wrapperRef}
       className="relative w-full"
-      style={{ backgroundColor: "#FFFFFF", height: "300vh" }}
+      style={{ backgroundColor: "#0A0A0A", height: "300vh" }}
     >
       <div
         className="reno-process-sticky"
@@ -135,7 +134,7 @@ export function Process() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          backgroundColor: "#FFFFFF",
+          backgroundColor: "#0A0A0A",
           paddingBlock: "clamp(56px, 8vw, 80px)",
           paddingInline: "clamp(20px, 6vw, 80px)",
           overflow: "hidden",
@@ -149,7 +148,7 @@ export function Process() {
             as="h2"
             variant="drop"
             style={{
-              color: "#000000",
+              color: "#FFFFFF",
               fontWeight: 600,
               fontSize: "clamp(32px, 5vw, 64px)",
               lineHeight: 1.18,
@@ -221,23 +220,24 @@ export function Process() {
         .reno-process-step {
           border-radius: 24px;
           padding: clamp(16px, 2.2vw, 22px) clamp(18px, 2.6vw, 28px);
-          background-color: rgba(239,239,239,0);
+          background-color: rgba(255,255,255,0);
         }
         .reno-process-step-title {
-          color: #000000;
+          color: #FFFFFF;
           font-weight: 600;
           font-size: clamp(22px, 2.8vw, 32px);
           line-height: 1.25;
+          letter-spacing: -0.01em;
         }
         .reno-process-body-wrap {
           overflow: hidden;
           height: 0;
         }
         .reno-process-body-text {
-          color: rgba(0,0,0,0.7);
+          color: rgba(255,255,255,0.68);
           font-weight: 400;
           font-size: clamp(15px, 1.5vw, 20px);
-          line-height: 1.45;
+          line-height: 1.5;
           padding-top: 10px;
           margin: 0;
         }
@@ -247,13 +247,13 @@ export function Process() {
           max-width: 433px;
           align-self: center;
           flex-shrink: 0;
-          background: rgba(0,0,0,0.04);
+          background: rgba(255,255,255,0.04);
           padding: 8px;
           border-radius: 32px;
           box-shadow:
-            0 0 0 1px rgba(0,0,0,0.04),
-            0 1px 0 rgba(255,255,255,0.6) inset,
-            0 16px 40px rgba(0,0,0,0.05);
+            0 0 0 1px rgba(255,255,255,0.06),
+            0 1px 0 rgba(255,255,255,0.06) inset,
+            0 22px 48px rgba(0,0,0,0.4);
         }
         .reno-process-media {
           position: relative;

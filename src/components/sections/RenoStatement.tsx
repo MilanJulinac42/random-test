@@ -11,6 +11,7 @@ export function RenoStatement() {
       style={{
         position: "relative",
         width: "100%",
+        minHeight: "100vh",
         backgroundColor: "#0D1A1E",
         display: "flex",
         flexDirection: "column",
@@ -43,14 +44,16 @@ export function RenoStatement() {
         }}
       />
 
-      {/* Center content */}
+      {/* Center content — flexes to fill remaining viewport height */}
       <div
         style={{
           position: "relative",
           zIndex: 1,
+          flex: 1,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
           textAlign: "center",
           padding: "clamp(80px,10vw,120px) clamp(24px,6vw,80px) clamp(48px,5vw,64px)",
           gap: "clamp(20px,2.4vw,28px)",
