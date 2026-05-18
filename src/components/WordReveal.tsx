@@ -39,7 +39,8 @@ export function WordReveal({
   className,
 }: WordRevealProps) {
   const containerRef = useRef<HTMLElement | null>(null);
-  const words = children.trim().split(/\s+/);
+  const lines = children.split("\n").map((l) => l.trim()).filter(Boolean);
+  const wordsByLine = lines.map((l) => l.split(/\s+/));
   const isClip = variant === "clip";
   const activeDuration = variant === "pop" ? 500 : duration;
 
@@ -138,31 +139,44 @@ export function WordReveal({
       style={style}
       className={className}
     >
-      {words.map((word, i) =>
-        isClip ? (
-          <span
-            key={i}
-            style={{
-              display: "inline-block",
-              overflow: "hidden",
-              verticalAlign: "bottom",
-              lineHeight: "inherit",
-            }}
-          >
-            <span className="wr-inner" style={{ display: "inline-block" }}>
-              {word}{i < words.length - 1 ? " " : ""}
+      {wordsByLine.flatMap((lineWords, li) => {
+        const nodes: React.ReactNode[] = [];
+        lineWords.forEach((word, i) => {
+          const key = li + "-" + i;
+          const wordEl = isClip ? (
+            <span
+              key={key}
+              style={{
+                display: "inline-block",
+                overflow: "hidden",
+                verticalAlign: "bottom",
+                lineHeight: "inherit",
+              }}
+            >
+              <span className="wr-inner" style={{ display: "inline-block" }}>
+                {word}
+              </span>
             </span>
-          </span>
-        ) : (
-          <span
-            key={i}
-            className="wr-word"
-            style={{ display: "inline-block" }}
-          >
-            {word}{i < words.length - 1 ? " " : ""}
-          </span>
-        )
-      )}
+          ) : (
+            <span
+              key={key}
+              className="wr-word"
+              style={{ display: "inline-block" }}
+            >
+              {word}
+            </span>
+          );
+          nodes.push(wordEl);
+          if (i < lineWords.length - 1) {
+            nodes.push(<span key={key + "-sp"}>{" "}</span>);
+          }
+        });
+        if (li < wordsByLine.length - 1) {
+          nodes.push(<br key={"br-" + li} className="reno-mobile-br" />);
+          nodes.push(<span key={"sp-" + li} className="reno-mobile-br-space"> </span>);
+        }
+        return nodes;
+      })}
     </Tag>
   );
 }

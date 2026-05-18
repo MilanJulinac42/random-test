@@ -143,7 +143,7 @@ export function Hero() {
       {/* Foreground content — viewport-relative, anchored to the bottom. */}
       <div
         ref={contentRef}
-        className="relative z-10 flex flex-col justify-end px-6 md:px-12 lg:px-20"
+        className="reno-hero-fg relative z-10 flex flex-col justify-end px-6 md:px-12 lg:px-20"
         style={{
           minHeight: "100vh",
           paddingBottom: "var(--hero-pad-bottom)",
@@ -183,7 +183,7 @@ export function Hero() {
               staggerMs={80}
               style={{ display: "block" }}
             >
-              One-stop
+              Modernize your home
             </WordReveal>
             <WordReveal
               as="span"
@@ -193,12 +193,12 @@ export function Hero() {
               staggerMs={80}
               style={{ display: "block" }}
             >
-              Renovation Platform
+              without the stress
             </WordReveal>
           </h1>
 
           <div data-hero-anim className="self-start">
-            <ArrowButton as="a" href="#quiz" variant="light-on-dark" style={{ paddingLeft: 38 }}>
+            <ArrowButton as="a" href="#quiz" variant="light-on-dark" hideArrow style={{ width: 320, padding: "8px 24px" }}>
               Check availability
             </ArrowButton>
           </div>
@@ -209,12 +209,12 @@ export function Hero() {
           className="flex flex-col md:flex-row md:items-end md:justify-between"
           style={{ marginTop: "clamp(40px, 7vw, 88px)", gap: 32 }}
         >
-          {/* Carousel — selecting a thumbnail swaps the background image. */}
+          {/* Carousel — selecting a thumbnail swaps the background image. Hidden on mobile. */}
           <div
             data-hero-anim
             role="tablist"
             aria-label="Featured project images"
-            className="flex"
+            className="reno-hero-thumbs flex"
             style={{ gap: 12 }}
           >
             {SLIDES.map((slide, i) => {
@@ -256,7 +256,7 @@ export function Hero() {
           {/* Caption */}
           <p
             data-hero-anim
-            className="md:text-right"
+            className="reno-hero-caption md:text-right"
             style={{
               color: "rgba(255,255,255,0.7)",
               fontSize: "clamp(15px, 1.3vw, 20px)",
@@ -265,9 +265,9 @@ export function Hero() {
               maxWidth: 640,
             }}
           >
-            We manage the designers, contractors, and payments
+            Specializing in AED 500k– AED 1.5 M transformations
             <br />
-            with daily photo updates and a written on-time guarantee.
+            for homeowners who value precision over the lowest bid.
           </p>
         </div>
       </div>
@@ -285,6 +285,24 @@ export function Hero() {
             --hero-pad-bottom: 28px;
             --hero-thumb: 100px;
             --hero-thumb-h: 62px;
+          }
+        }
+        @media (max-width: 767px) {
+          .reno-hero-thumbs { display: none !important; }
+          .reno-hero-fg {
+            align-items: center;
+            text-align: center;
+          }
+          .reno-hero-fg > div:first-of-type {
+            align-items: center;
+            text-align: center;
+          }
+          .reno-hero-fg > div:first-of-type > .self-start {
+            align-self: center !important;
+          }
+          .reno-hero-caption {
+            text-align: center !important;
+            margin: 0 auto;
           }
         }
       `}</style>

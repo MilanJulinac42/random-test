@@ -139,14 +139,14 @@ export function Guarantee() {
             style={{
               color: "#0D0D0D",
               fontWeight: 600,
-              fontSize: "clamp(38px, 5.6vw, 80px)",
-              lineHeight: 1.04,
-              letterSpacing: "-0.025em",
+              fontSize: "clamp(34px, 5vw, 64px)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
               margin: 0,
               whiteSpace: "nowrap",
             }}
           >
-            Promises we put in writing.
+            {"Promises we put\nin writing"}
           </WordReveal>
 
           <p

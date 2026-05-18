@@ -75,13 +75,13 @@ export function WhyUs() {
           style={{
             color: "#0D0D0D",
             fontWeight: 600,
-            fontSize: "clamp(40px, 5.6vw, 84px)",
-            lineHeight: 1.04,
-            letterSpacing: "-0.025em",
+            fontSize: "clamp(34px, 5vw, 64px)",
+            lineHeight: 1.1,
+            letterSpacing: "-0.02em",
             margin: 0,
           }}
         >
-          Why homeowners choose Reno.
+          {"Why homeowners\nchoose Reno"}
         </WordReveal>
 
         <p
@@ -110,7 +110,7 @@ export function WhyUs() {
               className={`reno-why-card ${isDark ? "reno-why-card--dark" : "reno-why-card--light"}`}
             >
               <div className="reno-why-card-inner">
-                <h3 className="reno-why-title">{line1}<br />{line2}</h3>
+                <h3 className="reno-why-title"><span className="reno-why-title-l1">{line1}</span><br className="reno-why-title-br" /><span className="reno-why-title-l2">{line2}</span></h3>
                 <p className="reno-why-body">{body}</p>
 
                 {isDark ? (
@@ -258,17 +258,52 @@ export function WhyUs() {
           }
         }
 
-        /* Mobile — 1 column */
-        @media (max-width: 640px) {
+        /* Mobile — 1 column, 4 equal cards, icon first */
+        @media (max-width: 767px) {
           #why-us {
-            padding-inline: clamp(20px, 6vw, 32px) !important;
+            padding-inline: 20px !important;
+            padding-block: 60px !important;
           }
           .reno-why-grid {
             grid-template-columns: 1fr;
-            gap: 14px;
+            gap: 12px;
           }
           .reno-why-card {
-            aspect-ratio: 1 / 0.75;
+            aspect-ratio: unset;
+            min-height: 0;
+            overflow: visible;
+          }
+          .reno-why-card-inner {
+            position: static !important;
+            inset: auto !important;
+            padding: 32px 24px !important;
+          }
+          .reno-why-icon {
+            order: 1;
+            margin-top: 0 !important;
+            margin-bottom: 14px;
+          }
+          .reno-why-title {
+            order: 2;
+            font-size: 18px !important;
+            line-height: 1.25;
+            margin: 0 !important;
+          }
+          .reno-why-title-br { display: none; }
+          .reno-why-title-l1::after { content: ' '; }
+          .reno-why-body {
+            order: 3;
+            font-size: 14px !important;
+            margin-top: 6px !important;
+          }
+          .reno-why-sub {
+            font-size: 14px !important;
+            text-align: center;
+            margin: 0 auto !important;
+            margin-top: 12px !important;
+          }
+          .reno-why-header {
+            text-align: center;
           }
         }
       `}</style>

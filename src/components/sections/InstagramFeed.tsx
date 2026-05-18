@@ -1,4 +1,4 @@
-import { useAnimeReveal } from "@/lib/anime";
+import { useAnimeReveal, useAnimeRevealGroup } from "@/lib/anime";
 import { WordReveal } from "@/components/WordReveal";
 
 const TILE_BGS = ["#E8E0D5", "#D5E0DC", "#D5D8E8", "#E8DDD5", "#D5E8E0", "#E8E5D5"];
@@ -25,7 +25,11 @@ function LinkedInIcon({ size = 16, color = "currentColor" }: { size?: number; co
 
 export function InstagramFeed() {
   const headerRef = useAnimeReveal<HTMLDivElement>({ translateY: 22 });
-  const gridRef = useAnimeReveal<HTMLDivElement>({ translateY: 24 });
+  const gridRef = useAnimeRevealGroup<HTMLDivElement>(".reno-ig-cell", {
+    staggerMs: 70,
+    duration: 620,
+    translateY: 22,
+  });
   const cardRef = useAnimeReveal<HTMLDivElement>({ translateY: 20 });
 
   return (
@@ -51,14 +55,14 @@ export function InstagramFeed() {
                 as="h2"
                 variant="pop"
                 style={{
-                  fontSize: "clamp(40px, 5vw, 64px)",
-                  fontWeight: 700,
+                  fontSize: "clamp(34px, 5vw, 64px)",
+                  fontWeight: 600,
                   color: "#FFFFFF",
                   letterSpacing: "-0.02em",
                   lineHeight: 1.1,
                 }}
               >
-                Follow the build.
+                Follow the build
               </WordReveal>
               <p style={{ fontSize: 15, color: "#999", marginTop: 6 }}>
                 Real progress from real projects — updated regularly.

@@ -4,6 +4,8 @@ type CommonProps = {
   children: ReactNode;
   /** Visual variant — both render a white pill with dark text; differs only in shadow color. */
   variant?: "dark-on-light" | "light-on-dark";
+  /** When true, hides the trailing arrow circle and centers the label text. */
+  hideArrow?: boolean;
   className?: string;
   style?: CSSProperties;
   disabled?: boolean;
@@ -35,7 +37,7 @@ const baseStyle: CSSProperties = {
   gap: 14,
   height: 56,
   padding: "8px 8px 8px 28px",
-  borderRadius: 999,
+  borderRadius: 12,
   border: "none",
   background: "#FFFFFF",
   color: "#0D0D0D",
@@ -57,7 +59,7 @@ const iconCircleStyle: CSSProperties = {
   justifyContent: "center",
   width: 40,
   height: 40,
-  borderRadius: 999,
+  borderRadius: 12,
   background: "rgba(0,0,0,0.08)",
   transition:
     "transform 420ms cubic-bezier(0.32, 0.72, 0, 1), background-color 420ms cubic-bezier(0.32, 0.72, 0, 1)",
@@ -88,6 +90,7 @@ export function ArrowButton(props: Props) {
   const {
     children,
     variant = "dark-on-light",
+    hideArrow = false,
     className,
     style,
     disabled,
@@ -105,6 +108,7 @@ export function ArrowButton(props: Props) {
 
   const composed: CSSProperties = {
     ...baseStyle,
+    ...(hideArrow && { justifyContent: "center", padding: "8px 28px" }),
     boxShadow: shadow,
     opacity: disabled ? 0.55 : 1,
     cursor: disabled ? "wait" : baseStyle.cursor,
@@ -138,7 +142,9 @@ export function ArrowButton(props: Props) {
     el.style.transform = "scale(1)";
   };
 
-  const content = (
+  const content = hideArrow ? (
+    <span>{children}</span>
+  ) : (
     <>
       <span>{children}</span>
       <span className="reno-arrowbtn-icon" style={iconCircleStyle}>

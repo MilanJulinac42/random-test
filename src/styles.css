@@ -482,3 +482,39 @@ body {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+/* Hidden line-break used inside <WordReveal>; appears only on mobile */
+.reno-mobile-br { display: none; }
+@media (max-width: 767px) {
+  .reno-mobile-br { display: inline; }
+}
+
+/* ── Unified mobile typography across all sections (≤767px) ── */
+@media (max-width: 767px) {
+  section#why-us h2,
+  section#guarantee h2,
+  section#how-it-works h2,
+  section#reviews h2,
+  section#social h2,
+  section#reno-statement h2,
+  section#quiz h2,
+  .reno-gallery-mobile-heading {
+    font-size: 30px !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    letter-spacing: -0.02em !important;
+    width: 100% !important;
+    align-self: stretch !important;
+    white-space: normal !important;
+  }
+  /* Subheading / lede right under section h2 */
+  section#why-us .reno-why-sub,
+  section#guarantee .reno-g-sub,
+  section#reviews > div > p,
+  section#social > div > div > div > p {
+    text-align: center !important;
+    font-size: 14px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}

@@ -66,19 +66,18 @@ export function Reviews() {
           textAlign: "center",
         }}
       >
-        <div className="reno-eyebrow reno-eyebrow--dark">Testimonials</div>
         <WordReveal
           as="h2"
           variant="slide-up"
           style={{
             color: "#FFFFFF",
             fontWeight: 600,
-            fontSize: "clamp(30px, 5.2vw, 64px)",
-            lineHeight: 1.18,
+            fontSize: "clamp(34px, 5vw, 64px)",
+            lineHeight: 1.1,
             letterSpacing: "-0.02em",
           }}
         >
-          Hear it from our clients
+          {"Hear it from\nour clients"}
         </WordReveal>
         <p
           style={{
@@ -209,6 +208,17 @@ export function Reviews() {
             grid-template-columns: 1fr;
             max-width: 480px;
           }
+        }
+        @media (max-width: 767px) {
+          .reno-review-card { min-height: 200px; }
+          .reno-review-card-content {
+            min-height: 200px;
+            padding: 20px 18px;
+            gap: 14px;
+          }
+          .reno-review-name { font-size: 13px; }
+          .reno-review-quote { font-size: 12px; line-height: 1.45; }
+          .reno-review-stars svg { width: 14px; height: 14px; }
         }
       `}</style>
     </section>

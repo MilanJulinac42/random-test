@@ -68,17 +68,17 @@ export function RenoStatement() {
           style={{
             color: "#FFFFFF",
             fontWeight: 600,
-            fontSize: "clamp(44px,7.2vw,96px)",
-            lineHeight: 1.08,
+            fontSize: "clamp(34px, 5vw, 64px)",
+            lineHeight: 1.1,
             letterSpacing: "-0.02em",
             margin: 0,
             maxWidth: 860,
           }}
         >
-          Start your journey with Reno
+          {"Start your journey\nwith Reno"}
         </WordReveal>
 
-        <ArrowButton as="a" href="#quiz" variant="light-on-dark" style={{ paddingLeft: 38 }}>
+        <ArrowButton as="a" href="#quiz" variant="light-on-dark" hideArrow style={{ width: 320, padding: "8px 24px" }}>
           Check availability
         </ArrowButton>
       </div>

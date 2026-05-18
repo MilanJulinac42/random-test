@@ -150,13 +150,13 @@ export function Process() {
             style={{
               color: "#FFFFFF",
               fontWeight: 600,
-              fontSize: "clamp(32px, 5vw, 64px)",
-              lineHeight: 1.18,
+              fontSize: "clamp(34px, 5vw, 64px)",
+              lineHeight: 1.1,
               letterSpacing: "-0.02em",
               marginBottom: "clamp(28px, 4vw, 40px)",
             }}
           >
-            From first call to keys in hand.
+            {"From first call\nto keys in hand"}
           </WordReveal>
 
           <div className="reno-process-row">
@@ -281,6 +281,20 @@ export function Process() {
           .reno-process-media {
             max-height: 505px;
           }
+        }
+        @media (max-width: 767px) {
+          .reno-process-sticky {
+            justify-content: flex-start !important;
+            padding-block: 40px !important;
+            padding-inline: 20px !important;
+          }
+          .reno-process-row { gap: 20px; }
+          .reno-process-steps { gap: 8px; }
+          .reno-process-step { padding: 12px 16px; }
+          .reno-process-step-title { font-size: 18px; }
+          .reno-process-body-text { font-size: 14px; padding-top: 8px; }
+          .reno-process-media-shell { max-width: 280px; }
+          .reno-process-media { aspect-ratio: 280 / 340; }
         }
       `}</style>
     </section>

@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           area: string
           budget: string
+          extended_data: string | null
           id: string
           name: string
           phone: string
@@ -28,6 +29,7 @@ export type Database = {
         Insert: {
           area: string
           budget: string
+          extended_data?: string | null
           id?: string
           name: string
           phone: string
@@ -38,6 +40,7 @@ export type Database = {
         Update: {
           area?: string
           budget?: string
+          extended_data?: string | null
           id?: string
           name?: string
           phone?: string

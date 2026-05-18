@@ -9,6 +9,78 @@ import kitchenAfter from "@/assets/gallery/kitchen-after.png";
 import kidsBefore from "@/assets/gallery/kids-before.png";
 import kidsAfter from "@/assets/gallery/kids-after.png";
 
+function BeforeAfterSlider({
+  before,
+  after,
+  alt,
+}: {
+  before: string;
+  after: string;
+  alt: string;
+}) {
+  const [pct, setPct] = useState(10);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const draggingRef = useRef(false);
+
+  const update = (clientX: number) => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const rect = wrap.getBoundingClientRect();
+    const next = ((clientX - rect.left) / rect.width) * 100;
+    setPct(Math.max(0, Math.min(100, next)));
+  };
+
+  return (
+    <div
+      ref={wrapRef}
+      className="reno-ba-slider"
+      onPointerDown={(e) => {
+        draggingRef.current = true;
+        (e.currentTarget as Element).setPointerCapture(e.pointerId);
+        update(e.clientX);
+      }}
+      onPointerMove={(e) => {
+        if (!draggingRef.current) return;
+        update(e.clientX);
+      }}
+      onPointerUp={(e) => {
+        draggingRef.current = false;
+        try {
+          (e.currentTarget as Element).releasePointerCapture(e.pointerId);
+        } catch {
+          /* ignore */
+        }
+      }}
+      onPointerCancel={() => {
+        draggingRef.current = false;
+      }}
+    >
+      <img src={after} alt={`${alt} — after`} className="reno-ba-img" />
+      <img
+        src={before}
+        alt={`${alt} — before`}
+        className="reno-ba-img"
+        style={{ clipPath: `inset(0 ${100 - pct}% 0 0)` }}
+      />
+      <span
+        className="reno-ba-label reno-ba-label--before"
+        style={{ opacity: pct > 12 ? 1 : 0 }}
+      >
+        Before
+      </span>
+      <span className="reno-ba-label reno-ba-label--after">After</span>
+      <div className="reno-ba-handle" style={{ left: `${pct}%` }} aria-hidden>
+        <div className="reno-ba-grabber">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 6L4 12l5 6" />
+            <path d="M15 6l5 6-5 6" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 type Project = {
   title: string;
   location: string;
@@ -100,7 +172,7 @@ export function Gallery() {
       id="gallery"
       data-nav-theme="dark"
       ref={wrapperRef}
-      className="relative w-full"
+      className="reno-gallery-section relative w-full"
       style={{ backgroundColor: "#FFFFFF", height: "300vh" }}
     >
       {/* ── Sticky viewport ── */}
@@ -220,6 +292,21 @@ export function Gallery() {
         </div>
       </div>
 
+      {/* ── Mobile stack — replaces the sticky scroll experience below 768px ── */}
+      <div className="reno-gallery-mobile">
+        <h2 className="reno-gallery-mobile-heading">
+          Delivered projects,<br className="reno-mobile-br" /> not renders
+        </h2>
+        {projects.map((p) => (
+          <article key={p.title} className="reno-gallery-mobile-card">
+            <h3 className="reno-gallery-mobile-title">{p.title}</h3>
+            <div className="reno-gallery-mobile-loc">{p.location}</div>
+            <BeforeAfterSlider before={p.before} after={p.after} alt={p.title} />
+            <p className="reno-gallery-mobile-desc">{p.desc}</p>
+          </article>
+        ))}
+      </div>
+
       <style>{`
         .reno-gallery-info {
           position: absolute;
@@ -282,13 +369,129 @@ export function Gallery() {
           transition: background-color 280ms ease, color 280ms ease;
         }
 
-        /* ── Mobile — disable sticky, stack naturally ── */
+        /* ── Mobile stack — hidden on desktop ── */
+        .reno-gallery-mobile {
+          display: none;
+        }
+
+        /* ── Mobile (<768px): replace sticky with vertical stack ── */
         @media (max-width: 767px) {
-          .reno-gallery-sticky {
-            position: relative !important;
+          .reno-gallery-section {
             height: auto !important;
-            padding: 24px 16px 80px;
           }
+          .reno-gallery-sticky {
+            display: none !important;
+          }
+          .reno-gallery-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            background-color: #FFFFFF;
+            padding: 60px 20px;
+          }
+          .reno-gallery-mobile-heading {
+            color: #0D0D0D;
+            font-weight: 600;
+            font-size: clamp(34px, 5vw, 64px);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin: 0 0 8px;
+          }
+          .reno-gallery-mobile-card {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+          }
+          .reno-gallery-mobile-title {
+            color: #0D0D0D;
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 1.2;
+            letter-spacing: -0.018em;
+            margin: 0;
+          }
+          .reno-gallery-mobile-loc {
+            color: rgba(0,0,0,0.5);
+            font-weight: 500;
+            font-size: 13px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-top: -8px;
+          }
+          .reno-gallery-mobile-desc {
+            color: rgba(0,0,0,0.62);
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 1.55;
+            margin: 4px 0 0 0;
+          }
+        }
+
+        /* ── Before/After slider ── */
+        .reno-ba-slider {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 4 / 3;
+          border-radius: 16px;
+          overflow: hidden;
+          touch-action: none;
+          user-select: none;
+          background-color: #E8E3DB;
+          cursor: ew-resize;
+        }
+        .reno-ba-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          pointer-events: none;
+          user-select: none;
+          -webkit-user-drag: none;
+        }
+        .reno-ba-label {
+          position: absolute;
+          top: 12px;
+          padding: 5px 10px;
+          border-radius: 999px;
+          background-color: rgba(0,0,0,0.45);
+          color: #FFFFFF;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          backdrop-filter: blur(6px);
+          pointer-events: none;
+          transition: opacity 240ms cubic-bezier(0.32,0.72,0,1);
+        }
+        .reno-ba-label--before { left: 12px; }
+        .reno-ba-label--after { right: 12px; }
+        .reno-ba-handle {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 2px;
+          background-color: #FFFFFF;
+          box-shadow: 0 0 12px rgba(0,0,0,0.35);
+          transform: translateX(-1px);
+          pointer-events: none;
+          will-change: left;
+        }
+        .reno-ba-grabber {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 40px;
+          height: 40px;
+          margin: -20px 0 0 -20px;
+          border-radius: 999px;
+          background-color: #FFFFFF;
+          color: #0D0D0D;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 14px rgba(0,0,0,0.3);
         }
       `}</style>
     </section>

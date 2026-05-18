@@ -157,6 +157,38 @@ export function Stats() {
             min-height: 496px;
           }
         }
+        @media (max-width: 767px) {
+          #stats {
+            padding-inline: 20px !important;
+            padding-block: 60px !important;
+          }
+          .reno-stats-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+          }
+          .reno-stats-left {
+            display: contents;
+          }
+          .reno-stat-card {
+            min-height: 160px;
+            width: 100%;
+            padding: 20px !important;
+            justify-content: flex-start !important;
+          }
+          .reno-stat-gradient {
+            min-height: 160px;
+          }
+          .reno-stat-number,
+          .reno-stat-number-xl {
+            font-size: 44px !important;
+            line-height: 0.96;
+          }
+          .reno-stat-label,
+          .reno-stat-label-lg {
+            font-size: 14px !important;
+          }
+        }
       `}</style>
     </section>
   );
