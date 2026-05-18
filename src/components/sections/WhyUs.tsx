@@ -3,7 +3,8 @@ import { useAnimeReveal, useAnimeRevealGroup } from "@/lib/anime";
 import { WordReveal } from "@/components/WordReveal";
 
 type Point = {
-  title: string;
+  line1: string;
+  line2: string;
   body: string;
   Icon: LucideIcon;
   /** undefined = dark gradient (card 1); string = icon bg color for light cards */
@@ -12,25 +13,29 @@ type Point = {
 
 const points: Point[] = [
   {
-    title: "You hire Reno, not a contractor",
+    line1: "You hire Reno,",
+    line2: "not a contractor",
     body: "Single point of accountability — we own the outcome, not just the introduction.",
     Icon: Shield,
     // no iconBg → dark gradient card
   },
   {
-    title: "Design-led approach",
+    line1: "Design-led",
+    line2: "approach",
     body: "Reno Studio takes you from floor plan to photorealistic render before any demolition starts.",
     Icon: PenTool,
     iconBg: "#0EA5E9",
   },
   {
-    title: "End-to-end project management",
+    line1: "End-to-end project",
+    line2: "management",
     body: "Dedicated PM, milestone tracking, QC inspections — not a marketplace that disappears after matching.",
     Icon: ListChecks,
     iconBg: "#F59E0B",
   },
   {
-    title: "Proven track record",
+    line1: "Proven track",
+    line2: "record",
     body: "150+ projects. 250,000 sqft of fitted-out areas. Premium villas and penthouses delivered.",
     Icon: BadgeCheck,
     iconBg: "#16A34A",
@@ -97,15 +102,15 @@ export function WhyUs() {
 
       {/* 4 horizontal cards */}
       <div ref={cardsRef} className="reno-why-grid">
-        {points.map(({ title, body, Icon, iconBg }) => {
+        {points.map(({ line1, line2, body, Icon, iconBg }) => {
           const isDark = !iconBg;
           return (
             <article
-              key={title}
+              key={line1}
               className={`reno-why-card ${isDark ? "reno-why-card--dark" : "reno-why-card--light"}`}
             >
               <div className="reno-why-card-inner">
-                <h3 className="reno-why-title">{title}</h3>
+                <h3 className="reno-why-title">{line1}<br />{line2}</h3>
                 <p className="reno-why-body">{body}</p>
 
                 {isDark ? (
@@ -193,19 +198,13 @@ export function WhyUs() {
           flex-direction: column;
         }
 
-        /* ── Title: always 2 lines ── */
+        /* ── Title: exactly 2 lines via explicit <br> ── */
         .reno-why-title {
           font-weight: 600;
           font-size: clamp(19px, 1.6vw, 24px);
           line-height: 1.22;
           letter-spacing: -0.015em;
           margin: 0;
-          /* Reserve exactly 2 lines, clamp overflow */
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          min-height: calc(2 * 1.22em);
         }
         .reno-why-card--dark  .reno-why-title { color: #FFFFFF; }
         .reno-why-card--light .reno-why-title { color: #0D0D0D; }
