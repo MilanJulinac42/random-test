@@ -198,7 +198,7 @@ export function Hero() {
           </h1>
 
           <div data-hero-anim className="self-start">
-            <ArrowButton as="a" href="#quiz" variant="light-on-dark">
+            <ArrowButton as="a" href="#quiz" variant="light-on-dark" style={{ paddingLeft: 38 }}>
               Check availability
             </ArrowButton>
           </div>
