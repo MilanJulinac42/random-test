@@ -2,13 +2,7 @@
 @source "../src";
 @import "tw-animate-css";
 
-@font-face {
-  font-family: 'ZT Talk';
-  src: url('/fonts/zt-talk/ZTTalk-LightExpanded.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
+/* ZT Talk Expanded — captions (weight 400) */
 @font-face {
   font-family: 'ZT Talk';
   src: url('/fonts/zt-talk/ZTTalk-Expanded.otf') format('opentype');
@@ -16,6 +10,7 @@
   font-style: normal;
   font-display: swap;
 }
+/* ZT Talk Medium Expanded — body & subheadings (weight 500) */
 @font-face {
   font-family: 'ZT Talk';
   src: url('/fonts/zt-talk/ZTTalk-SemiExpanded.ttf') format('truetype');
@@ -23,24 +18,11 @@
   font-style: normal;
   font-display: swap;
 }
+/* ZT Talk Semibold Expanded — headings (weight 600) */
 @font-face {
   font-family: 'ZT Talk';
   src: url('/fonts/zt-talk/ZTTalk-SemiBoldExpanded.ttf') format('truetype');
   font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ZT Talk';
-  src: url('/fonts/zt-talk/ZTTalk-BoldExpanded.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ZT Talk';
-  src: url('/fonts/zt-talk/ZTTalk-BoldExpanded.ttf') format('truetype');
-  font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
