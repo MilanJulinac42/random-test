@@ -14,6 +14,7 @@ type GuaranteeItem = {
   body: string;
   Icon: LucideIcon;
   iconBg: string;
+  videoSrc?: string;
 };
 
 const items: GuaranteeItem[] = [
@@ -22,6 +23,7 @@ const items: GuaranteeItem[] = [
     body: "Your BOQ price is your final price — no hidden costs.",
     Icon: Lock,
     iconBg: "#FF6B35",
+    videoSrc: "/videos/guarantee-dirham.mp4",
   },
   {
     title: "Timeline guarantee",
@@ -136,8 +138,25 @@ export function Guarantee() {
         {/* Bento grid */}
         <div ref={gridRef} className="reno-g-grid">
           {items.map((item, i) => (
-            <article key={item.title} className={`reno-g-card reno-g-card--${i + 1}`}>
-              <IconSquare Icon={item.Icon} bg={item.iconBg} />
+            <article
+              key={item.title}
+              className={`reno-g-card reno-g-card--${i + 1}${item.videoSrc ? " reno-g-card--video" : ""}`}
+            >
+              {item.videoSrc ? (
+                <div className="reno-g-video-wrap">
+                  <video
+                    src={item.videoSrc}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    aria-hidden
+                    className="reno-g-video"
+                  />
+                </div>
+              ) : (
+                <IconSquare Icon={item.Icon} bg={item.iconBg} />
+              )}
               <div className="reno-g-text">
                 <h3 className="reno-g-title">{item.title}</h3>
                 <p className="reno-g-body">{item.body}</p>
@@ -211,6 +230,34 @@ export function Guarantee() {
         .reno-g-card--1,
         .reno-g-card--3 {
           justify-content: flex-end;
+        }
+
+        /* Video card: video fills space, text pinned to bottom */
+        .reno-g-card--video {
+          justify-content: flex-start;
+          gap: 0;
+          padding: 0;
+          overflow: hidden;
+        }
+        .reno-g-video-wrap {
+          flex: 1;
+          min-height: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+        }
+        .reno-g-video {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+          pointer-events: none;
+          user-select: none;
+        }
+        .reno-g-card--video .reno-g-text {
+          flex-shrink: 0;
+          padding: clamp(16px, 1.8vw, 22px) clamp(22px, 2.4vw, 32px) clamp(22px, 2.4vw, 32px);
         }
 
         /* Full-width bottom card — horizontal layout on desktop */
