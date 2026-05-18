@@ -129,24 +129,13 @@ export function InstagramFeed() {
         {/* LinkedIn card */}
         <div ref={cardRef}>
           <div
-            className="reno-li-shell"
-            style={{
-              marginTop: 20,
-              background: "rgba(255,255,255,0.04)",
-              borderRadius: 22,
-              padding: 6,
-              boxShadow:
-                "0 0 0 1px rgba(255,255,255,0.06), 0 1px 0 rgba(255,255,255,0.06) inset",
-            }}
-          >
-          <div
             className="reno-li-card flex flex-col md:flex-row md:items-center md:justify-between"
             style={{
+              marginTop: 20,
               background: "#1A1A1A",
               borderRadius: 16,
               padding: "28px 32px",
               gap: 20,
-              boxShadow: "0 1px 0 rgba(255,255,255,0.05) inset",
             }}
           >
             <div>
@@ -180,7 +169,6 @@ export function InstagramFeed() {
             >
               Follow us ↗
             </a>
-          </div>
           </div>
         </div>
       </div>

@@ -247,13 +247,8 @@ export function Process() {
           max-width: 433px;
           align-self: center;
           flex-shrink: 0;
-          background: rgba(255,255,255,0.04);
-          padding: 8px;
-          border-radius: 32px;
-          box-shadow:
-            0 0 0 1px rgba(255,255,255,0.06),
-            0 1px 0 rgba(255,255,255,0.06) inset,
-            0 22px 48px rgba(0,0,0,0.4);
+          border-radius: 24px;
+          box-shadow: 0 22px 48px rgba(0,0,0,0.4);
         }
         .reno-process-media {
           position: relative;
@@ -261,6 +256,7 @@ export function Process() {
           aspect-ratio: 417 / 505;
           border-radius: 24px;
           overflow: hidden;
+          border-radius: inherit;
         }
         .reno-process-media-img {
           position: absolute;
