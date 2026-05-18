@@ -6,12 +6,13 @@ import {
   SmilePlus,
   type LucideIcon,
 } from "lucide-react";
+import type { ReactNode } from "react";
 import { useAnimeReveal, useAnimeRevealGroup } from "@/lib/anime";
 import { WordReveal } from "@/components/WordReveal";
 
 type GuaranteeItem = {
   title: string;
-  body: string;
+  body: ReactNode;
   Icon: LucideIcon;
   iconBg: string;
   videoSrc?: string;
@@ -20,7 +21,7 @@ type GuaranteeItem = {
 const items: GuaranteeItem[] = [
   {
     title: "Price-lock guarantee",
-    body: "Your BOQ price is your final price — no hidden costs.",
+    body: <>Your BOQ price is your final price —<br />no hidden costs.</>,
     Icon: Lock,
     iconBg: "#FF6B35",
     videoSrc: "/videos/guarantee-dirham.mp4",
@@ -33,7 +34,7 @@ const items: GuaranteeItem[] = [
   },
   {
     title: "Design on us",
-    body: "Free design when you execute the project with Reno.",
+    body: <>Free design when you execute the project<br />with Reno.</>,
     Icon: Paintbrush,
     iconBg: "#16A34A",
     videoSrc: "/videos/guarantee-palette.mp4",
@@ -75,6 +76,32 @@ function IconSquare({
     >
       <Icon size={24} strokeWidth={1.8} color="#FFFFFF" />
     </div>
+  );
+}
+
+function CardInner({ item }: { item: GuaranteeItem }) {
+  return (
+    <>
+      {item.videoSrc ? (
+        <div className="reno-g-video-wrap">
+          <video
+            src={item.videoSrc}
+            autoPlay
+            loop
+            muted
+            playsInline
+            aria-hidden
+            className="reno-g-video"
+          />
+        </div>
+      ) : (
+        <IconSquare Icon={item.Icon} bg={item.iconBg} />
+      )}
+      <div className="reno-g-text">
+        <h3 className="reno-g-title">{item.title}</h3>
+        <p className="reno-g-body">{item.body}</p>
+      </div>
+    </>
   );
 }
 
@@ -138,32 +165,30 @@ export function Guarantee() {
 
         {/* Bento grid */}
         <div ref={gridRef} className="reno-g-grid">
-          {items.map((item, i) => (
-            <article
-              key={item.title}
-              className={`reno-g-card reno-g-card--${i + 1}${item.videoSrc ? " reno-g-card--video" : ""}`}
-            >
-              {item.videoSrc ? (
-                <div className="reno-g-video-wrap">
-                  <video
-                    src={item.videoSrc}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    aria-hidden
-                    className="reno-g-video"
-                  />
-                </div>
-              ) : (
-                <IconSquare Icon={item.Icon} bg={item.iconBg} />
-              )}
-              <div className="reno-g-text">
-                <h3 className="reno-g-title">{item.title}</h3>
-                <p className="reno-g-body">{item.body}</p>
-              </div>
+          {/* Left tall — Price-lock (video) */}
+          <article className="reno-g-card reno-g-card--1 reno-g-card--video">
+            <CardInner item={items[0]} />
+          </article>
+
+          {/* Middle column — two stacked cards in a flex wrapper */}
+          <div className="reno-g-middle">
+            <article className="reno-g-card reno-g-card--2">
+              <CardInner item={items[1]} />
             </article>
-          ))}
+            <article className="reno-g-card reno-g-card--4">
+              <CardInner item={items[3]} />
+            </article>
+          </div>
+
+          {/* Right tall — Design on us (video) */}
+          <article className="reno-g-card reno-g-card--3 reno-g-card--video">
+            <CardInner item={items[2]} />
+          </article>
+
+          {/* Full-width bottom — Satisfaction checkpoint */}
+          <article className="reno-g-card reno-g-card--5">
+            <CardInner item={items[4]} />
+          </article>
         </div>
       </div>
 
@@ -183,21 +208,20 @@ export function Guarantee() {
           align-items: flex-start;
         }
 
-        /* ── Bento grid ── */
+        /* ── Bento grid — 3 cols, 2 rows (bento + satisfaction) ── */
         .reno-g-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          grid-template-rows: auto auto auto;
+          grid-template-rows: auto auto;
           gap: clamp(10px, 1.2vw, 16px);
           width: 100%;
         }
 
         /* Explicit placement */
-        .reno-g-card--1 { grid-column: 1; grid-row: 1 / 3; }
-        .reno-g-card--2 { grid-column: 2; grid-row: 1; }
-        .reno-g-card--3 { grid-column: 3; grid-row: 1 / 3; }
-        .reno-g-card--4 { grid-column: 2; grid-row: 2; }
-        .reno-g-card--5 { grid-column: 1 / -1; grid-row: 3; }
+        .reno-g-card--1 { grid-column: 1; grid-row: 1; }
+        .reno-g-middle   { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: 8px; }
+        .reno-g-card--3 { grid-column: 3; grid-row: 1; }
+        .reno-g-card--5 { grid-column: 1 / -1; grid-row: 2; }
 
         /* Card base */
         .reno-g-card {
@@ -231,12 +255,6 @@ export function Guarantee() {
         .reno-g-card--1,
         .reno-g-card--3 {
           justify-content: flex-end;
-        }
-
-        /* Middle column cards — hug content, no stretch */
-        .reno-g-card--2,
-        .reno-g-card--4 {
-          align-self: start;
         }
 
         /* Video card: video fills space, text pinned to bottom */
@@ -295,7 +313,7 @@ export function Guarantee() {
           line-height: 1.55;
           margin: 0;
           display: -webkit-box;
-          -webkit-line-clamp: 2;
+          -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
@@ -306,22 +324,19 @@ export function Guarantee() {
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: unset;
           }
-          .reno-g-card--1,
-          .reno-g-card--2,
-          .reno-g-card--3,
-          .reno-g-card--4,
-          .reno-g-card--5 {
-            grid-column: unset;
-            grid-row: unset;
-          }
-          .reno-g-card--5 {
-            grid-column: 1 / -1;
+          /* Unwrap the middle flex wrapper — cards flow into the 2-col grid */
+          .reno-g-middle {
+            display: contents;
           }
           .reno-g-card--1,
           .reno-g-card--3 {
+            grid-column: unset;
+            grid-row: unset;
             justify-content: flex-start;
           }
           .reno-g-card--5 {
+            grid-column: 1 / -1;
+            grid-row: unset;
             flex-direction: column;
             align-items: flex-start;
           }
