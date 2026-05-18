@@ -6,7 +6,7 @@ import { WordReveal } from "@/components/WordReveal";
  * 200+ projects delivered. Each number counts up when it scrolls into view.
  */
 export function Stats() {
-  const gridRef = useAnimeRevealGroup<HTMLDivElement>(".reno-stat-shell", {
+  const gridRef = useAnimeRevealGroup<HTMLDivElement>(".reno-stat-card", {
     staggerMs: 110,
     duration: 700,
     translateY: 22,
@@ -31,18 +31,16 @@ export function Stats() {
         {/* Left column — two stacked cards */}
         <div className="reno-stats-left">
           {/* 120 — white card, content top-aligned */}
-          <div className="reno-stat-shell reno-stat-shell--light">
           <div
             className="reno-stat-card"
             style={{
               background: "#FFFFFF",
-              borderRadius: 22,
+              borderRadius: 24,
               padding: "clamp(24px, 3.4vw, 44px)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "flex-start",
               gap: 14,
-              boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset",
             }}
           >
             <div className="reno-stat-number" style={{ color: "#0D0D0D" }}>
@@ -52,21 +50,18 @@ export function Stats() {
               Vetted contractors
             </WordReveal>
           </div>
-          </div>
 
           {/* 98% — dark card, content bottom-aligned */}
-          <div className="reno-stat-shell reno-stat-shell--dark">
           <div
             className="reno-stat-card"
             style={{
               background: "#0E0E0E",
-              borderRadius: 22,
+              borderRadius: 24,
               padding: "clamp(24px, 3.4vw, 44px)",
               display: "flex",
               flexDirection: "column",
               justifyContent: "flex-end",
               gap: 14,
-              boxShadow: "0 1px 0 rgba(255,255,255,0.08) inset",
             }}
           >
             <div className="reno-stat-number" style={{ color: "#FFFFFF" }}>
@@ -77,11 +72,9 @@ export function Stats() {
               On time delivery
             </WordReveal>
           </div>
-          </div>
         </div>
 
         {/* Right — large gradient card */}
-        <div className="reno-stat-shell reno-stat-shell--gradient">
         <div
           className="reno-stat-card reno-stat-gradient"
           style={{
@@ -93,7 +86,6 @@ export function Stats() {
             gap: 24,
             overflow: "hidden",
             position: "relative",
-            boxShadow: "0 1px 0 rgba(255,255,255,0.12) inset",
           }}
         >
           <div
@@ -106,7 +98,6 @@ export function Stats() {
           <WordReveal as="div" variant="blur-in" delay={600} className="reno-stat-label reno-stat-label-lg" style={{ color: "rgba(255,255,255,0.85)", position: "relative", zIndex: 1 }}>
             Projects delivered across the network
           </WordReveal>
-        </div>
         </div>
       </div>
 
@@ -127,30 +118,6 @@ export function Stats() {
         .reno-stat-card {
           min-height: 200px;
           width: 100%;
-        }
-        .reno-stat-shell {
-          padding: 6px;
-          border-radius: 28px;
-          box-shadow: 0 0 0 1px rgba(255,255,255,0.04);
-          min-height: 200px;
-          display: flex;
-        }
-        .reno-stat-shell--light {
-          background: rgba(0,0,0,0.04);
-          box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 0 rgba(255,255,255,0.5) inset;
-        }
-        .reno-stat-shell--dark {
-          background: rgba(255,255,255,0.04);
-          box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 0 rgba(255,255,255,0.05) inset;
-        }
-        .reno-stat-shell--gradient {
-          padding: 8px;
-          border-radius: 32px;
-          background: rgba(255,255,255,0.05);
-          box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 1px 0 rgba(255,255,255,0.06) inset;
-        }
-        .reno-stat-shell--gradient .reno-stat-gradient {
-          border-radius: 24px;
         }
         .reno-stat-gradient {
           min-height: 280px;
@@ -186,11 +153,9 @@ export function Stats() {
           .reno-stat-card {
             min-height: 238px;
           }
-          .reno-stat-shell { min-height: 238px; }
           .reno-stat-gradient {
             min-height: 496px;
           }
-          .reno-stat-shell--gradient { min-height: 496px; }
         }
       `}</style>
     </section>
