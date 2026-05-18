@@ -136,11 +136,11 @@ export function Stats() {
         }
         .reno-stat-label {
           font-weight: 500;
-          font-size: clamp(16px, 1.7vw, 26px);
+          font-size: clamp(8px, 1.7vw, 18px);
           line-height: 1.3;
         }
         .reno-stat-label-lg {
-          font-size: clamp(18px, 2vw, 30px);
+          font-size: clamp(10px, 2vw, 22px);
         }
         @media (min-width: 900px) {
           .reno-stats-grid {
