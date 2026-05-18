@@ -32,16 +32,17 @@ const items: GuaranteeItem[] = [
     iconBg: "#3B7BF6",
   },
   {
-    title: "Milestone-based payments",
-    body: "You only pay as work is completed and inspected.",
-    Icon: Layers,
-    iconBg: "#7C3AED",
-  },
-  {
     title: "Design on us",
     body: "Free design when you execute the project with Reno.",
     Icon: Paintbrush,
     iconBg: "#16A34A",
+    videoSrc: "/videos/guarantee-palette.mp4",
+  },
+  {
+    title: "Milestone-based payments",
+    body: "You only pay as work is completed and inspected.",
+    Icon: Layers,
+    iconBg: "#7C3AED",
   },
   {
     title: "Satisfaction checkpoint",
@@ -230,6 +231,18 @@ export function Guarantee() {
         .reno-g-card--1,
         .reno-g-card--3 {
           justify-content: flex-end;
+        }
+
+        /* Middle column cards — hug content, center-align */
+        .reno-g-card--2,
+        .reno-g-card--4 {
+          justify-content: center;
+          align-items: center;
+        }
+        .reno-g-card--2 .reno-g-text,
+        .reno-g-card--4 .reno-g-text {
+          text-align: center;
+          align-items: center;
         }
 
         /* Video card: video fills space, text pinned to bottom */
