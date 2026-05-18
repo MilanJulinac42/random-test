@@ -223,9 +223,9 @@ export function Guarantee() {
         .reno-g-card--3 { grid-column: 3; grid-row: 1; }
         .reno-g-card--5 { grid-column: 1 / -1; grid-row: 2; }
 
-        /* Middle cards fill wrapper height equally */
+        /* Middle cards fill wrapper height equally, content vertically centered */
         .reno-g-card--2,
-        .reno-g-card--4 { flex: 1; }
+        .reno-g-card--4 { flex: 1; justify-content: center; }
 
         /* Card base */
         .reno-g-card {
