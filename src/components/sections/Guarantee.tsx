@@ -233,16 +233,10 @@ export function Guarantee() {
           justify-content: flex-end;
         }
 
-        /* Middle column cards — hug content, center-align */
+        /* Middle column cards — hug content, no stretch */
         .reno-g-card--2,
         .reno-g-card--4 {
-          justify-content: center;
-          align-items: center;
-        }
-        .reno-g-card--2 .reno-g-text,
-        .reno-g-card--4 .reno-g-text {
-          text-align: center;
-          align-items: center;
+          align-self: start;
         }
 
         /* Video card: video fills space, text pinned to bottom */
