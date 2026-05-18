@@ -7,7 +7,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAnimeRevealGroup } from "@/lib/anime";
 import { WordReveal } from "@/components/WordReveal";
 import { ArrowButton } from "@/components/ArrowButton";
-import houseMark from "@/assets/quiz-house-mark.png";
 
 const UNITS = ["Villa", "Apartment", "Landscape"] as const;
 const BUDGETS = [
@@ -137,15 +136,19 @@ export function Quiz() {
             alignItems: "center",
           }}
         >
-          <img
-            src={houseMark}
-            alt=""
+          <video
+            src="/videos/quiz-home.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
             aria-hidden
             style={{
               width: "clamp(200px, 28vw, 400px)",
               height: "clamp(200px, 28vw, 400px)",
               objectFit: "contain",
               userSelect: "none",
+              pointerEvents: "none",
             }}
           />
           <WordReveal
