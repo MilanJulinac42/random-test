@@ -141,10 +141,7 @@ export function Reviews() {
           max-width: 1280px;
         }
         .reno-review-shell {
-          background: rgba(255,255,255,0.04);
-          border-radius: 28px;
-          padding: 6px;
-          box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 0 rgba(255,255,255,0.05) inset;
+          border-radius: 22px;
           transition: transform 480ms cubic-bezier(0.32, 0.72, 0, 1);
           will-change: transform;
         }
