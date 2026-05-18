@@ -1,42 +1,46 @@
+import { Shield, PenTool, ListChecks, BadgeCheck, type LucideIcon } from "lucide-react";
 import { useAnimeReveal, useAnimeRevealGroup } from "@/lib/anime";
 import { WordReveal } from "@/components/WordReveal";
 
 type Point = {
-  n: string;
   title: string;
   body: string;
+  Icon: LucideIcon;
 };
 
 const points: Point[] = [
   {
-    n: "01",
     title: "You hire Reno, not a contractor",
     body: "Single point of accountability — we own the outcome, not just the introduction.",
+    Icon: Shield,
   },
   {
-    n: "02",
     title: "Design-led approach",
     body: "Reno Studio takes you from floor plan to photorealistic render before any demolition starts.",
+    Icon: PenTool,
   },
   {
-    n: "03",
     title: "End-to-end project management",
     body: "Dedicated PM, milestone tracking, QC inspections — not a marketplace that disappears after matching.",
+    Icon: ListChecks,
   },
   {
-    n: "04",
     title: "Proven track record",
     body: "150+ projects. 250,000 sqft of fitted-out areas. Premium villas and penthouses delivered.",
+    Icon: BadgeCheck,
   },
 ];
 
 export function WhyUs() {
-  const eyebrowRef = useAnimeReveal<HTMLDivElement>({ translateY: 14, duration: 600 });
-  const subRef = useAnimeReveal<HTMLParagraphElement>({ translateY: 18, delay: 200, duration: 700 });
+  const subRef = useAnimeReveal<HTMLParagraphElement>({
+    translateY: 18,
+    delay: 200,
+    duration: 700,
+  });
   const cardsRef = useAnimeRevealGroup<HTMLDivElement>(".reno-why-card", {
     staggerMs: 110,
-    duration: 720,
-    translateY: 22,
+    duration: 760,
+    translateY: 24,
   });
 
   return (
@@ -47,150 +51,154 @@ export function WhyUs() {
       style={{
         backgroundColor: "#FFFFFF",
         paddingBlock: "clamp(80px, 9vw, 128px)",
-        paddingInline: "clamp(20px, 6vw, 80px)",
+        paddingInline: "80px",
       }}
     >
-      <div className="reno-why-inner">
-        {/* LEFT — editorial heading column */}
-        <div className="reno-why-left">
-          <div ref={eyebrowRef} className="reno-eyebrow">
-            The difference
-          </div>
+      {/* Header — spans full width inside 80px padding */}
+      <div className="reno-why-header">
+        <WordReveal
+          as="h2"
+          variant="slide-up"
+          staggerMs={70}
+          duration={780}
+          style={{
+            color: "#0D0D0D",
+            fontWeight: 600,
+            fontSize: "clamp(40px, 5.6vw, 84px)",
+            lineHeight: 1.04,
+            letterSpacing: "-0.025em",
+            margin: 0,
+          }}
+        >
+          Why homeowners choose Reno.
+        </WordReveal>
 
-          <WordReveal
-            as="h2"
-            variant="slide-up"
-            staggerMs={70}
-            duration={780}
-            style={{
-              color: "#0D0D0D",
-              fontWeight: 600,
-              fontSize: "clamp(40px, 6vw, 84px)",
-              lineHeight: 1.04,
-              letterSpacing: "-0.025em",
-              margin: 0,
-              marginTop: 24,
-            }}
-          >
-            Why homeowners choose Reno.
-          </WordReveal>
+        <p
+          ref={subRef}
+          style={{
+            color: "rgba(0,0,0,0.55)",
+            fontSize: "clamp(15px, 1.3vw, 18px)",
+            lineHeight: 1.5,
+            margin: 0,
+            marginTop: 18,
+            maxWidth: 720,
+          }}
+        >
+          We don't match you with a contractor — we are the contractor. Design, build,
+          and project management under one roof.
+        </p>
+      </div>
 
-          <p
-            ref={subRef}
-            style={{
-              color: "rgba(0,0,0,0.55)",
-              fontSize: "clamp(15px, 1.3vw, 18px)",
-              lineHeight: 1.5,
-              maxWidth: 420,
-              margin: 0,
-              marginTop: 22,
-            }}
-          >
-            We don't match you with a contractor — we are the contractor. Design, build,
-            and project management under one roof.
-          </p>
-        </div>
-
-        {/* RIGHT — stacked numbered cards */}
-        <div ref={cardsRef} className="reno-why-right">
-          {points.map((p) => (
-            <article key={p.n} className="reno-why-card-shell">
-              <div className="reno-why-card">
-                <div className="reno-why-num">{p.n}</div>
-                <h3 className="reno-why-title">{p.title}</h3>
-                <p className="reno-why-body">{p.body}</p>
+      {/* 4 horizontal cards */}
+      <div ref={cardsRef} className="reno-why-grid">
+        {points.map(({ title, body, Icon }) => (
+          <article key={title} className="reno-why-card">
+            <div className="reno-why-card-inner">
+              <h3 className="reno-why-title">{title}</h3>
+              <p className="reno-why-body">{body}</p>
+              <div className="reno-why-icon" aria-hidden>
+                <Icon size={22} strokeWidth={1.6} color="#FFFFFF" />
               </div>
-            </article>
-          ))}
-        </div>
+            </div>
+          </article>
+        ))}
       </div>
 
       <style>{`
-        .reno-eyebrow {
-          display: inline-block;
-          text-transform: uppercase;
-          letter-spacing: 0.22em;
-          font-size: 11px;
-          font-weight: 500;
-          font-family: 'ZT Talk', system-ui, sans-serif;
-          padding: 6px 12px;
-          background: rgba(0,0,0,0.05);
-          color: rgba(0,0,0,0.55);
-          border-radius: 999px;
-          box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 0 0 1px rgba(0,0,0,0.04);
-        }
-
-        .reno-why-inner {
+        .reno-why-header {
           width: 100%;
-          max-width: 1280px;
-          margin: 0 auto;
-          display: flex;
-          flex-direction: column;
-          gap: clamp(36px, 5vw, 56px);
+          margin-bottom: clamp(48px, 5vw, 72px);
         }
-        .reno-why-left { display: flex; flex-direction: column; }
-        .reno-why-right { display: flex; flex-direction: column; gap: clamp(10px, 1.2vw, 14px); }
 
-        .reno-why-card-shell {
-          background: rgba(0,0,0,0.035);
-          border-radius: 28px;
-          padding: 6px;
-          box-shadow:
-            0 1px 0 rgba(255,255,255,0.6) inset,
-            0 0 0 1px rgba(0,0,0,0.04);
-          transition: transform 480ms cubic-bezier(0.32, 0.72, 0, 1);
-          will-change: transform;
+        .reno-why-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: clamp(14px, 1.4vw, 22px);
+          width: 100%;
         }
-        .reno-why-card-shell:hover { transform: translateY(-3px); }
-        .reno-why-card-shell:hover .reno-why-num { color: #0D0D0D; }
 
         .reno-why-card {
-          background: #FFFFFF;
-          border-radius: 22px;
-          padding: clamp(22px, 2.4vw, 30px) clamp(24px, 2.8vw, 32px);
+          position: relative;
+          aspect-ratio: 1 / 1.12;
+          border-radius: 28px;
+          overflow: hidden;
+          background:
+            radial-gradient(120% 90% at 30% 25%, rgba(110, 72, 255, 0.55) 0%, rgba(110, 72, 255, 0) 58%),
+            linear-gradient(155deg, #050514 0%, #0B0B2E 34%, #1B1486 72%, #3829C9 100%);
           box-shadow:
-            0 1px 0 rgba(255,255,255,0.95) inset,
-            0 8px 24px rgba(0,0,0,0.04);
+            0 1px 0 rgba(255,255,255,0.08) inset,
+            0 0 0 1px rgba(255,255,255,0.04),
+            0 14px 36px rgba(15, 12, 80, 0.18);
+          transition: transform 480ms cubic-bezier(0.32, 0.72, 0, 1), box-shadow 480ms cubic-bezier(0.32, 0.72, 0, 1);
+          will-change: transform;
         }
-        .reno-why-num {
-          font-family: 'ZT Talk', system-ui, sans-serif;
-          font-weight: 500;
-          font-size: 12px;
-          letter-spacing: 0.18em;
-          color: rgba(0,0,0,0.4);
-          text-transform: uppercase;
-          transition: color 480ms cubic-bezier(0.32, 0.72, 0, 1);
-        }
-        .reno-why-title {
-          color: #0D0D0D;
-          font-weight: 600;
-          font-size: clamp(20px, 1.9vw, 24px);
-          line-height: 1.25;
-          letter-spacing: -0.01em;
-          margin: 14px 0 0 0;
-        }
-        .reno-why-body {
-          color: rgba(0,0,0,0.62);
-          font-weight: 400;
-          font-size: clamp(14px, 1.15vw, 16px);
-          line-height: 1.55;
-          margin: 8px 0 0 0;
+        .reno-why-card:hover {
+          transform: translateY(-4px);
+          box-shadow:
+            0 1px 0 rgba(255,255,255,0.1) inset,
+            0 0 0 1px rgba(255,255,255,0.06),
+            0 22px 48px rgba(15, 12, 80, 0.28);
         }
 
-        @media (min-width: 960px) {
-          .reno-why-inner {
-            flex-direction: row;
-            align-items: flex-start;
-            gap: clamp(48px, 6vw, 96px);
+        .reno-why-card-inner {
+          position: absolute;
+          inset: 0;
+          padding: clamp(24px, 2.4vw, 32px);
+          display: flex;
+          flex-direction: column;
+        }
+
+        .reno-why-title {
+          color: #FFFFFF;
+          font-weight: 600;
+          font-size: clamp(20px, 1.7vw, 26px);
+          line-height: 1.2;
+          letter-spacing: -0.015em;
+          margin: 0;
+          max-width: 14ch;
+        }
+        .reno-why-body {
+          color: rgba(255, 255, 255, 0.7);
+          font-weight: 400;
+          font-size: clamp(13px, 1vw, 15px);
+          line-height: 1.5;
+          margin: 16px 0 0 0;
+        }
+        .reno-why-icon {
+          margin-top: auto;
+          width: 48px;
+          height: 48px;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.08);
+          box-shadow:
+            0 0 0 1px rgba(255, 255, 255, 0.1),
+            0 1px 0 rgba(255, 255, 255, 0.12) inset;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        /* Tablet — 2 columns */
+        @media (max-width: 1024px) {
+          .reno-why-grid {
+            grid-template-columns: repeat(2, 1fr);
           }
-          .reno-why-left {
-            flex: 1;
-            position: sticky;
-            top: 96px;
+          .reno-why-card {
+            aspect-ratio: 1 / 0.95;
           }
-          .reno-why-right {
-            flex: 1;
+        }
+
+        /* Mobile — 1 column with reduced padding */
+        @media (max-width: 640px) {
+          #why-us {
+            padding-inline: clamp(20px, 6vw, 32px) !important;
+          }
+          .reno-why-grid {
+            grid-template-columns: 1fr;
             gap: 14px;
+          }
+          .reno-why-card {
+            aspect-ratio: 1 / 0.75;
           }
         }
       `}</style>
