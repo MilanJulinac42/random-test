@@ -10,18 +10,20 @@ import { ArrowButton } from "@/components/ArrowButton";
 export function FloatingCTA() {
   const [heroIn, setHeroIn] = useState(true);
   const [quizIn, setQuizIn] = useState(false);
+  const [footerIn, setFooterIn] = useState(false);
 
   useEffect(() => {
     const hero = document.getElementById("top");
     const quiz = document.getElementById("quiz");
+    const footer = document.getElementById("reno-statement");
 
     let heroObs: IntersectionObserver | null = null;
     let quizObs: IntersectionObserver | null = null;
+    let footerObs: IntersectionObserver | null = null;
 
     if (hero) {
       heroObs = new IntersectionObserver(
         ([entry]) => setHeroIn(entry.isIntersecting),
-        // Treat the hero as "in view" until at least 20% of it has scrolled past.
         { threshold: 0, rootMargin: "-20% 0px 0px 0px" },
       );
       heroObs.observe(hero);
@@ -30,19 +32,27 @@ export function FloatingCTA() {
     if (quiz) {
       quizObs = new IntersectionObserver(
         ([entry]) => setQuizIn(entry.isIntersecting),
-        // Hide as soon as any part of the Quiz enters the viewport.
         { threshold: 0, rootMargin: "0px" },
       );
       quizObs.observe(quiz);
     }
 
+    if (footer) {
+      footerObs = new IntersectionObserver(
+        ([entry]) => setFooterIn(entry.isIntersecting),
+        { threshold: 0, rootMargin: "0px" },
+      );
+      footerObs.observe(footer);
+    }
+
     return () => {
       heroObs?.disconnect();
       quizObs?.disconnect();
+      footerObs?.disconnect();
     };
   }, []);
 
-  const visible = !heroIn && !quizIn;
+  const visible = !heroIn && !quizIn && !footerIn;
 
   return (
     <div
