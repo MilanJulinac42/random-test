@@ -75,17 +75,17 @@ export function WhyUs() {
 
         <p
           ref={subRef}
+          className="reno-why-sub"
           style={{
             color: "rgba(0,0,0,0.55)",
-            fontSize: "clamp(15px, 1.3vw, 18px)",
+            fontSize: "clamp(13px, 1.15vw, 17px)",
             lineHeight: 1.5,
             margin: 0,
             marginTop: 18,
-            maxWidth: 720,
+            whiteSpace: "nowrap",
           }}
         >
-          We don't match you with a contractor — we are the contractor. Design, build,
-          and project management under one roof.
+          We don't match you with a contractor — we are the contractor. Design, build, and project management under one roof.
         </p>
       </div>
 
@@ -185,6 +185,14 @@ export function WhyUs() {
           }
           .reno-why-card {
             aspect-ratio: 1 / 0.95;
+          }
+        }
+
+        /* Below desktop — allow the subheader to wrap so it never overflows */
+        @media (max-width: 1180px) {
+          .reno-why-sub {
+            white-space: normal !important;
+            max-width: 720px;
           }
         }
 
