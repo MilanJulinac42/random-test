@@ -219,9 +219,13 @@ export function Guarantee() {
 
         /* Explicit placement */
         .reno-g-card--1 { grid-column: 1; grid-row: 1; }
-        .reno-g-middle   { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: 8px; }
+        .reno-g-middle   { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: clamp(10px, 1.2vw, 16px); }
         .reno-g-card--3 { grid-column: 3; grid-row: 1; }
         .reno-g-card--5 { grid-column: 1 / -1; grid-row: 2; }
+
+        /* Middle cards fill wrapper height equally */
+        .reno-g-card--2,
+        .reno-g-card--4 { flex: 1; }
 
         /* Card base */
         .reno-g-card {
