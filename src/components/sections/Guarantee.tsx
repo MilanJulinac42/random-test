@@ -1,51 +1,90 @@
+import {
+  Lock,
+  Clock,
+  Layers,
+  Paintbrush,
+  SmilePlus,
+  type LucideIcon,
+} from "lucide-react";
 import { useAnimeReveal, useAnimeRevealGroup } from "@/lib/anime";
 import { WordReveal } from "@/components/WordReveal";
 
-type Guarantee = {
-  n: string;
+type GuaranteeItem = {
   title: string;
   body: string;
-  feature?: boolean;
-  chip?: string;
+  Icon: LucideIcon;
+  iconBg: string;
 };
 
-const items: Guarantee[] = [
+const items: GuaranteeItem[] = [
   {
-    n: "01",
     title: "Price-lock guarantee",
     body: "Your BOQ price is your final price — no hidden costs.",
-    feature: true,
-    chip: "No hidden costs",
+    Icon: Lock,
+    iconBg: "#FF6B35",
   },
   {
-    n: "02",
     title: "Timeline guarantee",
     body: "We deliver on schedule or pay you back up to 5% of the project value.",
+    Icon: Clock,
+    iconBg: "#3B7BF6",
   },
   {
-    n: "03",
     title: "Milestone-based payments",
     body: "You only pay as work is completed and inspected.",
+    Icon: Layers,
+    iconBg: "#7C3AED",
   },
   {
-    n: "04",
     title: "Design on us",
     body: "Free design when you execute the project with Reno.",
+    Icon: Paintbrush,
+    iconBg: "#16A34A",
   },
   {
-    n: "05",
     title: "Satisfaction checkpoint",
     body: "Unhappy at any milestone? We pause, fix, then proceed.",
+    Icon: SmilePlus,
+    iconBg: "#DB2777",
   },
 ];
 
+function IconSquare({
+  Icon,
+  bg,
+}: {
+  Icon: LucideIcon;
+  bg: string;
+}) {
+  return (
+    <div
+      style={{
+        width: 52,
+        height: 52,
+        borderRadius: 14,
+        background: bg,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+        boxShadow: `0 2px 8px ${bg}40`,
+      }}
+    >
+      <Icon size={24} strokeWidth={1.8} color="#FFFFFF" />
+    </div>
+  );
+}
+
 export function Guarantee() {
-  const eyebrowRef = useAnimeReveal<HTMLDivElement>({ translateY: 14, duration: 600 });
-  const subRef = useAnimeReveal<HTMLParagraphElement>({ translateY: 18, delay: 220, duration: 700 });
-  const gridRef = useAnimeRevealGroup<HTMLDivElement>(".reno-guarantee-card-shell", {
-    staggerMs: 100,
-    duration: 720,
-    translateY: 22,
+  const subRef = useAnimeReveal<HTMLParagraphElement>({
+    translateY: 18,
+    delay: 220,
+    duration: 700,
+  });
+  const gridRef = useAnimeRevealGroup<HTMLDivElement>(".reno-g-card", {
+    staggerMs: 90,
+    duration: 700,
+    translateY: 20,
   });
 
   return (
@@ -59,27 +98,22 @@ export function Guarantee() {
         paddingInline: "clamp(20px, 6vw, 80px)",
       }}
     >
-      <div className="reno-guarantee-inner">
+      <div className="reno-g-inner">
         {/* Header */}
-        <div className="reno-guarantee-header">
-          <div ref={eyebrowRef} className="reno-eyebrow">
-            Guarantees
-          </div>
-
+        <div className="reno-g-header">
           <WordReveal
             as="h2"
-            variant="clip"
-            staggerMs={70}
-            duration={780}
+            variant="slide-up"
+            staggerMs={65}
+            duration={760}
             style={{
               color: "#0D0D0D",
               fontWeight: 600,
-              fontSize: "clamp(40px, 6vw, 84px)",
+              fontSize: "clamp(38px, 5.6vw, 80px)",
               lineHeight: 1.04,
               letterSpacing: "-0.025em",
               margin: 0,
-              marginTop: 24,
-              maxWidth: 900,
+              whiteSpace: "nowrap",
             }}
           >
             Promises we put in writing.
@@ -88,44 +122,25 @@ export function Guarantee() {
           <p
             ref={subRef}
             style={{
-              color: "rgba(0,0,0,0.55)",
-              fontSize: "clamp(15px, 1.3vw, 18px)",
+              color: "rgba(0,0,0,0.52)",
+              fontSize: "clamp(13px, 1.15vw, 17px)",
               lineHeight: 1.5,
-              maxWidth: 560,
-              margin: 0,
-              marginTop: 22,
+              margin: "16px 0 0 0",
+              whiteSpace: "nowrap",
             }}
           >
-            Five commitments, written into every Reno contract. If we miss, you don't pay
-            the difference — we do.
+            Five commitments, written into every Reno contract.
           </p>
         </div>
 
         {/* Bento grid */}
-        <div ref={gridRef} className="reno-guarantee-grid">
-          {items.map((g) => (
-            <article
-              key={g.n}
-              className={
-                "reno-guarantee-card-shell" +
-                (g.feature ? " reno-guarantee-card-shell--feature" : "")
-              }
-            >
-              <div
-                className={
-                  "reno-guarantee-card" +
-                  (g.feature ? " reno-guarantee-card--feature" : "")
-                }
-              >
-                <div className="reno-guarantee-num">{g.n}</div>
-                <h3 className="reno-guarantee-title">{g.title}</h3>
-                <p className="reno-guarantee-body">{g.body}</p>
-                {g.chip && (
-                  <div className="reno-guarantee-chip">
-                    <span className="reno-guarantee-chip-dot" />
-                    {g.chip}
-                  </div>
-                )}
+        <div ref={gridRef} className="reno-g-grid">
+          {items.map((item, i) => (
+            <article key={item.title} className={`reno-g-card reno-g-card--${i + 1}`}>
+              <IconSquare Icon={item.Icon} bg={item.iconBg} />
+              <div className="reno-g-text">
+                <h3 className="reno-g-title">{item.title}</h3>
+                <p className="reno-g-body">{item.body}</p>
               </div>
             </article>
           ))}
@@ -133,139 +148,146 @@ export function Guarantee() {
       </div>
 
       <style>{`
-        .reno-guarantee-inner {
+        .reno-g-inner {
           width: 100%;
           max-width: 1280px;
           margin: 0 auto;
           display: flex;
           flex-direction: column;
-          gap: clamp(40px, 5vw, 64px);
+          gap: clamp(40px, 5vw, 60px);
         }
-        .reno-guarantee-header {
+
+        .reno-g-header {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
         }
 
-        .reno-guarantee-grid {
+        /* ── Bento grid ── */
+        .reno-g-grid {
           display: grid;
-          grid-template-columns: 1fr;
-          gap: clamp(12px, 1.4vw, 20px);
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: auto auto auto;
+          gap: clamp(10px, 1.2vw, 16px);
+          width: 100%;
         }
 
-        .reno-guarantee-card-shell {
-          background: rgba(0,0,0,0.035);
-          border-radius: 28px;
-          padding: 6px;
-          box-shadow:
-            0 1px 0 rgba(255,255,255,0.6) inset,
-            0 0 0 1px rgba(0,0,0,0.04);
+        /* Explicit placement */
+        .reno-g-card--1 { grid-column: 1; grid-row: 1 / 3; }
+        .reno-g-card--2 { grid-column: 2; grid-row: 1; }
+        .reno-g-card--3 { grid-column: 3; grid-row: 1 / 3; }
+        .reno-g-card--4 { grid-column: 2; grid-row: 2; }
+        .reno-g-card--5 { grid-column: 1 / -1; grid-row: 3; }
+
+        /* Card base */
+        .reno-g-card {
+          background: transparent;
+          border: 1px solid rgba(0, 0, 0, 0.085);
+          border-radius: 24px;
+          padding: clamp(22px, 2.4vw, 32px);
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
           transition:
             transform 480ms cubic-bezier(0.32, 0.72, 0, 1),
+            border-color 480ms cubic-bezier(0.32, 0.72, 0, 1),
             box-shadow 480ms cubic-bezier(0.32, 0.72, 0, 1);
           will-change: transform;
         }
-        .reno-guarantee-card-shell:hover {
+        .reno-g-card:hover {
           transform: translateY(-3px);
-          box-shadow:
-            0 1px 0 rgba(255,255,255,0.6) inset,
-            0 0 0 1px rgba(0,0,0,0.05),
-            0 14px 32px rgba(0,0,0,0.05);
-        }
-        .reno-guarantee-card-shell:hover .reno-guarantee-num {
-          color: #0D0D0D;
-        }
-        .reno-guarantee-card-shell--feature {
-          border-radius: 32px;
-          padding: 8px;
-        }
-        .reno-guarantee-card-shell--feature:hover {
-          box-shadow:
-            0 1px 0 rgba(255,255,255,0.6) inset,
-            0 0 0 1px rgba(0,0,0,0.06),
-            0 22px 48px rgba(0,0,0,0.07);
+          border-color: rgba(0, 0, 0, 0.13);
+          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
         }
 
-        .reno-guarantee-card {
-          position: relative;
-          background: #FFFFFF;
-          border-radius: 22px;
-          padding: clamp(22px, 2.4vw, 32px) clamp(24px, 2.8vw, 34px);
-          box-shadow:
-            0 1px 0 rgba(255,255,255,0.95) inset,
-            0 8px 24px rgba(0,0,0,0.04);
-          min-height: 100%;
+        /* Text block */
+        .reno-g-text {
           display: flex;
           flex-direction: column;
+          gap: 8px;
         }
-        .reno-guarantee-card--feature {
-          border-radius: 26px;
-          padding: clamp(28px, 3.4vw, 44px) clamp(28px, 3.6vw, 48px);
+
+        /* Tall cards — push content to bottom */
+        .reno-g-card--1,
+        .reno-g-card--3 {
+          justify-content: flex-end;
         }
-        .reno-guarantee-num {
-          font-family: 'ZT Talk', system-ui, sans-serif;
-          font-weight: 500;
-          font-size: 12px;
-          letter-spacing: 0.18em;
-          color: rgba(0,0,0,0.4);
-          text-transform: uppercase;
-          transition: color 480ms cubic-bezier(0.32, 0.72, 0, 1);
+
+        /* Full-width bottom card — horizontal layout on desktop */
+        .reno-g-card--5 {
+          flex-direction: row;
+          align-items: center;
+          gap: clamp(20px, 3vw, 36px);
         }
-        .reno-guarantee-title {
+        .reno-g-card--5 .reno-g-text {
+          gap: 6px;
+        }
+
+        .reno-g-title {
           color: #0D0D0D;
           font-weight: 600;
-          font-size: clamp(20px, 1.9vw, 24px);
+          font-size: clamp(17px, 1.6vw, 22px);
           line-height: 1.22;
-          letter-spacing: -0.01em;
-          margin: 16px 0 0 0;
+          letter-spacing: -0.012em;
+          margin: 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
-        .reno-guarantee-card--feature .reno-guarantee-title {
-          font-size: clamp(28px, 3.2vw, 44px);
-          line-height: 1.1;
-          letter-spacing: -0.022em;
-          margin-top: 20px;
-        }
-        .reno-guarantee-body {
-          color: rgba(0,0,0,0.62);
+        .reno-g-body {
+          color: rgba(0, 0, 0, 0.58);
           font-weight: 400;
-          font-size: clamp(14px, 1.15vw, 16px);
+          font-size: clamp(13px, 1.05vw, 15px);
           line-height: 1.55;
-          margin: 10px 0 0 0;
-        }
-        .reno-guarantee-card--feature .reno-guarantee-body {
-          font-size: clamp(15px, 1.3vw, 19px);
-          line-height: 1.5;
-          margin-top: 12px;
-          max-width: 540px;
+          margin: 0;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
 
-        .reno-guarantee-chip {
-          margin-top: auto;
-          padding-top: 24px;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          align-self: flex-start;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-          font-size: 10px;
-          font-weight: 500;
-          color: rgba(0,0,0,0.55);
-        }
-        .reno-guarantee-chip-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 999px;
-          background: #1FAB6E;
-          box-shadow: 0 0 0 4px rgba(31,171,110,0.12);
-        }
-
-        @media (min-width: 768px) {
-          .reno-guarantee-grid {
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+          .reno-g-grid {
             grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: unset;
           }
-          .reno-guarantee-card-shell--feature {
+          .reno-g-card--1,
+          .reno-g-card--2,
+          .reno-g-card--3,
+          .reno-g-card--4,
+          .reno-g-card--5 {
+            grid-column: unset;
+            grid-row: unset;
+          }
+          .reno-g-card--5 {
             grid-column: 1 / -1;
+          }
+          .reno-g-card--1,
+          .reno-g-card--3 {
+            justify-content: flex-start;
+          }
+          .reno-g-card--5 {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .reno-g-grid {
+            grid-template-columns: 1fr;
+          }
+          .reno-g-card--5 {
+            grid-column: unset;
+          }
+          .reno-g-header h2 {
+            white-space: normal !important;
+          }
+          .reno-g-header p {
+            white-space: normal !important;
+          }
+          .reno-g-title {
+            white-space: normal;
           }
         }
       `}</style>
