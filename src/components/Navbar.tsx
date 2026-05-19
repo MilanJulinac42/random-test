@@ -19,7 +19,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 pt-5 md:pt-7 flex justify-center pointer-events-none">
+    <nav className="fixed top-0 left-0 right-0 z-50 pt-2 md:pt-3 flex justify-center pointer-events-none">
       <a
         href="#top"
         className="relative flex items-center pointer-events-auto"

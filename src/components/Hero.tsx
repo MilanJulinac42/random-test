@@ -94,9 +94,10 @@ export function Hero() {
       className="relative w-full overflow-hidden"
       style={{ background: "#0A0A0A", minHeight: "100vh" }}
     >
-      {/* Background image card — inset from the black artboard edge, rounded. */}
+      {/* Background image card — inset from the black artboard edge, rounded on desktop.
+          Mobile (≤767px) goes full-bleed: no inset, no radius. */}
       <div
-        className="absolute overflow-hidden"
+        className="reno-hero-card absolute overflow-hidden"
         style={{
           top: "clamp(8px, 1.2vw, 15px)",
           left: "clamp(8px, 1.2vw, 15px)",
@@ -288,6 +289,13 @@ export function Hero() {
           }
         }
         @media (max-width: 767px) {
+          .reno-hero-card {
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            border-radius: 0 !important;
+          }
           .reno-hero-thumbs { display: none !important; }
           .reno-hero-fg {
             align-items: center;

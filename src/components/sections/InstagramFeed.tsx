@@ -1,8 +1,18 @@
 import { useAnimeReveal, useAnimeRevealGroup } from "@/lib/anime";
 import { WordReveal } from "@/components/WordReveal";
 
-const TILE_BGS = ["#E8E0D5", "#D5E0DC", "#D5D8E8", "#E8DDD5", "#D5E8E0", "#E8E5D5"];
 const IG_URL = "https://instagram.com/reno_app";
+
+/** Latest 6 IG posts. Update `src` when posting; set `href` to the
+ *  specific post URL (https://instagram.com/p/XXXX/) once available. */
+const POSTS: { src: string; href: string }[] = [
+  { src: "/instagram/ig-1.jpeg", href: IG_URL },
+  { src: "/instagram/ig-2.jpeg", href: IG_URL },
+  { src: "/instagram/ig-3.jpeg", href: IG_URL },
+  { src: "/instagram/ig-4.jpeg", href: IG_URL },
+  { src: "/instagram/ig-5.jpg", href: IG_URL },
+  { src: "/instagram/ig-6.jpg", href: IG_URL },
+];
 const LI_URL = "https://www.linkedin.com/company/renohomeae/";
 
 function InstagramIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
@@ -108,17 +118,21 @@ export function InstagramFeed() {
         {/* Instagram grid */}
         <div ref={gridRef}>
           <div className="reno-ig-grid">
-            {TILE_BGS.map((bg, i) => (
+            {POSTS.map((post, i) => (
               <a
                 key={i}
-                href={IG_URL}
+                href={post.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-src=""
                 className="reno-ig-cell"
-                style={{ background: bg }}
                 aria-label={`Instagram post ${i + 1}`}
               >
+                <img
+                  src={post.src}
+                  alt=""
+                  loading="lazy"
+                  className="reno-ig-img"
+                />
                 <div className="reno-ig-overlay">
                   <InstagramIcon size={24} color="#FFFFFF" />
                   <span style={{ fontSize: 12, color: "#FFFFFF", marginTop: 6 }}>
@@ -201,6 +215,14 @@ export function InstagramFeed() {
           will-change: transform;
         }
         .reno-ig-cell:hover { transform: translateY(-2px); }
+        .reno-ig-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
         .reno-ig-overlay {
           position: absolute;
           inset: 0;

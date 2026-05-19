@@ -171,13 +171,15 @@ export function Stats() {
             display: contents;
           }
           .reno-stat-card {
-            min-height: 160px;
+            min-height: 0;
+            height: 180px;
             width: 100%;
             padding: 20px !important;
             justify-content: flex-start !important;
           }
           .reno-stat-gradient {
-            min-height: 160px;
+            min-height: 0;
+            height: 180px;
           }
           .reno-stat-number,
           .reno-stat-number-xl {

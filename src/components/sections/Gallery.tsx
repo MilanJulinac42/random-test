@@ -87,6 +87,9 @@ type Project = {
   desc: string;
   before: string;
   after: string;
+  /** Mobile-only photos (real project shots). Falls back to before/after when absent. */
+  mobileBefore?: string;
+  mobileAfter?: string;
 };
 
 const projects: Project[] = [
@@ -96,6 +99,8 @@ const projects: Project[] = [
     desc: "Perched high above the city, this family apartment is defined by soft oak, seamless micro cement floors, and light that moves gently across curved seating and custom timber cladding in the living room.",
     before: livingBefore,
     after: livingAfter,
+    mobileBefore: "/mobile-gallery/before-1.jpg",
+    mobileAfter: "/mobile-gallery/after-1.jpg",
   },
   {
     title: "Kitchen & dining",
@@ -103,6 +108,8 @@ const projects: Project[] = [
     desc: "This family villa centers around a generous kitchen with a built-in coffee bar, flowing into spacious dining and lounge areas designed for long, relaxed gatherings.",
     before: kitchenBefore,
     after: kitchenAfter,
+    mobileBefore: "/mobile-gallery/before-2.jpg",
+    mobileAfter: "/mobile-gallery/after-2.jpg",
   },
   {
     title: "Kid's bedroom",
@@ -110,6 +117,8 @@ const projects: Project[] = [
     desc: "In the children's room, a bespoke bunk bed and dual built-in desks create individual corners for study and rest, balancing privacy with a sense of shared comfort.",
     before: kidsBefore,
     after: kidsAfter,
+    mobileBefore: "/mobile-gallery/before-3.jpg",
+    mobileAfter: "/mobile-gallery/after-3.jpg",
   },
 ];
 
@@ -197,7 +206,7 @@ export function Gallery() {
             right: "clamp(8px,1.2vw,15px)",
             borderRadius: 24,
             overflow: "hidden",
-            backgroundColor: "#E8E3DB",
+            backgroundColor: "transparent",
           }}
         >
           {/* Images — 3 projects × (before, after) */}
@@ -230,11 +239,11 @@ export function Gallery() {
             variant="slide-right"
             style={{
               position: "absolute",
-              top: "clamp(12px,1.4vw,20px)",
+              top: "calc(clamp(12px,1.4vw,20px) - 25px)",
               left: "clamp(20px,2.2vw,28px)",
               right: "clamp(20px,2.2vw,28px)",
               zIndex: 2,
-              color: "#FFFFFF",
+              color: "#0D0D0D",
               fontWeight: 600,
               fontSize: "clamp(32px,5vw,68px)",
               lineHeight: 1.1,
@@ -264,7 +273,7 @@ export function Gallery() {
             </div>
           ))}
 
-          {/* Before / After toggle — inside image, bottom-right */}
+          {/* Before / After toggle — inside image, bottom-right (offset left to clear FloatingCTA) */}
           <div
             className="reno-gallery-toggle"
             role="group"
@@ -280,8 +289,8 @@ export function Gallery() {
                   aria-pressed={isActive}
                   className="reno-gallery-toggle-btn"
                   style={{
-                    backgroundColor: isActive ? "#FFFFFF" : "rgba(255,255,255,0.18)",
-                    color: isActive ? "#0D0D0D" : "rgba(255,255,255,0.8)",
+                    backgroundColor: isActive ? "#BCB5AC" : "#0D0D0D",
+                    color: "#FFFFFF",
                   }}
                 >
                   {m === "before" ? "Before" : "After"}
@@ -301,7 +310,11 @@ export function Gallery() {
           <article key={p.title} className="reno-gallery-mobile-card">
             <h3 className="reno-gallery-mobile-title">{p.title}</h3>
             <div className="reno-gallery-mobile-loc">{p.location}</div>
-            <BeforeAfterSlider before={p.before} after={p.after} alt={p.title} />
+            <BeforeAfterSlider
+              before={p.mobileBefore ?? p.before}
+              after={p.mobileAfter ?? p.after}
+              alt={p.title}
+            />
             <p className="reno-gallery-mobile-desc">{p.desc}</p>
           </article>
         ))}
@@ -348,11 +361,12 @@ export function Gallery() {
           background-color: #FFFFFF;
         }
 
-        /* Toggle — inside image card, bottom-right */
+        /* Toggle — inside image card, bottom area shifted right */
         .reno-gallery-toggle {
           position: absolute;
-          bottom: clamp(16px,1.6vw,24px);
-          right: clamp(20px,2vw,28px);
+          bottom: 1px;
+          left: calc(58% - 20px);
+          transform: translateX(-50%);
           display: flex;
           gap: 8px;
           z-index: 2;
